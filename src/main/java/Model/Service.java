@@ -1,15 +1,26 @@
 package Model;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable(tableName = "Service")
 public class Service {
+
+    @DatabaseField(generatedId = true)
     private int ID_service;
+
+    @DatabaseField(canBeNull = false, unique = true)
     private String name;
+
+    @DatabaseField(canBeNull = false, unique = true)
     private String short_name;
+
+    @DatabaseField(canBeNull = false, unique = true)
     private int ID_area;
 
     public Service() {}
 
-    public Service(int ID_service, String name, String short_name, int ID_area) {
-        this.ID_service = ID_service;
+    public Service(String name, String short_name, int ID_area) {
         this.name = name;
         this.short_name = short_name;
         this.ID_area = ID_area;
@@ -29,10 +40,6 @@ public class Service {
 
     public int getID_area() {
         return ID_area;
-    }
-
-    public void setID_service(int ID_service) {
-        this.ID_service = ID_service;
     }
 
     public void setName(String name) {

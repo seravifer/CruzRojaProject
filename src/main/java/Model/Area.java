@@ -1,13 +1,20 @@
 package Model;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable(tableName = "Area")
 public class Area {
+
+    @DatabaseField(generatedId = true)
     private int ID_area;
+
+    @DatabaseField(canBeNull = false, unique = true)
     private String name;
 
     public Area() {}
 
-    public Area(int ID_area, String name) {
-        this.ID_area = ID_area;
+    public Area(String name) {
         this.name = name;
     }
 
@@ -17,10 +24,6 @@ public class Area {
 
     public String getName() {
         return name;
-    }
-
-    public void setID_area(int ID_area) {
-        this.ID_area = ID_area;
     }
 
     public void setName(String name) {
