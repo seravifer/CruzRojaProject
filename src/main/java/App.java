@@ -1,8 +1,8 @@
+import controller.HomeController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class App extends Application {
 
@@ -11,11 +11,9 @@ public class App extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/view/root.fxml"));
-        primaryStage.setTitle("Cruz Roja");
-        primaryStage.setScene(new Scene(root, 900, 720));
-        primaryStage.show();
+    public void start(Stage primaryStage) throws IOException {
+        primaryStage.setTitle("Registro Cruz Roja");
+        new HomeController(primaryStage);
     }
 
 }
