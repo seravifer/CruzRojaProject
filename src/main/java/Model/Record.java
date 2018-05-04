@@ -10,54 +10,47 @@ public class Record {
 
     @DatabaseField(generatedId = true)
     private int ID_record;
-    @DatabaseField()
-    private int ID_parent;
-    @DatabaseField()
+    @DatabaseField
     private SimpleDateFormat date;
-    @DatabaseField()
+    @DatabaseField
     private int code;
-    @DatabaseField()
-    private int subcode;
-    @DatabaseField()
-    private int resource_id;
+    @DatabaseField(foreign = true)
+    private Resource resource_id;
     @DatabaseField(canBeNull = false, foreign = true)
     private Assembly assembly;
-    @DatabaseField()
+    @DatabaseField
     private SimpleDateFormat startTime;
-    @DatabaseField()
+    @DatabaseField
     private SimpleDateFormat endTime;
-    @DatabaseField()
+    @DatabaseField
     private int area;
-    @DatabaseField()
+    @DatabaseField
     private int applicant;
-    @DatabaseField()
+    @DatabaseField
     private int service;
-    @DatabaseField()
-    private String notes;
-    @DatabaseField()
+    @DatabaseField
+    private String address;
+    @DatabaseField
+    private int assistance_h;
+    @DatabaseField
+    private int assistance_m;
+    @DatabaseField
+    private int evacuated_h;
+    @DatabaseField
+    private int evacuated_m;
+    @DatabaseField
     private String registry;
-    @DatabaseField()
-    private boolean gender;
-    @DatabaseField()
-    private String placeTransfer;
-    @DatabaseField()
-    private SimpleDateFormat startTimeAssistance;
-    @DatabaseField()
-    private SimpleDateFormat transferTimeAssistance;
-    @DatabaseField()
-    private SimpleDateFormat endTimeAssistance;
+    @DatabaseField
+    private String notes;
+
 
     public Record() {}
 
-    public Record(int ID_parent, SimpleDateFormat date, int code, int subcode, int resource_id, Assembly assembly,
-                  SimpleDateFormat startTime, SimpleDateFormat endTime, int area, int applicant, int service,
-                  String notes, String registry, boolean gender, String placeTransfer,
-                  SimpleDateFormat startTimeAssistance, SimpleDateFormat transferTimeAssistance,
-                  SimpleDateFormat endTimeAssistance) {
-        this.ID_parent = ID_parent;
+    public Record(SimpleDateFormat date, int code, Resource resource_id, Assembly assembly, SimpleDateFormat startTime,
+                  SimpleDateFormat endTime, int area, int applicant, int service, String address, int assistance_h,
+                  int assistance_m, int evacuated_h, int evacuated_m, String registry, String notes) {
         this.date = date;
         this.code = code;
-        this.subcode = subcode;
         this.resource_id = resource_id;
         this.assembly = assembly;
         this.startTime = startTime;
@@ -65,21 +58,17 @@ public class Record {
         this.area = area;
         this.applicant = applicant;
         this.service = service;
-        this.notes = notes;
+        this.address = address;
+        this.assistance_h = assistance_h;
+        this.assistance_m = assistance_m;
+        this.evacuated_h = evacuated_h;
+        this.evacuated_m = evacuated_m;
         this.registry = registry;
-        this.gender = gender;
-        this.placeTransfer = placeTransfer;
-        this.startTimeAssistance = startTimeAssistance;
-        this.transferTimeAssistance = transferTimeAssistance;
-        this.endTimeAssistance = endTimeAssistance;
+        this.notes = notes;
     }
 
     public int getID_record() {
         return ID_record;
-    }
-
-    public int getID_parent() {
-        return ID_parent;
     }
 
     public SimpleDateFormat getDate() {
@@ -90,11 +79,7 @@ public class Record {
         return code;
     }
 
-    public int getSubcode() {
-        return subcode;
-    }
-
-    public int getResource_id() {
+    public Resource getResource_id() {
         return resource_id;
     }
 
@@ -122,40 +107,32 @@ public class Record {
         return service;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getAddress() {
+        return address;
+    }
+
+    public int getAssistance_h() {
+        return assistance_h;
+    }
+
+    public int getAssistance_m() {
+        return assistance_m;
+    }
+
+    public int getEvacuated_h() {
+        return evacuated_h;
+    }
+
+    public int getEvacuated_m() {
+        return evacuated_m;
     }
 
     public String getRegistry() {
         return registry;
     }
 
-    public boolean isGender() {
-        return gender;
-    }
-
-    public String getPlaceTransfer() {
-        return placeTransfer;
-    }
-
-    public SimpleDateFormat getStartTimeAssistance() {
-        return startTimeAssistance;
-    }
-
-    public SimpleDateFormat getTransferTimeAssistance() {
-        return transferTimeAssistance;
-    }
-
-    public SimpleDateFormat getEndTimeAssistance() {
-        return endTimeAssistance;
-    }
-
-    public void setID_record(int ID_record) {
-        this.ID_record = ID_record;
-    }
-
-    public void setID_parent(int ID_parent) {
-        this.ID_parent = ID_parent;
+    public String getNotes() {
+        return notes;
     }
 
     public void setDate(SimpleDateFormat date) {
@@ -166,11 +143,7 @@ public class Record {
         this.code = code;
     }
 
-    public void setSubcode(int subcode) {
-        this.subcode = subcode;
-    }
-
-    public void setResource_id(int resource_id) {
+    public void setResource_id(Resource resource_id) {
         this.resource_id = resource_id;
     }
 
@@ -198,31 +171,31 @@ public class Record {
         this.service = service;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setAssistance_h(int assistance_h) {
+        this.assistance_h = assistance_h;
+    }
+
+    public void setAssistance_m(int assistance_m) {
+        this.assistance_m = assistance_m;
+    }
+
+    public void setEvacuated_h(int evacuated_h) {
+        this.evacuated_h = evacuated_h;
+    }
+
+    public void setEvacuated_m(int evacuated_m) {
+        this.evacuated_m = evacuated_m;
     }
 
     public void setRegistry(String registry) {
         this.registry = registry;
     }
 
-    public void setGender(boolean gender) {
-        this.gender = gender;
-    }
-
-    public void setPlaceTransfer(String placeTransfer) {
-        this.placeTransfer = placeTransfer;
-    }
-
-    public void setStartTimeAssistance(SimpleDateFormat startTimeAssistance) {
-        this.startTimeAssistance = startTimeAssistance;
-    }
-
-    public void setTransferTimeAssistance(SimpleDateFormat transferTimeAssistance) {
-        this.transferTimeAssistance = transferTimeAssistance;
-    }
-
-    public void setEndTimeAssistance(SimpleDateFormat endTimeAssistance) {
-        this.endTimeAssistance = endTimeAssistance;
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }

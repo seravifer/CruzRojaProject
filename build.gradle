@@ -12,9 +12,6 @@ repositories {
 
 dependencies {
     compile 'com.jfoenix:jfoenix:8.0.3'
-    compile 'org.jdbi:jdbi3-core:3.1.1'
-    compile 'org.jdbi:jdbi3-sqlite:3.1.1'
-    compile 'org.jdbi:jdbi3-sqlobject:3.1.1'
     compile 'org.xerial:sqlite-jdbc:3.21.0.1'
     compile 'com.j256.ormlite:ormlite-jdbc:5.1'
     compile 'com.j256.ormlite:ormlite-core:5.1'

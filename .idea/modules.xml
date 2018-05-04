@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/CruzRojaProject.iml" filepath="$PROJECT_DIR$/.idea/modules/CruzRojaProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/CruzRojaProject_main.iml" filepath="$PROJECT_DIR$/.idea/modules/CruzRojaProject_main.iml" group="CruzRojaProject" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/CruzRojaProject_test.iml" filepath="$PROJECT_DIR$/.idea/modules/CruzRojaProject_test.iml" group="CruzRojaProject" />
-      <module fileurl="file://$PROJECT_DIR$/src/main/main.iml" filepath="$PROJECT_DIR$/src/main/main.iml" />
     </modules>
   </component>
 </project>
