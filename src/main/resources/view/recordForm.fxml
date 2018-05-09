@@ -8,55 +8,83 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <GridPane alignment="CENTER" hgap="5.0" layoutX="5.0" vgap="5.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <AnchorPane prefHeight="70.0" prefWidth="802.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="50.0" fitWidth="52.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../img/logo.png" />
+                    </image>
+                </ImageView>
+                <Label layoutX="693.0" layoutY="22.0" text="Sergi Avila" AnchorPane.rightAnchor="25.0">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <JFXButton fx:id="addID" layoutX="113.0" layoutY="20.0" ripplerFill="RED" style="-fx-background-color: #f44336;" text="Añadir" textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </JFXButton>
+            </children>
+        </AnchorPane>
+    </top>
+    <center>
+      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0">
          <children>
-            <JFXButton buttonType="RAISED" onAction="#save_registry" ripplerFill="#eb2323" style="-fx-background-color: #e53935#e53935;" text="Registrar" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+            <GridPane alignment="CENTER" hgap="5.0" layoutX="5.0" vgap="5.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <JFXButton buttonType="RAISED" onAction="#save_registry" ripplerFill="#eb2323" style="-fx-background-color: #e53935#e53935;" text="Registrar" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+                     <padding>
+                        <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+                     </padding>
+                  </JFXButton>
+                  <JFXComboBox fx:id="resourceID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Recurso" GridPane.rowIndex="1" />
+                  <JFXComboBox fx:id="assemblyID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Asamblea" GridPane.rowIndex="2" />
+                  <JFXTimePicker fx:id="startTimeID" defaultColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Hora de inicio" GridPane.rowIndex="3" />
+                  <JFXTimePicker fx:id="endTimeID" defaultColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Hora de fin" GridPane.rowIndex="4" />
+                  <JFXComboBox fx:id="areaID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Área" GridPane.rowIndex="5" />
+                  <JFXTextField fx:id="applicantID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Solicitante" GridPane.rowIndex="6" />
+                  <JFXComboBox fx:id="serviceID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Servicio" GridPane.rowIndex="7" />
+                  <JFXTextField fx:id="addressID" focusColor="#e53935" maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="381.0" promptText="Dirección" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <JFXTextField fx:id="assistance_hID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Asistencia - H" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <JFXTextField fx:id="assistance_mID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Asistencia - M" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <JFXTextField fx:id="evacuated_hID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Evacuación - H" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <JFXTextField fx:id="evacuated_mID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Evacuación - M" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <JFXTextField fx:id="registryID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Registro" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <JFXTextField fx:id="notesID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Observaciones" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <JFXCheckBox fx:id="cb_stayID" alignment="CENTER_RIGHT" checkedColor="#e53935" maxWidth="-Infinity" onAction="#stay" text="Mantener en espera" textAlignment="JUSTIFY" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+                  <Label fx:id="codeID" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Código de referencia" textAlignment="CENTER" GridPane.columnSpan="2" />
+               </children>
                <padding>
-                  <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
-            </JFXButton>
-            <JFXComboBox fx:id="resourceID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Recurso" GridPane.rowIndex="1" />
-            <JFXComboBox fx:id="assemblyID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Asamblea" GridPane.rowIndex="2" />
-            <JFXTimePicker fx:id="startTimeID" defaultColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Hora de inicio" GridPane.rowIndex="3" />
-            <JFXTimePicker fx:id="endTimeID" defaultColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Hora de fin" GridPane.rowIndex="4" />
-            <JFXComboBox fx:id="areaID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Área" GridPane.rowIndex="5" />
-            <JFXTextField fx:id="applicantID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Solicitante" GridPane.rowIndex="6" />
-            <JFXComboBox fx:id="serviceID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Servicio" GridPane.rowIndex="7" />
-            <JFXTextField fx:id="addressID" focusColor="#e53935" maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="381.0" promptText="Dirección" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <JFXTextField fx:id="assistance_hID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Asistencia - H" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <JFXTextField fx:id="assistance_mID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Asistencia - M" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <JFXTextField fx:id="evacuated_hID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Evacuación - H" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <JFXTextField fx:id="evacuated_mID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Evacuación - M" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <JFXTextField fx:id="registryID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Registro" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <JFXTextField fx:id="notesID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Observaciones" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <JFXCheckBox fx:id="cb_stayID" alignment="CENTER_RIGHT" checkedColor="#e53935" maxWidth="-Infinity" onAction="#stay" text="Mantener en espera" textAlignment="JUSTIFY" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
-            <Label fx:id="codeID" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Código de referencia" textAlignment="CENTER" GridPane.columnSpan="2" />
+            </GridPane>
          </children>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
-      </GridPane>
-   </children>
-</AnchorPane>
+      </AnchorPane>
+   </center>
+</BorderPane>

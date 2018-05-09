@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -17,7 +18,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class RecordsController {
+public class RecordsController extends AnchorPane {
 
     @FXML
     private VBox recordsID;
@@ -27,10 +28,16 @@ public class RecordsController {
 
     private Stage stage;
 
-    public RecordsController(Stage stage) throws IOException, SQLException {
+    public RecordsController(Stage stage) throws SQLException {
+        this.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
         fxmlLoader.setController(this);
-        Parent parent = fxmlLoader.load();
+        Parent parent = null;
+        try {
+            parent = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Scene scene = new Scene(parent);
         stage.setScene(scene);
         stage.show();
@@ -38,7 +45,7 @@ public class RecordsController {
         init();
     }
 
-    private void init() throws SQLException {
+    public void init() throws SQLException {
         Dao<Record, Integer> recordDao = DaoManager.createDao(DataBase.get(), Record.class);
 
         QueryBuilder<Record, Integer> queryBuilder = recordDao.queryBuilder().limit((long) 5);

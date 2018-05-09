@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.SVGPath;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -61,7 +62,6 @@ public class RecordComponent extends AnchorPane {
     @FXML
     private SVGPath editID;
 
-
     public RecordComponent(Record record) throws SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/record.fxml"));
         fxmlLoader.setRoot(this);
@@ -77,6 +77,6 @@ public class RecordComponent extends AnchorPane {
         assemblyID.setText(record.getAssembly().getName_assembly());
         // TODO Completar con todas
 
-        //editID.setOnMouseClicked(() -> new RecordFormController(record));
+        //editID.setOnMouseClicked(() -> new RecordFormController());
     }
 }
