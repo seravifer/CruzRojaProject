@@ -1,4 +1,4 @@
-import controller.RecordsController;
+import controller.HomeController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -13,7 +13,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Registro Cruz Roja");
-        new RecordsController(primaryStage);
+        new HomeController(primaryStage);
     }
 
 }
