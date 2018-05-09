@@ -5,8 +5,6 @@
  */
 package controller;
 
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import java.io.IOException;
@@ -18,53 +16,35 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 /**
  * FXML Controller class
  *
- * @author Elio Brennan
+ * @author Elio
  */
-public class RecordFormController implements Initializable {
+public class EventFormController implements Initializable {
 
     @FXML
-    private JFXComboBox<?> resource;
+    private JFXTextField id_parent;
     @FXML
-    private JFXComboBox<?> assembly;
+    private JFXTextField subcode;
     @FXML
-    private JFXTimePicker startTime;
+    private JFXTimePicker startTimeAssistance;
     @FXML
-    private JFXTimePicker endTime;
+    private JFXTimePicker transferTimeAssistance;
     @FXML
-    private JFXComboBox<?> area;
+    private JFXTextField placeTransfer;
     @FXML
-    private JFXTextField applicant;
+    private JFXTextField keyTransfer;
     @FXML
-    private JFXComboBox<?> service;
-    @FXML
-    private JFXTextField address;
-    @FXML
-    private JFXTextField assistance_h;
-    @FXML
-    private JFXTextField assistance_m;
-    @FXML
-    private JFXTextField evacuated_h;
-    @FXML
-    private JFXTextField evacuated_m;
-    @FXML
-    private JFXTextField registry;
-    @FXML
-    private JFXTextField notes;
-    @FXML
-    private JFXCheckBox cb_stay;
-    @FXML
-    private Label code;
+    private JFXTimePicker endTimeAssistance;
+    
     private Stage stage;
-
-    public RecordFormController(Stage stage) {
+    
+    public EventFormController(Stage stage) {
         this.stage = stage;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/recordForm.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/eventForm.fxml"));
         fxmlLoader.setController(this);
         Parent parent = null;
         try {
@@ -75,7 +55,6 @@ public class RecordFormController implements Initializable {
         Scene scene = new Scene(parent);
         stage.setScene(scene);
     }
-
     /**
      * Initializes the controller class.
      */
@@ -85,11 +64,7 @@ public class RecordFormController implements Initializable {
     }    
 
     @FXML
-    private void save_record(ActionEvent event) {
-    }
-
-    @FXML
-    private void stay(ActionEvent event) {
+    private void save_event(ActionEvent event) {
     }
     
 }
