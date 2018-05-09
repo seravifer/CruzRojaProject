@@ -1,19 +1,23 @@
 package controller;
 
+import Model.Record;
+import Service.DataBase;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.sql.SQLException;
+import java.util.List;
 
-public class RecordsController implements Initializable {
+public class RecordsController {
 
     @FXML
     private VBox recordsID;
@@ -21,13 +25,9 @@ public class RecordsController implements Initializable {
     @FXML
     private JFXButton addID;
 
+    private Stage stage;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-    }
-
-    public RecordsController(Stage stage) throws IOException {
+    public RecordsController(Stage stage) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
         fxmlLoader.setController(this);
         Parent parent = fxmlLoader.load();
@@ -35,9 +35,19 @@ public class RecordsController implements Initializable {
         stage.setScene(scene);
         stage.show();
 
-        recordsID.getChildren().add(0, new RecordComponent());
-        addID.setOnAction((e) -> {
-            new RecordFormController(stage);
-        });
+        init();
+    }
+
+    private void init() throws SQLException {
+        Dao<Record, Integer> recordDao = DaoManager.createDao(DataBase.get(), Record.class);
+
+        QueryBuilder<Record, Integer> queryBuilder = recordDao.queryBuilder().limit((long) 5);
+        List<Record> records = recordDao.query(queryBuilder.prepare());
+
+        for (Record record : records) {
+            recordsID.getChildren().add(0, new RecordComponent(record));
+        }
+
+        addID.setOnAction((e) -> new RecordFormController(stage));
     }
 }

@@ -32,7 +32,7 @@ public class DataBase {
         }
     }
 
-    public static ConnectionSource getDB() {
+    public static ConnectionSource get() {
         if(instance == null) {
             instance = new DataBase();
         }

@@ -3,31 +3,29 @@ package Model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.text.SimpleDateFormat;
-
 @DatabaseTable(tableName = "Record")
 public class Record {
 
     @DatabaseField(generatedId = true)
     private int ID_record;
     @DatabaseField
-    private SimpleDateFormat date;
+    private String date;
     @DatabaseField
     private int code;
-    @DatabaseField(foreign = true)
-    private Resource resource_id;
-    @DatabaseField(canBeNull = false, foreign = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private Resource resource;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Assembly assembly;
     @DatabaseField
-    private SimpleDateFormat startTime;
+    private String startTime;
     @DatabaseField
-    private SimpleDateFormat endTime;
-    @DatabaseField
-    private int area;
-    @DatabaseField
-    private int applicant;
-    @DatabaseField
-    private int service;
+    private String endTime;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private Area area;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private Applicant applicant;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private Service service;
     @DatabaseField
     private String address;
     @DatabaseField
@@ -45,12 +43,12 @@ public class Record {
 
     public Record() {}
 
-    public Record(SimpleDateFormat date, int code, Resource resource_id, Assembly assembly, SimpleDateFormat startTime,
-                  SimpleDateFormat endTime, int area, int applicant, int service, String address, int assistance_h,
+    public Record(String date, int code, Resource resource, Assembly assembly, String startTime,
+                  String endTime, Area area, Applicant applicant, Service service, String address, int assistance_h,
                   int assistance_m, int evacuated_h, int evacuated_m, String registry, String notes) {
         this.date = date;
         this.code = code;
-        this.resource_id = resource_id;
+        this.resource = resource;
         this.assembly = assembly;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -70,7 +68,7 @@ public class Record {
         return ID_record;
     }
 
-    public SimpleDateFormat getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -78,31 +76,31 @@ public class Record {
         return code;
     }
 
-    public Resource getResource_id() {
-        return resource_id;
+    public Resource getResource() {
+        return resource;
     }
 
     public Assembly getAssembly() {
         return assembly;
     }
 
-    public SimpleDateFormat getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public SimpleDateFormat getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public int getArea() {
+    public Area getArea() {
         return area;
     }
 
-    public int getApplicant() {
+    public Applicant getApplicant() {
         return applicant;
     }
 
-    public int getService() {
+    public Service getService() {
         return service;
     }
 
@@ -134,7 +132,7 @@ public class Record {
         return notes;
     }
 
-    public void setDate(SimpleDateFormat date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -142,31 +140,31 @@ public class Record {
         this.code = code;
     }
 
-    public void setResource_id(Resource resource_id) {
-        this.resource_id = resource_id;
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
     public void setAssembly(Assembly assembly) {
         this.assembly = assembly;
     }
 
-    public void setStartTime(SimpleDateFormat startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public void setEndTime(SimpleDateFormat endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
-    public void setArea(int area) {
+    public void setArea(Area area) {
         this.area = area;
     }
 
-    public void setApplicant(int applicant) {
+    public void setApplicant(Applicant applicant) {
         this.applicant = applicant;
     }
 
-    public void setService(int service) {
+    public void setService(Service service) {
         this.service = service;
     }
 

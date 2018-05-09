@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<fx:root prefHeight="117.0" prefWidth="749.0" style="-fx-background-color: #fff;" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="98.0" prefWidth="1087.0" style="-fx-background-color: #fff;" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="27.0" layoutY="36.0" text="#18/0001">
+      <Label fx:id="codeID" layoutX="14.0" layoutY="20.0" text="#18/0001">
          <font>
-            <Font size="30.0" />
+            <Font size="22.0" />
          </font></Label>
+      <Label fx:id="dateID" layoutX="27.0" layoutY="56.0" text="18/05/2018" textFill="#000000b6">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="resourceID" layoutX="176.0" layoutY="26.0" text="A.11">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="assemblyID" layoutX="168.0" layoutY="58.0" text="Valencia" />
+      <Label fx:id="startTimeID" layoutX="314.0" layoutY="26.0" text="10:30" />
+      <Label fx:id="endTimeID" layoutX="314.0" layoutY="56.0" text="17:00" />
+      <Label fx:id="areaID" layoutX="443.0" layoutY="29.0" text="Prevencion" />
+      <Label fx:id="serviceID" layoutX="443.0" layoutY="59.0" text="Maritimo" />
+      <Label fx:id="assistance_hID" layoutX="674.0" layoutY="29.0" text="0" />
+      <Label fx:id="evacuated_hID" layoutX="674.0" layoutY="59.0" text="2" />
+      <Label fx:id="assistance_mID" layoutX="700.0" layoutY="29.0" text="0" />
+      <Label fx:id="evacuated_mID" layoutX="700.0" layoutY="59.0" text="1" />
+      <Label fx:id="registryID" layoutX="765.0" layoutY="44.0" text="Registry" />
+      <Label fx:id="notesID" layoutX="852.0" layoutY="44.0" text="Nota" />
+      <SVGPath fx:id="editID" content="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" layoutX="985.0" layoutY="37.0" pickOnBounds="true">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </SVGPath>
    </children>
 </fx:root>

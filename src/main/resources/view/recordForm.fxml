@@ -37,22 +37,22 @@
                   <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
                </padding>
             </JFXButton>
-            <JFXComboBox fx:id="resource" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Recurso" GridPane.rowIndex="1" />
-            <JFXComboBox fx:id="assembly" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Asamblea" GridPane.rowIndex="2" />
-            <JFXTimePicker fx:id="startTime" defaultColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Hora de inicio" GridPane.rowIndex="3" />
-            <JFXTimePicker fx:id="endTime" defaultColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Hora de fin" GridPane.rowIndex="4" />
-            <JFXComboBox fx:id="area" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Área" GridPane.rowIndex="5" />
-            <JFXTextField fx:id="applicant" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Solicitante" GridPane.rowIndex="6" />
-            <JFXComboBox fx:id="service" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Servicio" GridPane.rowIndex="7" />
-            <JFXTextField fx:id="address" focusColor="#e53935" maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="381.0" promptText="Dirección" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <JFXTextField fx:id="assistance_h" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Asistencia - H" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <JFXTextField fx:id="assistance_m" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Asistencia - M" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <JFXTextField fx:id="evacuated_h" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Evacuación - H" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <JFXTextField fx:id="evacuated_m" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Evacuación - M" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <JFXTextField fx:id="registry" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Registro" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <JFXTextField fx:id="notes" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Observaciones" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <JFXCheckBox fx:id="cb_stay" alignment="CENTER_RIGHT" checkedColor="#e53935" maxWidth="-Infinity" onAction="#stay" text="Mantener en espera" textAlignment="JUSTIFY" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
-            <Label fx:id="code" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Código de referencia" textAlignment="CENTER" GridPane.columnSpan="2" />
+            <JFXComboBox fx:id="resourceID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Recurso" GridPane.rowIndex="1" />
+            <JFXComboBox fx:id="assemblyID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Asamblea" GridPane.rowIndex="2" />
+            <JFXTimePicker fx:id="startTimeID" defaultColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Hora de inicio" GridPane.rowIndex="3" />
+            <JFXTimePicker fx:id="endTimeID" defaultColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Hora de fin" GridPane.rowIndex="4" />
+            <JFXComboBox fx:id="areaID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Área" GridPane.rowIndex="5" />
+            <JFXTextField fx:id="applicantID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Solicitante" GridPane.rowIndex="6" />
+            <JFXComboBox fx:id="serviceID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Servicio" GridPane.rowIndex="7" />
+            <JFXTextField fx:id="addressID" focusColor="#e53935" maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="381.0" promptText="Dirección" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <JFXTextField fx:id="assistance_hID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Asistencia - H" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <JFXTextField fx:id="assistance_mID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Asistencia - M" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <JFXTextField fx:id="evacuated_hID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Evacuación - H" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <JFXTextField fx:id="evacuated_mID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Evacuación - M" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <JFXTextField fx:id="registryID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Registro" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <JFXTextField fx:id="notesID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Observaciones" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <JFXCheckBox fx:id="cb_stayID" alignment="CENTER_RIGHT" checkedColor="#e53935" maxWidth="-Infinity" onAction="#stay" text="Mantener en espera" textAlignment="JUSTIFY" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+            <Label fx:id="codeID" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Código de referencia" textAlignment="CENTER" GridPane.columnSpan="2" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

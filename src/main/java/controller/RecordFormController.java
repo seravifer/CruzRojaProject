@@ -1,65 +1,70 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
+import Model.Record;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Elio Brennan
- */
-public class RecordFormController implements Initializable {
+import java.io.IOException;
+
+public class RecordFormController {
 
     @FXML
-    private JFXComboBox<?> resource;
+    private JFXComboBox<?> resourceID;
+
     @FXML
-    private JFXComboBox<?> assembly;
+    private JFXComboBox<?> assemblyID;
+
     @FXML
-    private JFXTimePicker startTime;
+    private JFXTimePicker startTimeID;
+
     @FXML
-    private JFXTimePicker endTime;
+    private JFXTimePicker endTimeID;
+
     @FXML
-    private JFXComboBox<?> area;
+    private JFXComboBox<?> areaID;
+
     @FXML
-    private JFXTextField applicant;
+    private JFXTextField applicantID;
+
     @FXML
-    private JFXComboBox<?> service;
+    private JFXComboBox<?> serviceID;
+
     @FXML
-    private JFXTextField address;
+    private JFXTextField addressID;
+
     @FXML
-    private JFXTextField assistance_h;
+    private JFXTextField assistance_hID;
+
     @FXML
-    private JFXTextField assistance_m;
+    private JFXTextField assistance_mID;
+
     @FXML
-    private JFXTextField evacuated_h;
+    private JFXTextField evacuated_hID;
+
     @FXML
-    private JFXTextField evacuated_m;
+    private JFXTextField evacuated_mID;
+
     @FXML
-    private JFXTextField registry;
+    private JFXTextField registryID;
+
     @FXML
-    private JFXTextField notes;
+    private JFXTextField notesID;
+
     @FXML
-    private JFXCheckBox cb_stay;
+    private JFXCheckBox cb_stayID;
+
     @FXML
-    private Label code;
+    private Label codeID;
+
     private Stage stage;
 
     public RecordFormController(Stage stage) {
@@ -76,13 +81,9 @@ public class RecordFormController implements Initializable {
         stage.setScene(scene);
     }
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    public RecordFormController(Stage stage, Record record) {
+
+    }
 
     @FXML
     private void save_registry(ActionEvent event) {
