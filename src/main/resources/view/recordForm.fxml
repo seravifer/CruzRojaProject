@@ -7,16 +7,16 @@
 <?import com.jfoenix.controls.JFXTimePicker?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="579.0" prefWidth="979.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <AnchorPane prefHeight="70.0" prefWidth="802.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
             <children>
@@ -39,7 +39,7 @@
         </AnchorPane>
     </top>
     <center>
-      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0">
+      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="780.0">
          <children>
             <GridPane alignment="CENTER" hgap="5.0" layoutX="5.0" vgap="5.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
               <columnConstraints>
@@ -58,7 +58,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXButton buttonType="RAISED" onAction="#save_registry" ripplerFill="#eb2323" style="-fx-background-color: #e53935#e53935;" text="Registrar" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+                  <JFXButton buttonType="RAISED" ripplerFill="#eb2323" style="-fx-background-color: #e53935#e53935;" text="Registrar" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="8">
                      <padding>
                         <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
                      </padding>
@@ -77,7 +77,7 @@
                   <JFXTextField fx:id="evacuated_mID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Evacuación - M" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <JFXTextField fx:id="registryID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Registro" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <JFXTextField fx:id="notesID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Observaciones" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <JFXCheckBox fx:id="cb_stayID" alignment="CENTER_RIGHT" checkedColor="#e53935" maxWidth="-Infinity" onAction="#stay" text="Mantener en espera" textAlignment="JUSTIFY" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
+                  <JFXCheckBox fx:id="cb_stayID" alignment="CENTER_RIGHT" checkedColor="#e53935" maxWidth="-Infinity" text="Mantener en espera" textAlignment="JUSTIFY" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="CENTER" />
                   <Label fx:id="codeID" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" text="Código de referencia" textAlignment="CENTER" GridPane.columnSpan="2" />
                </children>
                <padding>

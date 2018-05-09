@@ -132,6 +132,7 @@ public class Record {
         return notes;
     }
 
+
     public void setDate(String date) {
         this.date = date;
     }

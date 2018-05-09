@@ -1,8 +1,7 @@
-import controller.RecordsController;
+import Controller.RecordsController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 public class App extends Application {
@@ -12,9 +11,8 @@ public class App extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException, SQLException {
-        primaryStage.setTitle("Registro Cruz Roja");
-        new RecordsController(primaryStage);
+    public void start(Stage primaryStage) throws SQLException {
+        new RecordsController();
     }
 
 }

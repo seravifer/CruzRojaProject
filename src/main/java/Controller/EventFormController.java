@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package Controller;
 
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTimePicker;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,15 +23,28 @@ import javafx.stage.Stage;
  *
  * @author Elio
  */
-public class AreaFormController implements Initializable {
+public class EventFormController implements Initializable {
 
     @FXML
-    private JFXTextField name_applicant;
+    private JFXTextField id_parent;
+    @FXML
+    private JFXTextField subcode;
+    @FXML
+    private JFXTimePicker startTimeAssistance;
+    @FXML
+    private JFXTimePicker transferTimeAssistance;
+    @FXML
+    private JFXTextField placeTransfer;
+    @FXML
+    private JFXTextField keyTransfer;
+    @FXML
+    private JFXTimePicker endTimeAssistance;
+    
     private Stage stage;
-
-    public AreaFormController(Stage stage) {
+    
+    public EventFormController(Stage stage) {
         this.stage = stage;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/areaForm.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/eventForm.fxml"));
         fxmlLoader.setController(this);
         Parent parent = null;
         try {
@@ -41,17 +55,16 @@ public class AreaFormController implements Initializable {
         Scene scene = new Scene(parent);
         stage.setScene(scene);
     }
-
     /**
-     * Initializes the controller class.
+     * Initializes the Controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }
+    }    
 
     @FXML
-    private void save_area(ActionEvent event) {
+    private void save_event(ActionEvent event) {
     }
-
+    
 }

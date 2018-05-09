@@ -1,5 +1,6 @@
-package controller;
+package Controller;
 
+import Controller.Component.RecordComponent;
 import Model.Record;
 import Service.DataBase;
 import com.j256.ormlite.dao.Dao;
@@ -12,7 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.scene.shape.SVGPath;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -26,10 +27,10 @@ public class RecordsController extends AnchorPane {
     @FXML
     private JFXButton addID;
 
-    private Stage stage;
+    @FXML
+    private SVGPath settingsID;
 
-    public RecordsController(Stage stage) throws SQLException {
-        this.stage = stage;
+    public RecordsController() throws SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
         fxmlLoader.setController(this);
         Parent parent = null;
@@ -39,13 +40,12 @@ public class RecordsController extends AnchorPane {
             e.printStackTrace();
         }
         Scene scene = new Scene(parent);
-        stage.setScene(scene);
-        stage.show();
+        SuperController.getInstance().setScene(scene);
 
         init();
     }
 
-    public void init() throws SQLException {
+    private void init() throws SQLException {
         Dao<Record, Integer> recordDao = DaoManager.createDao(DataBase.get(), Record.class);
 
         QueryBuilder<Record, Integer> queryBuilder = recordDao.queryBuilder().limit((long) 5);
@@ -55,6 +55,7 @@ public class RecordsController extends AnchorPane {
             recordsID.getChildren().add(0, new RecordComponent(record));
         }
 
-        addID.setOnAction((e) -> new RecordFormController(stage));
+        addID.setOnAction((e) -> new RecordFormController());
+        recordsID.setOnMouseClicked((e)-> {});
     }
 }

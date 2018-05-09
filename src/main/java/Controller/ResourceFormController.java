@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package Controller;
 
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
@@ -22,15 +22,17 @@ import javafx.stage.Stage;
  *
  * @author Elio
  */
-public class ApplicantFormController implements Initializable {
+public class ResourceFormController implements Initializable {
 
-    private Stage stage;
     @FXML
-    private JFXTextField name_applicant;
-
-    public ApplicantFormController(Stage stage) {
+    private JFXTextField name_resource;
+    @FXML
+    private JFXTextField code_resource;
+private Stage stage;
+    
+    public ResourceFormController(Stage stage) {
         this.stage = stage;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/applicantForm.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/resourceForm.fxml"));
         fxmlLoader.setController(this);
         Parent parent = null;
         try {
@@ -42,8 +44,9 @@ public class ApplicantFormController implements Initializable {
         stage.setScene(scene);
     }
     
+    
     /**
-     * Initializes the controller class.
+     * Initializes the Controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -51,7 +54,7 @@ public class ApplicantFormController implements Initializable {
     }    
 
     @FXML
-    private void save_applicant(ActionEvent event) {
+    private void save_resource(ActionEvent event) {
     }
     
 }
