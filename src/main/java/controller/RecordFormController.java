@@ -62,14 +62,18 @@ public class RecordFormController implements Initializable {
     private Label code;
     private Stage stage;
 
-    public RecordFormController(Stage stage) throws IOException {
+    public RecordFormController(Stage stage) {
         this.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/recordForm.fxml"));
         fxmlLoader.setController(this);
-        Parent parent = fxmlLoader.load();
+        Parent parent = null;
+        try {
+            parent = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         Scene scene = new Scene(parent);
         stage.setScene(scene);
-        stage.show();
     }
 
     /**
