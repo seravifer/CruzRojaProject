@@ -9,12 +9,17 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -55,6 +60,17 @@ public class RecordFormController implements Initializable {
     private JFXCheckBox cb_stay;
     @FXML
     private Label code;
+    private Stage stage;
+
+    public RecordFormController(Stage stage) throws IOException {
+        this.stage = stage;
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/recordForm.fxml"));
+        fxmlLoader.setController(this);
+        Parent parent = fxmlLoader.load();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     /**
      * Initializes the controller class.
