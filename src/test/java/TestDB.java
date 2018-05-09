@@ -15,7 +15,9 @@ public class TestDB {
 
         Applicant applicant = new Applicant();
         applicant.setName_applicant("rtjer");
-
         accountDao.create(applicant);
+
+        Applicant applicant1 = accountDao.queryForId(String.valueOf(applicant.getID_applicant()));
+        System.out.println(applicant1.getID_applicant());
     }
 }

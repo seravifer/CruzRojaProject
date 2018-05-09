@@ -43,7 +43,6 @@ public class Record {
     @DatabaseField
     private String notes;
 
-
     public Record() {}
 
     public Record(SimpleDateFormat date, int code, Resource resource_id, Assembly assembly, SimpleDateFormat startTime,
