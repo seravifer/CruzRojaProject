@@ -78,8 +78,18 @@ public class RecordComponent extends AnchorPane {
     private void init() {
         codeID.setText("#18/" + String.format("%05d", record.getCode()));
         assemblyID.setText(record.getAssembly().getName_assembly());
-        // TODO Completar con todas
-
+        resourceID.setText(record.getResource().getName_resource());
+        dateID.setText(record.getDate());
+        startTimeID.setText(record.getDate());
+        endTimeID.setText(record.getEndTime());
+        areaID.setText(record.getArea().getName());
+        serviceID.setText(record.getService().getName());
+        assistance_hID.setText(record.getAssistance_h() + "");
+        evacuated_hID.setText(record.getEvacuated_h() + "");
+        assistance_mID.setText(record.getAssistance_m() + "");
+        evacuated_mID.setText(record.getEvacuated_m() + "");
+        registryID.setText(record.getRegistry());
+        notesID.setText(record.getNotes());
         editID.setOnMouseClicked((event) -> new RecordFormController());
     }
 }
