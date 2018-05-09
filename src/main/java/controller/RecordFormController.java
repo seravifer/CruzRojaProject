@@ -86,7 +86,7 @@ public class RecordFormController {
     }
 
     @FXML
-    private void save_registry(ActionEvent event) {
+    private void save_record(ActionEvent event) {
     }
 
     @FXML
