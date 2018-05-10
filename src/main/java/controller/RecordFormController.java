@@ -2,10 +2,7 @@ package Controller;
 
 import Model.*;
 import Service.DAO;
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTimePicker;
+import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +15,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class RecordFormController {
+
+    @FXML
+    private Label codeID;
 
     @FXML
     private JFXComboBox<Resource> resourceID;
@@ -41,9 +41,6 @@ public class RecordFormController {
     private JFXComboBox<Service> serviceID;
 
     @FXML
-    private JFXTextField addressID;
-
-    @FXML
     private JFXTextField assistance_hID;
 
     @FXML
@@ -62,10 +59,7 @@ public class RecordFormController {
     private JFXTextField notesID;
 
     @FXML
-    private JFXCheckBox cb_stayID;
-
-    @FXML
-    private Label codeID;
+    private JFXDatePicker dateID;
 
     public RecordFormController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/recordForm.fxml"));
