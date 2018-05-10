@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -9,6 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
@@ -21,7 +23,7 @@
                   <Image url="@../img/logo.png" />
                </image>
             </ImageView>
-            <Label layoutX="665.0" layoutY="23.0" text="Sergi Avila" AnchorPane.rightAnchor="53.0">
+            <Label alignment="CENTER_RIGHT" layoutX="538.0" layoutY="22.0" prefHeight="27.0" prefWidth="165.0" text="Nombre Apellido" AnchorPane.rightAnchor="99.0">
                <font>
                   <Font size="18.0" />
                </font>
@@ -32,18 +34,25 @@
                </font>
             </JFXButton>
             <SVGPath fx:id="settingsID" content="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" layoutX="765.0" layoutY="24.0" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="25.0" />
+            <SVGPath content="M16.56,5.44L15.11,6.89C16.84,7.94 18,9.83 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12C6,9.83 7.16,7.94 8.88,6.88L7.44,5.44C5.36,6.88 4,9.28 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12C20,9.28 18.64,6.88 16.56,5.44M13,3H11V13H13" layoutX="715.0" layoutY="24.0" scaleX="1.2" scaleY="1.2" AnchorPane.rightAnchor="67.0" />
+            <Line endX="20.0" layoutX="744.0" layoutY="36.0" rotate="90.0" stroke="#c3c3c36b" AnchorPane.rightAnchor="37.5" />
          </children>
       </AnchorPane>
    </top>
    <center>
-      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutX="80.0" layoutY="142.0" prefHeight="379.0" prefWidth="350.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <content>
-            <VBox fx:id="recordsID" spacing="20.0">
-               <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </padding>
-            </VBox>
-         </content>
-      </ScrollPane>
+      <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" layoutY="72.0" pickOnBounds="false" prefHeight="359.0" prefWidth="802.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+               <content>
+                  <VBox fx:id="recordsID" spacing="20.0">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+            <JFXCheckBox fx:id="allID" checkedColor="RED" layoutX="21.0" layoutY="30.0" text="Mostrar todos" textFill="#000000a9" unCheckedColor="#8d8d8d" />
+         </children>
+      </AnchorPane>
    </center>
 </BorderPane>

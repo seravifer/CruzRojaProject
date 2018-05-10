@@ -2,11 +2,10 @@ package Controller;
 
 import Controller.Component.RecordComponent;
 import Model.Record;
-import Service.DataBase;
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
+import Service.DAO;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,7 +29,10 @@ public class RecordsController extends AnchorPane {
     @FXML
     private SVGPath settingsID;
 
-    public RecordsController() throws SQLException {
+    @FXML
+    private JFXCheckBox allID;
+
+    public RecordsController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
         fxmlLoader.setController(this);
         Parent parent = null;
@@ -45,17 +47,20 @@ public class RecordsController extends AnchorPane {
         init();
     }
 
-    private void init() throws SQLException {
-        Dao<Record, Integer> recordDao = DaoManager.createDao(DataBase.get(), Record.class);
-
-        QueryBuilder<Record, Integer> queryBuilder = recordDao.queryBuilder().limit((long) 5);
-        List<Record> records = recordDao.query(queryBuilder.prepare());
+    private void init() {
+        QueryBuilder<Record, Integer> queryBuilder = DAO.recordDao.queryBuilder().limit((long) 5);
+        List<Record> records = null;
+        try {
+            records = queryBuilder.query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         for (Record record : records) {
             recordsID.getChildren().add(0, new RecordComponent(record));
         }
 
         addID.setOnAction((e) -> new RecordFormController());
-        recordsID.setOnMouseClicked((e)-> {});
+        settingsID.setOnMouseClicked((e)-> {});
     }
 }

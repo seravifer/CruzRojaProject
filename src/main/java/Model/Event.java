@@ -3,13 +3,15 @@ package Model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Objects;
+
 @DatabaseTable(tableName = "Event")
 public class Event {
 
     @DatabaseField(generatedId = true)
     private int ID_Event;
     @DatabaseField
-    private int  ID_Parent;
+    private int parent_id;
     @DatabaseField
     private int subcode;
     @DatabaseField
@@ -23,9 +25,12 @@ public class Event {
     @DatabaseField
     private String endTimeAssistance;
 
-    public Event(int subcode, String startTimeAssistance, String transferTimeAssistance, String placeTransfer,
+    public Event() { }
+
+    public Event(int subcode, int parent_id, String startTimeAssistance, String transferTimeAssistance, String placeTransfer,
                  String keyTransfer, String endTimeAssistance) {
         this.subcode = subcode;
+        this.parent_id = parent_id;
         this.startTimeAssistance = startTimeAssistance;
         this.transferTimeAssistance = transferTimeAssistance;
         this.placeTransfer = placeTransfer;
@@ -37,8 +42,8 @@ public class Event {
         return ID_Event;
     }
 
-    public int getID_Parent() {
-        return ID_Parent;
+    public int getParent_id() {
+        return parent_id;
     }
 
     public int getSubcode() {
@@ -87,5 +92,18 @@ public class Event {
 
     public void setEndTimeAssistance(String endTimeAssistance) {
         this.endTimeAssistance = endTimeAssistance;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event event = (Event) o;
+        return ID_Event == event.ID_Event;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ID_Event);
     }
 }

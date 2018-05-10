@@ -41,4 +41,24 @@ public class Resource {
     public void setCode_resource(String code_resource) {
         this.code_resource = code_resource;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Resource resource = (Resource) o;
+
+        return ID_resource == resource.ID_resource;
+    }
+
+    @Override
+    public int hashCode() {
+        return ID_resource;
+    }
+
+    @Override
+    public String toString() {
+        return name_resource;
+    }
 }

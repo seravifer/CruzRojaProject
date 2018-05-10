@@ -2,6 +2,7 @@ package Controller.Component;
 
 import Controller.RecordFormController;
 import Model.Record;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -10,6 +11,7 @@ import javafx.scene.shape.SVGPath;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class RecordComponent extends AnchorPane {
 
@@ -76,11 +78,12 @@ public class RecordComponent extends AnchorPane {
     }
 
     private void init() {
-        codeID.setText("#18/" + String.format("%05d", record.getCode()));
+        codeID.setText("#" + String.valueOf(LocalDate.parse(record.getDate()).getYear()).substring(2, 4) + "/" +
+                String.format("%05d", record.getCode()));
         assemblyID.setText(record.getAssembly().getName_assembly());
         resourceID.setText(record.getResource().getName_resource());
         dateID.setText(record.getDate());
-        startTimeID.setText(record.getDate());
+        startTimeID.setText(record.getStartTime());
         endTimeID.setText(record.getEndTime());
         areaID.setText(record.getArea().getName());
         serviceID.setText(record.getService().getName());
@@ -90,6 +93,9 @@ public class RecordComponent extends AnchorPane {
         evacuated_mID.setText(record.getEvacuated_m() + "");
         registryID.setText(record.getRegistry());
         notesID.setText(record.getNotes());
-        editID.setOnMouseClicked((event) -> new RecordFormController());
+
+        editID.setOnMouseClicked((event) -> {
+            Platform.runLater(() -> new RecordFormController(record));
+        });
     }
 }

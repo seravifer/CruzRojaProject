@@ -55,4 +55,18 @@ public class User {
         this.password = password;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return ID_user == user.ID_user;
+    }
+
+    @Override
+    public int hashCode() {
+        return ID_user;
+    }
 }

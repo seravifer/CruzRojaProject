@@ -40,12 +40,14 @@ public class Record {
     private String registry;
     @DatabaseField
     private String notes;
+    @DatabaseField
+    private int user_id;
 
     public Record() {}
 
-    public Record(String date, int code, Resource resource, Assembly assembly, String startTime,
-                  String endTime, Area area, Applicant applicant, Service service, String address, int assistance_h,
-                  int assistance_m, int evacuated_h, int evacuated_m, String registry, String notes) {
+    public Record(String date, int code, Resource resource, Assembly assembly, String startTime, String endTime,
+                  Area area, Applicant applicant, Service service, String address, int assistance_h, int assistance_m,
+                  int evacuated_h, int evacuated_m, String registry, String notes, int user_id) {
         this.date = date;
         this.code = code;
         this.resource = resource;
@@ -62,6 +64,29 @@ public class Record {
         this.evacuated_m = evacuated_m;
         this.registry = registry;
         this.notes = notes;
+        this.user_id = user_id;
+    }
+
+    public Record(String date, int code, Resource resource, Assembly assembly, String startTime, String endTime,
+                  Area area, Applicant applicant, Service service, String address, String assistance_h,
+                  String assistance_m, String evacuated_h, String evacuated_m, String registry, String notes, int user_id) {
+        this.date = date;
+        this.code = code;
+        this.resource = resource;
+        this.assembly = assembly;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.area = area;
+        this.applicant = applicant;
+        this.service = service;
+        this.address = address;
+        this.assistance_h = Integer.parseInt(assistance_h);
+        this.assistance_m = Integer.parseInt(assistance_m);
+        this.evacuated_h = Integer.parseInt(evacuated_h);
+        this.evacuated_m = Integer.parseInt(evacuated_m);
+        this.registry = registry;
+        this.notes = notes;
+        this.user_id = user_id;
     }
 
     public int getID_record() {
@@ -132,6 +157,9 @@ public class Record {
         return notes;
     }
 
+    public int getUser_id() {
+        return user_id;
+    }
 
     public void setDate(String date) {
         this.date = date;
@@ -195,5 +223,24 @@ public class Record {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Record record = (Record) o;
+
+        return ID_record == record.ID_record;
+    }
+
+    @Override
+    public int hashCode() {
+        return ID_record;
     }
 }
