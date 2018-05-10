@@ -6,11 +6,15 @@ import Service.DAO;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
 
@@ -21,9 +25,6 @@ import java.util.List;
 public class RecordsController extends AnchorPane {
 
     @FXML
-    private VBox recordsID;
-
-    @FXML
     private JFXButton addID;
 
     @FXML
@@ -31,6 +32,18 @@ public class RecordsController extends AnchorPane {
 
     @FXML
     private JFXCheckBox allID;
+
+    @FXML
+    private JFXCheckBox allID1;
+
+    @FXML
+    private ScrollPane itemsID;
+
+    @FXML
+    private VBox recordsID;
+
+    @FXML
+    private HBox noItemsID;
 
     public RecordsController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
@@ -48,6 +61,17 @@ public class RecordsController extends AnchorPane {
     }
 
     private void init() {
+        recordsID.getChildren().addListener((ListChangeListener<Node>) c -> {
+            if (recordsID.getChildren().size() == 0) {
+                noItemsID.setVisible(true);
+            } else {
+                noItemsID.setVisible(false);
+            }
+        });
+
+        addID.setOnAction((e) -> new RecordFormController());
+        settingsID.setOnMouseClicked((e)-> {});
+
         QueryBuilder<Record, Integer> queryBuilder = DAO.recordDao.queryBuilder().limit((long) 5);
         List<Record> records = null;
         try {
@@ -59,8 +83,5 @@ public class RecordsController extends AnchorPane {
         for (Record record : records) {
             recordsID.getChildren().add(0, new RecordComponent(record));
         }
-
-        addID.setOnAction((e) -> new RecordFormController());
-        settingsID.setOnMouseClicked((e)-> {});
     }
 }
