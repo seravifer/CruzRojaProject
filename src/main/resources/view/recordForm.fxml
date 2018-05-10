@@ -68,7 +68,7 @@
                   <JFXTimePicker fx:id="startTimeID" defaultColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Hora de inicio" GridPane.rowIndex="3" />
                   <JFXTimePicker fx:id="endTimeID" defaultColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Hora de fin" GridPane.rowIndex="4" />
                   <JFXComboBox fx:id="areaID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Área" GridPane.rowIndex="5" />
-                  <JFXTextField fx:id="applicantID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Solicitante" GridPane.rowIndex="6" />
+                  <JFXComboBox fx:id="applicantID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Solicitante" GridPane.rowIndex="6" />
                   <JFXComboBox fx:id="serviceID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Servicio" GridPane.rowIndex="7" />
                   <JFXTextField fx:id="addressID" focusColor="#e53935" maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="381.0" promptText="Dirección" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <JFXTextField fx:id="assistance_hID" focusColor="#e53935" maxWidth="1.7976931348623157E308" promptText="Asistencia - H" GridPane.columnIndex="1" GridPane.rowIndex="2" />

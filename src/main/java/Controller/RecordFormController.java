@@ -1,7 +1,6 @@
 package Controller;
 
-import Model.Assembly;
-import Model.Record;
+import Model.*;
 import Service.DAO;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
@@ -21,7 +20,7 @@ import java.util.List;
 public class RecordFormController {
 
     @FXML
-    private JFXComboBox<?> resourceID;
+    private JFXComboBox<Resource> resourceID;
 
     @FXML
     private JFXComboBox<Assembly> assemblyID;
@@ -33,13 +32,13 @@ public class RecordFormController {
     private JFXTimePicker endTimeID;
 
     @FXML
-    private JFXComboBox<?> areaID;
+    private JFXComboBox<Area> areaID;
 
     @FXML
-    private JFXTextField applicantID;
+    private JFXComboBox<Applicant> applicantID;
 
     @FXML
-    private JFXComboBox<?> serviceID;
+    private JFXComboBox<Service> serviceID;
 
     @FXML
     private JFXTextField addressID;
@@ -85,13 +84,16 @@ public class RecordFormController {
 
     public RecordFormController(Record record) {
         // TODO Editar record
+        init();
     }
 
     private void init() {
         try {
             List<Assembly> assemblies = DAO.assemblyDao.queryBuilder().query();
+            List<Applicant> applicants = DAO.applicantDao.queryBuilder().query();
 
             assemblyID.getItems().addAll(assemblies);
+            applicantID.getItems().addAll(applicants);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -102,6 +104,15 @@ public class RecordFormController {
                 super.updateItem(item, empty);
                 if (item == null || empty) setGraphic(null);
                 else setText(item.getName_assembly());
+            }
+        });
+
+        applicantID.setCellFactory(cell -> new ListCell<Applicant>() {
+            @Override
+            protected void updateItem(Applicant item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) setGraphic(null);
+                else setText(item.getName_applicant());
             }
         });
 
