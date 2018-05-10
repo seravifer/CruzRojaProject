@@ -10,7 +10,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.SVGPath;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class RecordComponent extends AnchorPane {
@@ -94,8 +93,6 @@ public class RecordComponent extends AnchorPane {
         registryID.setText(record.getRegistry());
         notesID.setText(record.getNotes());
 
-        editID.setOnMouseClicked((event) -> {
-            Platform.runLater(() -> new RecordFormController(record));
-        });
+        editID.setOnMouseClicked((event) -> Platform.runLater(() -> new RecordFormController(record))); // Fix
     }
 }
