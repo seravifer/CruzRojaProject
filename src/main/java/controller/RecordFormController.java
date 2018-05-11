@@ -3,19 +3,21 @@ package Controller;
 import Model.*;
 import Service.DAO;
 import com.jfoenix.controls.*;
-import javafx.event.ActionEvent;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.shape.SVGPath;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class RecordFormController {
@@ -51,9 +53,6 @@ public class RecordFormController {
     private JFXComboBox<Area> areaID;
 
     @FXML
-    private JFXComboBox<Service> serviceID;
-
-    @FXML
     private JFXTextField evacuated_mID;
 
     @FXML
@@ -74,9 +73,27 @@ public class RecordFormController {
     @FXML
     private SVGPath closeID;
 
+    @FXML
+    private JFXComboBox<Service> serviceID;
+
+    @FXML
+    private TreeTableColumn<EventProperty, Integer> subCodeID;
+
+    @FXML
+    private TreeTableColumn<EventProperty, String> transferID;
+
+    @FXML
+    private TreeTableColumn<EventProperty, String> startTimeAssistanceID;
+
+    @FXML
+    private TreeTableColumn<EventProperty, String> transferTimeAssistanceID;
+
+    @FXML
+    private TreeTableColumn<EventProperty, String> endTimeAssistanceID;
+
     private Record record;
 
-    public RecordFormController() {
+    private void loadView() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/recordForm.fxml"));
         fxmlLoader.setController(this);
         Parent parent = null;
@@ -91,11 +108,19 @@ public class RecordFormController {
         init();
     }
 
+    public RecordFormController() {
+        loadView();
+
+        codeID.setText("#" + String.valueOf(LocalDate.now().getYear()).substring(2, 4) + "/" + "00000");
+        dateID.setValue(LocalDate.now());
+        startTimeID.setValue(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
+    }
+
     public RecordFormController(Record record) {
-        this();
+        loadView();
 
         LocalDate date = LocalDate.parse(record.getDate());
-        codeID.setText("#" + String.valueOf(date.getYear()).substring(2,4) + "/" +
+        codeID.setText("#" + String.valueOf(date.getYear()).substring(2, 4) + "/" +
                 String.format("%05d", record.getCode()));
         dateID.setValue(date);
         startTimeID.setValue(LocalTime.parse(record.getStartTime()));
@@ -120,40 +145,74 @@ public class RecordFormController {
             List<Assembly> assemblies = DAO.assemblyDao.queryBuilder().query();
             List<Applicant> applicants = DAO.applicantDao.queryBuilder().query();
             List<Resource> resources = DAO.resourceDao.queryBuilder().query();
-            List<Service> services = DAO.servicesDao.queryBuilder().query();
             List<Area> areas = DAO.areaDao.queryBuilder().query();
+            List<Service> services = DAO.servicesDao.queryBuilder().query();
 
             assemblyID.getItems().addAll(assemblies);
             applicantID.getItems().addAll(applicants);
             resourceID.getItems().addAll(resources);
-            serviceID.getItems().addAll(services);
             areaID.getItems().addAll(areas);
+            serviceID.getItems().addAll(services);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         startTimeID.setIs24HourView(true);
         endTimeID.setIs24HourView(true);
+
+
+        assistance_mID.textProperty().addListener(onlyNumbers(assistance_mID));
+        assistance_hID.textProperty().addListener(onlyNumbers(assistance_hID));
+        evacuated_mID.textProperty().addListener(onlyNumbers(evacuated_mID));
+        evacuated_hID.textProperty().addListener(onlyNumbers(evacuated_hID));
+        endTimeID.focusedProperty().addListener((ov, o, n) -> {
+            if (n && endTimeID.getValue() == null)
+                endTimeID.setValue(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
+        });
+
     }
 
     @FXML
-    void onClose(MouseEvent event) {
+    void onClose() {
         new RecordsController();
     }
 
     @FXML
-    void onSave(ActionEvent event) {
+    void onSave() {
         if (record == null) {
-            Record record = new Record(dateID.getValue().toString(), 0, resourceID.getValue(), assemblyID.getValue(),
-                    startTimeID.getValue().toString(), endTimeID.getValue().toString(), areaID.getValue(),
+             record = new Record(dateID.getValue().toString(), 0, resourceID.getValue(), assemblyID.getValue(),
+                    startTimeID.getValue(), endTimeID.getValue(), areaID.getValue(),
                     applicantID.getValue(), serviceID.getValue(), "", assistance_hID.getText(),
                     assistance_hID.getText(), evacuated_hID.getText(), evacuated_mID.getText(), registryID.getText(),
                     notesID.getText(), 1);
-            // DAO.recordDao.create(record);
+            try {
+                DAO.recordDao.create(record);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                record = null;
+            }
+
             addID.setText("Guardar");
+            LocalDate date = LocalDate.parse(record.getDate());
+            codeID.setText("#" + String.valueOf(date.getYear()).substring(2, 4) + "/" +
+                    String.format("%05d", record.getID_record()));
         } else {
-            // TODO actualizar objeto
+            try {
+                // TODO aplicar setters
+                DAO.recordDao.update(record);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
-    
+
+    private ChangeListener<String> onlyNumbers(TextField node) {
+        // TODO el valor minimo es 0
+        return (observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                node.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        };
+    }
+
 }

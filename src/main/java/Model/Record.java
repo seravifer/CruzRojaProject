@@ -3,6 +3,8 @@ package Model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.time.LocalTime;
+
 @DatabaseTable(tableName = "Record")
 public class Record {
 
@@ -45,37 +47,16 @@ public class Record {
 
     public Record() {}
 
-    public Record(String date, int code, Resource resource, Assembly assembly, String startTime, String endTime,
-                  Area area, Applicant applicant, Service service, String address, int assistance_h, int assistance_m,
-                  int evacuated_h, int evacuated_m, String registry, String notes, int user_id) {
-        this.date = date;
-        this.code = code;
-        this.resource = resource;
-        this.assembly = assembly;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.area = area;
-        this.applicant = applicant;
-        this.service = service;
-        this.address = address;
-        this.assistance_h = assistance_h;
-        this.assistance_m = assistance_m;
-        this.evacuated_h = evacuated_h;
-        this.evacuated_m = evacuated_m;
-        this.registry = registry;
-        this.notes = notes;
-        this.user_id = user_id;
-    }
-
-    public Record(String date, int code, Resource resource, Assembly assembly, String startTime, String endTime,
+    public Record(String date, int code, Resource resource, Assembly assembly, LocalTime startTime, LocalTime endTime,
                   Area area, Applicant applicant, Service service, String address, String assistance_h,
                   String assistance_m, String evacuated_h, String evacuated_m, String registry, String notes, int user_id) {
         this.date = date;
         this.code = code;
         this.resource = resource;
         this.assembly = assembly;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startTime = startTime.toString();
+        if (endTime == null) this.endTime = null;
+        else this.endTime = endTime.toString();
         this.area = area;
         this.applicant = applicant;
         this.service = service;
@@ -159,6 +140,10 @@ public class Record {
 
     public int getUser_id() {
         return user_id;
+    }
+
+    public void setID(int ID_record) {
+        this.ID_record = ID_record;
     }
 
     public void setDate(String date) {

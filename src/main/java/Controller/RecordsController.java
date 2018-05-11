@@ -4,14 +4,17 @@ import Controller.Component.RecordComponent;
 import Model.Record;
 import Service.DAO;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXDatePicker;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -20,6 +23,7 @@ import javafx.scene.shape.SVGPath;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class RecordsController extends AnchorPane {
@@ -31,10 +35,19 @@ public class RecordsController extends AnchorPane {
     private SVGPath settingsID;
 
     @FXML
+    private SVGPath reportID;
+
+    @FXML
     private JFXCheckBox allID;
 
     @FXML
-    private JFXCheckBox allID1;
+    private JFXCheckBox pendingID;
+
+    @FXML
+    private JFXDatePicker toID;
+
+    @FXML
+    private JFXDatePicker fromID;
 
     @FXML
     private ScrollPane itemsID;
@@ -61,27 +74,55 @@ public class RecordsController extends AnchorPane {
     }
 
     private void init() {
+        addID.setOnAction((e) -> new RecordFormController());
+        // settingsID.setOnMouseClicked((e)-> { new AdminController()});
+        // reportID.setOnMouseClicked((e) -> new ReportController());
+
+        //fromID.setValue(LocalDate.now());
+        fromID.setValue(LocalDate.of(2018, 1,1));
+        toID.setValue(LocalDate.now());
+
         recordsID.getChildren().addListener((ListChangeListener<Node>) c -> {
-            if (recordsID.getChildren().size() == 0) {
-                noItemsID.setVisible(true);
-            } else {
-                noItemsID.setVisible(false);
-            }
+            if (recordsID.getChildren().size() == 0) noItemsID.setVisible(true);
+            else noItemsID.setVisible(false);
         });
 
-        addID.setOnAction((e) -> new RecordFormController());
-        settingsID.setOnMouseClicked((e)-> {});
+        fromID.valueProperty().addListener((ob, o, n) -> {
+            filter();
+            limitDays();
+        });
 
-        QueryBuilder<Record, Integer> queryBuilder = DAO.recordDao.queryBuilder().limit((long) 5);
+        toID.valueProperty().addListener((ob, o, n) -> filter());
+
+        limitDays();
+        filter();
+    }
+
+    private void filter() {
+        QueryBuilder<Record, Integer> queryBuilder = DAO.recordDao.queryBuilder();
         List<Record> records = null;
         try {
+            Where<Record, Integer> where = queryBuilder.where();
+            where.between("date", fromID.getValue(), toID.getValue());
+            if (pendingID.isSelected()) where.and().isNull("endTime");
+
             records = queryBuilder.query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        recordsID.getChildren().clear();
         for (Record record : records) {
             recordsID.getChildren().add(0, new RecordComponent(record));
         }
+    }
+
+    private void limitDays() {
+        toID.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.isBefore(fromID.getValue()));
+            }
+        });
     }
 }

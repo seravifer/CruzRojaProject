@@ -3,6 +3,8 @@ package Model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Objects;
+
 @DatabaseTable(tableName = "Service")
 public class Service {
 
@@ -58,15 +60,13 @@ public class Service {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Service service = (Service) o;
-
         return ID_service == service.ID_service;
     }
 
     @Override
     public int hashCode() {
-        return ID_service;
+        return Objects.hash(ID_service);
     }
 
     @Override

@@ -59,6 +59,12 @@ public class RecordComponent extends AnchorPane {
     @FXML
     private SVGPath editID;
 
+    @FXML
+    private Label statusID;
+
+    @FXML
+    private AnchorPane badgeID;
+
     private Record record;
 
     public RecordComponent(Record record) {
@@ -83,7 +89,6 @@ public class RecordComponent extends AnchorPane {
         resourceID.setText(record.getResource().getName_resource());
         dateID.setText(record.getDate());
         startTimeID.setText(record.getStartTime());
-        endTimeID.setText(record.getEndTime());
         areaID.setText(record.getArea().getName());
         serviceID.setText(record.getService().getName());
         assistance_hID.setText(record.getAssistance_h() + "");
@@ -93,6 +98,16 @@ public class RecordComponent extends AnchorPane {
         registryID.setText(record.getRegistry());
         notesID.setText(record.getNotes());
 
-        editID.setOnMouseClicked((event) -> Platform.runLater(() -> new RecordFormController(record))); // Fix
+        if (record.getEndTime() == null) {
+            statusID.setText("En servicio");
+            badgeID.setStyle("-fx-background-color: #FF9149");
+            endTimeID.setText("--:--");
+        } else {
+            statusID.setText("Finalizado");
+            badgeID.setStyle("-fx-background-color: #27ff46");
+            endTimeID.setText(record.getEndTime());
+        }
+
+        editID.setOnMouseClicked((event) -> Platform.runLater(() -> new RecordFormController(record)));
     }
 }

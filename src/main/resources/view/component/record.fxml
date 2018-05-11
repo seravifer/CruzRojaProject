@@ -7,11 +7,11 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<fx:root maxHeight="-Infinity" prefHeight="98.0" prefWidth="1087.0" style="-fx-background-color: #fff;" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" prefHeight="98.0" prefWidth="967.0" style="-fx-background-color: #fff;" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="20.0" prefHeight="98.0" prefWidth="1087.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane maxHeight="-Infinity" maxWidth="145.0" prefHeight="98.0" prefWidth="145.0">
+            <AnchorPane maxHeight="-Infinity" maxWidth="160.0" prefHeight="98.0" prefWidth="145.0">
                <children>
                   <Label fx:id="codeID" layoutX="27.0" layoutY="21.0" text="#18/0001">
                      <font>
@@ -25,7 +25,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="98.0" prefWidth="118.0">
+            <AnchorPane maxWidth="170.0" prefHeight="98.0" prefWidth="140.0">
                <children>
                   <Label fx:id="resourceID" alignment="CENTER" contentDisplay="CENTER" layoutX="62.0" layoutY="25.0" text="A.11" textAlignment="CENTER" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
                      <font>
@@ -35,19 +35,19 @@
                   <Label fx:id="assemblyID" alignment="CENTER" contentDisplay="CENTER" layoutX="54.0" layoutY="57.0" text="Valencia" textAlignment="CENTER" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="98.0" prefWidth="131.0">
+            <AnchorPane maxWidth="150.0" prefHeight="98.0" prefWidth="90.0">
                <children>
                   <Label fx:id="startTimeID" alignment="CENTER" contentDisplay="CENTER" layoutX="75.0" layoutY="26.0" text="10:30" textAlignment="CENTER" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
                   <Label fx:id="endTimeID" alignment="CENTER" contentDisplay="CENTER" layoutX="75.0" layoutY="56.0" text="17:00" textAlignment="CENTER" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="98.0" prefWidth="132.0">
+            <AnchorPane maxWidth="200.0" prefHeight="98.0" prefWidth="150.0">
                <children>
                   <Label fx:id="areaID" alignment="CENTER" contentDisplay="CENTER" layoutX="99.0" layoutY="26.0" text="Prevencion" textAlignment="CENTER" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
                   <Label fx:id="serviceID" alignment="CENTER" contentDisplay="CENTER" layoutX="99.0" layoutY="56.0" text="Maritimo" textAlignment="CENTER" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="98.0" prefWidth="170.0">
+            <AnchorPane maxWidth="170.0" prefHeight="98.0" prefWidth="180.0">
                <children>
                   <Label fx:id="assistance_hID" layoutX="59.0" layoutY="29.0" text="00" />
                   <Label fx:id="evacuated_hID" layoutX="58.0" layoutY="56.0" prefHeight="17.0" prefWidth="14.0" text="02" />
@@ -69,13 +69,13 @@
                   </Label>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="98.0" prefWidth="153.0" HBox.hgrow="ALWAYS">
+            <AnchorPane prefHeight="98.0" prefWidth="140.0" HBox.hgrow="ALWAYS">
                <children>
                   <HBox alignment="CENTER" fillHeight="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <AnchorPane prefHeight="21.0" prefWidth="80.0" style="-fx-background-color: #FF9149; -fx-background-radius: 5;">
+                        <AnchorPane fx:id="badgeID" prefHeight="21.0" prefWidth="80.0" style="-fx-background-color: #FF9149; -fx-background-radius: 5;">
                            <children>
-                              <Label alignment="CENTER" layoutX="26.0" layoutY="2.0" text="En progreso" textFill="WHITE" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0" />
+                              <Label fx:id="statusID" alignment="CENTER" layoutX="26.0" layoutY="2.0" text="En progreso" textFill="WHITE" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0" />
                            </children>
                         </AnchorPane>
                      </children>
