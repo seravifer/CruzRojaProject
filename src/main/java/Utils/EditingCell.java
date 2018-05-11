@@ -1,12 +1,12 @@
 package Utils;
 
 import Model.Event;
-import javafx.scene.control.ContentDisplay;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
-class EditingCell extends TableCell<Event, String> {
+public class EditingCell extends TableCell<Event, String> {
 
     private TextField textField;
 
@@ -14,23 +14,21 @@ class EditingCell extends TableCell<Event, String> {
 
     @Override
     public void startEdit() {
-        super.startEdit();
-
-        if (textField == null) {
+        if (!isEmpty()) {
+            super.startEdit();
             createTextField();
+            setText(null);
+            setGraphic(textField);
+            textField.selectAll();
         }
-
-        setGraphic(textField);
-        setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-        textField.selectAll();
     }
 
     @Override
     public void cancelEdit() {
         super.cancelEdit();
 
-        setText(String.valueOf(getItem()));
-        setContentDisplay(ContentDisplay.TEXT_ONLY);
+        setText(getItem());
+        setGraphic(null);
     }
 
     @Override
@@ -45,18 +43,25 @@ class EditingCell extends TableCell<Event, String> {
                 if (textField != null) {
                     textField.setText(getString());
                 }
+                setText(null);
                 setGraphic(textField);
-                setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             } else {
                 setText(getString());
-                setContentDisplay(ContentDisplay.TEXT_ONLY);
+                setGraphic(null);
             }
         }
     }
 
     private void createTextField() {
         textField = new TextField(getString());
-        textField.setMinWidth(this.getWidth() - this.getGraphicTextGap()*2);
+        textField.setMinWidth(this.getWidth() - this.getGraphicTextGap()* 2);
+        textField.focusedProperty().addListener(
+                (ObservableValue<? extends Boolean> arg0,
+                 Boolean arg1, Boolean arg2) -> {
+                    if (!arg2) {
+                        commitEdit(textField.getText());
+                    }
+                });
         textField.setOnKeyPressed(t -> {
             if (t.getCode() == KeyCode.ENTER) {
                 commitEdit(textField.getText());

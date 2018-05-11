@@ -2,6 +2,7 @@ package Controller;
 
 import Model.*;
 import Service.DAO;
+import Utils.EditingCell;
 import com.jfoenix.controls.*;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -53,6 +54,9 @@ public class RecordFormController {
     private JFXComboBox<Area> areaID;
 
     @FXML
+    private JFXComboBox<Service> serviceID;
+
+    @FXML
     private JFXTextField evacuated_mID;
 
     @FXML
@@ -71,25 +75,43 @@ public class RecordFormController {
     private JFXTextField notesID;
 
     @FXML
+    private JFXTextField transferID;
+
+    @FXML
+    private JFXTimePicker startTimeAssistanceID;
+
+    @FXML
+    private JFXTimePicker transferTimeAssistanceID;
+
+    @FXML
+    private JFXTimePicker endTimeAssistanceID;
+
+    @FXML
+    private JFXButton addEventID;
+
+    @FXML
     private SVGPath closeID;
 
     @FXML
-    private JFXComboBox<Service> serviceID;
+    private TableView<Event> eventsTableID;
 
     @FXML
-    private TreeTableColumn<EventProperty, Integer> subCodeID;
+    private TableColumn<Event, String> subCodeColumID;
 
     @FXML
-    private TreeTableColumn<EventProperty, String> transferID;
+    private TableColumn<Event, String> transferColumID;
 
     @FXML
-    private TreeTableColumn<EventProperty, String> startTimeAssistanceID;
+    private TableColumn<Event, String> startTimeAssistanceColumID;
 
     @FXML
-    private TreeTableColumn<EventProperty, String> transferTimeAssistanceID;
+    private TableColumn<Event, String> transferTimeAssistanceColumID;
 
     @FXML
-    private TreeTableColumn<EventProperty, String> endTimeAssistanceID;
+    private TableColumn<Event, String> endTimeAssistanceColumID;
+
+    @FXML
+    private TableColumn<Event, String> registryColumID;
 
     private Record record;
 
@@ -170,6 +192,48 @@ public class RecordFormController {
                 endTimeID.setValue(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
         });
 
+        Callback<TableColumn<Event, String>, TableCell<Event, String>> cellFactory
+                = (TableColumn<Event, String> p) -> new EditingCell();
+
+        subCodeColumID.setCellValueFactory(new PropertyValueFactory<>("subcode"));
+        startTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("startTimeAssistance"));
+        transferTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("transferTimeAssistance"));
+        endTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("endTimeAssistance"));
+        transferColumID.setCellValueFactory(new PropertyValueFactory<>("placeTransfer"));
+        registryColumID.setCellValueFactory(new PropertyValueFactory<>("registry"));
+
+        startTimeAssistanceColumID.setCellFactory(cellFactory);
+        transferTimeAssistanceColumID.setCellFactory(cellFactory);
+        endTimeAssistanceColumID.setCellFactory(cellFactory);
+        transferColumID.setCellFactory(cellFactory);
+        registryColumID.setCellFactory(cellFactory);
+
+        startTimeAssistanceColumID.setOnEditCommit(
+                (TableColumn.CellEditEvent<Event, String> t) ->
+                        t.getTableView().getItems().get(t.getTablePosition().getRow())
+                                .setStartTimeAssistance(t.getNewValue()));
+        transferTimeAssistanceColumID.setOnEditCommit(
+                (TableColumn.CellEditEvent<Event, String> t) ->
+                        t.getTableView().getItems().get(t.getTablePosition().getRow())
+                                .setTransferTimeAssistance(t.getNewValue()));
+        endTimeAssistanceColumID.setOnEditCommit(
+                (TableColumn.CellEditEvent<Event, String> t) ->
+                        t.getTableView().getItems().get(t.getTablePosition().getRow())
+                                .setEndTimeAssistance(t.getNewValue()));
+        transferColumID.setOnEditCommit(
+                (TableColumn.CellEditEvent<Event, String> t) ->
+                        t.getTableView().getItems().get(t.getTablePosition().getRow())
+                                .setTransferTimeAssistance(t.getNewValue()));
+
+        registryColumID.setOnEditCommit(
+                (TableColumn.CellEditEvent<Event, String> t) ->
+                        t.getTableView().getItems().get(t.getTablePosition().getRow())
+                                .setTransferTimeAssistance(t.getNewValue()));
+
+        addEventID.setOnAction(e -> {
+            eventsTableID.getItems().add(new Event(10, "prueba",
+                    "prueba", "prueba", "prueba", "" ));
+        });
     }
 
     @FXML

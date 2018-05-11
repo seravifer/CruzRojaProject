@@ -1,49 +1,41 @@
 package Model;
 
+import Utils.SimpleStringPropertyType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-
-import java.util.Objects;
+import javafx.beans.property.SimpleStringProperty;
 
 @DatabaseTable(tableName = "Event")
 public class Event {
 
     @DatabaseField(generatedId = true)
     private int ID_Event;
-    @DatabaseField
-    private int parent_id;
-    @DatabaseField
     private int subcode;
-    @DatabaseField
-    private String startTimeAssistance;
-    @DatabaseField
-    private String transferTimeAssistance;
-    @DatabaseField
-    private String placeTransfer;
-    @DatabaseField
-    private String keyTransfer;
-    @DatabaseField
-    private String endTimeAssistance;
+    @DatabaseField(persisterClass = SimpleStringPropertyType.class)
+    private SimpleStringProperty startTimeAssistance;
+    @DatabaseField(persisterClass = SimpleStringPropertyType.class)
+    private SimpleStringProperty transferTimeAssistance;
+    @DatabaseField(persisterClass = SimpleStringPropertyType.class)
+    private SimpleStringProperty endTimeAssistance;
+    @DatabaseField(persisterClass = SimpleStringPropertyType.class)
+    private SimpleStringProperty placeTransfer;
+    @DatabaseField(persisterClass = SimpleStringPropertyType.class)
+    private SimpleStringProperty registry;
 
-    public Event() { }
 
-    public Event(int subcode, int parent_id, String startTimeAssistance, String transferTimeAssistance, String placeTransfer,
-                 String keyTransfer, String endTimeAssistance) {
+    public Event() {}
+    public Event(int subcode, String startTimeAssistance, String transferTimeAssistance, String placeTransfer,
+                 String endTimeAssistance, String registry) {
         this.subcode = subcode;
-        this.parent_id = parent_id;
-        this.startTimeAssistance = startTimeAssistance;
-        this.transferTimeAssistance = transferTimeAssistance;
-        this.placeTransfer = placeTransfer;
-        this.keyTransfer = keyTransfer;
-        this.endTimeAssistance = endTimeAssistance;
+        this.startTimeAssistance = new SimpleStringProperty(startTimeAssistance);
+        this.transferTimeAssistance = new SimpleStringProperty(transferTimeAssistance);
+        this.placeTransfer = new SimpleStringProperty(placeTransfer);
+        this.endTimeAssistance = new SimpleStringProperty(endTimeAssistance);
+        this.registry = new SimpleStringProperty(registry);
     }
 
     public int getID_Event() {
         return ID_Event;
-    }
-
-    public int getParent_id() {
-        return parent_id;
     }
 
     public int getSubcode() {
@@ -51,23 +43,47 @@ public class Event {
     }
 
     public String getStartTimeAssistance() {
+        return startTimeAssistance.get();
+    }
+
+    public SimpleStringProperty startTimeAssistanceProperty() {
         return startTimeAssistance;
     }
 
     public String getTransferTimeAssistance() {
+        return transferTimeAssistance.get();
+    }
+
+    public SimpleStringProperty transferTimeAssistanceProperty() {
         return transferTimeAssistance;
     }
 
+    public String getEndTimeAssistance() {
+        return endTimeAssistance.get();
+    }
+
+    public SimpleStringProperty endTimeAssistanceProperty() {
+        return endTimeAssistance;
+    }
+
     public String getPlaceTransfer() {
+        return placeTransfer.get();
+    }
+
+    public SimpleStringProperty placeTransferProperty() {
         return placeTransfer;
     }
 
-    public String getKeyTransfer() {
-        return keyTransfer;
+    public String getRegistry() {
+        return registry.get();
     }
 
-    public String getEndTimeAssistance() {
-        return endTimeAssistance;
+    public SimpleStringProperty registryProperty() {
+        return registry;
+    }
+
+    public void setID_Event(int ID_Event) {
+        this.ID_Event = ID_Event;
     }
 
     public void setSubcode(int subcode) {
@@ -75,35 +91,23 @@ public class Event {
     }
 
     public void setStartTimeAssistance(String startTimeAssistance) {
-        this.startTimeAssistance = startTimeAssistance;
+        this.startTimeAssistance.set(startTimeAssistance);
     }
 
     public void setTransferTimeAssistance(String transferTimeAssistance) {
-        this.transferTimeAssistance = transferTimeAssistance;
-    }
-
-    public void setPlaceTransfer(String placeTransfer) {
-        this.placeTransfer = placeTransfer;
-    }
-
-    public void setKeyTransfer(String keyTransfer) {
-        this.keyTransfer = keyTransfer;
+        this.transferTimeAssistance.set(transferTimeAssistance);
     }
 
     public void setEndTimeAssistance(String endTimeAssistance) {
-        this.endTimeAssistance = endTimeAssistance;
+        this.endTimeAssistance.set(endTimeAssistance);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Event event = (Event) o;
-        return ID_Event == event.ID_Event;
+    public void setPlaceTransfer(String placeTransfer) {
+        this.placeTransfer.set(placeTransfer);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(ID_Event);
+    public void setRegistry(String registry) {
+        this.registry.set(registry);
     }
+
 }

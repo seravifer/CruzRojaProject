@@ -5,11 +5,10 @@
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -18,7 +17,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="814.0" prefWidth="1104.0" style="-fx-background-color: #F4F4F4;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="887.0" prefWidth="1104.0" style="-fx-background-color: #F4F4F4;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <AnchorPane prefHeight="70.0" prefWidth="802.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
             <children>
@@ -78,12 +77,11 @@
                   <Label layoutX="108.0" layoutY="236.0" text="Transladados" />
                   <AnchorPane layoutX="14.0" layoutY="372.0" prefHeight="63.0" prefWidth="1023.0" style="-fx-background-color: #e9e9e9;" AnchorPane.leftAnchor="20.0">
                      <children>
-                        <JFXTextField focusColor="#e53935" layoutX="122.0" layoutY="20.0" prefHeight="25.0" prefWidth="122.0" promptText="Lugar de translado" />
-                        <JFXTextField focusColor="#e53935" layoutX="275.0" layoutY="20.0" prefHeight="25.0" prefWidth="177.0" promptText="Patología" />
-                        <JFXTimePicker defaultColor="#e53935" layoutX="471.0" layoutY="20.0" prefHeight="25.0" prefWidth="123.0" />
-                        <JFXTimePicker defaultColor="#e53935" layoutX="602.0" layoutY="20.0" prefHeight="25.0" prefWidth="128.0" />
-                        <JFXTimePicker defaultColor="#e53935" layoutX="743.0" layoutY="20.0" prefHeight="25.0" prefWidth="118.0" />
-                        <JFXTextField focusColor="#e53935" labelFloat="true" layoutX="874.0" layoutY="20.0" promptText="Registro" />
+                        <JFXTextField fx:id="transferID" focusColor="#e53935" layoutX="122.0" layoutY="20.0" prefHeight="25.0" prefWidth="157.0" promptText="Lugar de translado" />
+                        <JFXTimePicker fx:id="startTimeAssistanceID" defaultColor="#e53935" layoutX="305.0" layoutY="20.0" prefHeight="25.0" prefWidth="123.0" />
+                        <JFXTimePicker fx:id="transferTimeAssistanceID" defaultColor="#e53935" layoutX="457.0" layoutY="20.0" prefHeight="25.0" prefWidth="128.0" />
+                        <JFXTimePicker fx:id="endTimeAssistanceID" defaultColor="#e53935" layoutX="623.0" layoutY="20.0" prefHeight="25.0" prefWidth="118.0" />
+                        <JFXTextField fx:id="registryID" focusColor="#e53935" labelFloat="true" layoutX="779.0" layoutY="19.0" promptText="Registro" />
                         <JFXButton fx:id="addEventID" layoutX="14.0" layoutY="17.0" ripplerFill="#ff6d6d" style="-fx-background-color: #eb2323;" text="Añadir" textFill="WHITE" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="17.0">
                            <font>
                               <Font size="14.0" />
@@ -91,24 +89,24 @@
                         </JFXButton>
                      </children>
                   </AnchorPane>
-                  <JFXTreeTableView editable="true" layoutX="20.0" layoutY="457.0" prefHeight="208.0" prefWidth="1024.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="456.0">
-                     <columns>
-                        <TreeTableColumn fx:id="subCodeID" maxWidth="100.0" minWidth="60.0" prefWidth="100.0" text="Codigo" />
-                        <TreeTableColumn fx:id="transferID" prefWidth="150.0" text="Lugar de translado" />
-                        <TreeTableColumn prefWidth="200.0" text="Patología" />
-                        <TreeTableColumn fx:id="startTimeAssistanceID" prefWidth="120.0" text="Hora inicio asistencia" />
-                        <TreeTableColumn fx:id="transferTimeAssistanceID" prefWidth="120.0" text="Hora inicio translado" />
-                        <TreeTableColumn fx:id="endTimeAssistanceID" prefWidth="120.0" text="Hora fin de translado" />
-                        <TreeTableColumn prefWidth="200.0" text="Registro" />
-                     </columns>
-                     <columnResizePolicy>
-                        <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy></JFXTreeTableView>
                   <SVGPath fx:id="closeID" content="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" fill="#b0b0b066" layoutX="878.0" layoutY="42.0" onMouseClicked="#onClose" pickOnBounds="true" scaleX="5.0" scaleY="5.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </SVGPath>
+                  <TableView fx:id="eventsTableID" editable="true" layoutX="20.0" layoutY="462.0" prefHeight="281.0" prefWidth="1025.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="456.0">
+                    <columns>
+                      <TableColumn fx:id="subCodeColumID" prefWidth="75.0" sortable="false" text="Código" />
+                      <TableColumn fx:id="transferColumID" prefWidth="75.0" sortable="false" text="Lugar de translado" />
+                        <TableColumn fx:id="startTimeAssistanceColumID" prefWidth="75.0" sortable="false" text="Hora inicio asistencia" />
+                        <TableColumn fx:id="transferTimeAssistanceColumID" prefWidth="75.0" sortable="false" text="Hora inicio translado" />
+                        <TableColumn fx:id="endTimeAssistanceColumID" prefWidth="75.0" sortable="false" text="Hora fin de translado" />
+                        <TableColumn fx:id="registryColumID" prefWidth="75.0" sortable="false" text="Registro" />
+                    </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
                </children>
             </AnchorPane>
          </children>
