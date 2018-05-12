@@ -1,7 +1,7 @@
-package Controller.Component;
+package controller.component;
 
-import Controller.RecordFormController;
-import Model.Record;
+import controller.RecordFormController;
+import model.Record;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -166,8 +166,9 @@ public class Record {
         this.startTime = startTime;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setEndTime(LocalTime endTime) {
+        if (endTime == null) this.endTime = null;
+        else this.endTime = endTime.toString();
     }
 
     public void setArea(Area area) {
@@ -186,20 +187,20 @@ public class Record {
         this.address = address;
     }
 
-    public void setAssistance_h(int assistance_h) {
-        this.assistance_h = assistance_h;
+    public void setAssistance_h(String assistance_h) {
+        this.assistance_h = Integer.parseInt(assistance_h);
     }
 
-    public void setAssistance_m(int assistance_m) {
-        this.assistance_m = assistance_m;
+    public void setAssistance_m(String assistance_m) {
+        this.assistance_m = Integer.parseInt(assistance_m);
     }
 
-    public void setEvacuated_h(int evacuated_h) {
-        this.evacuated_h = evacuated_h;
+    public void setEvacuated_h(String evacuated_h) {
+        this.evacuated_h = Integer.parseInt(evacuated_h);
     }
 
-    public void setEvacuated_m(int evacuated_m) {
-        this.evacuated_m = evacuated_m;
+    public void setEvacuated_m(String evacuated_m) {
+        this.evacuated_m = Integer.parseInt(evacuated_m);
     }
 
     public void setRegistry(String registry) {

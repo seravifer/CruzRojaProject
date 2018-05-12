@@ -75,17 +75,20 @@
                   <SVGPath content="M12,4A6,6 0 0,1 18,10C18,12.97 15.84,15.44 13,15.92V18H15V20H13V22H11V20H9V18H11V15.92C8.16,15.44 6,12.97 6,10A6,6 0 0,1 12,4M12,6A4,4 0 0,0 8,10A4,4 0 0,0 12,14A4,4 0 0,0 16,10A4,4 0 0,0 12,6Z" fill="#ce20da" layoutX="108.0" layoutY="298.0" />
                   <Label layoutX="25.0" layoutY="236.0" text="Evacuados" />
                   <Label layoutX="108.0" layoutY="236.0" text="Transladados" />
-                  <AnchorPane layoutX="14.0" layoutY="372.0" prefHeight="63.0" prefWidth="1023.0" style="-fx-background-color: #e9e9e9;" AnchorPane.leftAnchor="20.0">
+                  <AnchorPane fx:id="eventFormID" layoutX="14.0" layoutY="372.0" prefHeight="63.0" prefWidth="1023.0" style="-fx-background-color: #e9e9e9;" AnchorPane.leftAnchor="20.0">
                      <children>
                         <JFXTextField fx:id="transferID" focusColor="#e53935" layoutX="122.0" layoutY="20.0" prefHeight="25.0" prefWidth="157.0" promptText="Lugar de translado" />
                         <JFXTimePicker fx:id="startTimeAssistanceID" defaultColor="#e53935" layoutX="305.0" layoutY="20.0" prefHeight="25.0" prefWidth="123.0" />
                         <JFXTimePicker fx:id="transferTimeAssistanceID" defaultColor="#e53935" layoutX="457.0" layoutY="20.0" prefHeight="25.0" prefWidth="128.0" />
                         <JFXTimePicker fx:id="endTimeAssistanceID" defaultColor="#e53935" layoutX="623.0" layoutY="20.0" prefHeight="25.0" prefWidth="118.0" />
-                        <JFXTextField fx:id="registryID" focusColor="#e53935" labelFloat="true" layoutX="779.0" layoutY="19.0" promptText="Registro" />
+                        <JFXTextField fx:id="patientID" focusColor="#e53935" labelFloat="true" layoutX="779.0" layoutY="19.0" promptText="Registro" />
                         <JFXButton fx:id="addEventID" layoutX="14.0" layoutY="17.0" ripplerFill="#ff6d6d" style="-fx-background-color: #eb2323;" text="Añadir" textFill="WHITE" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="17.0">
                            <font>
                               <Font size="14.0" />
                            </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </JFXButton>
                      </children>
                   </AnchorPane>

@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 import com.j256.ormlite.field.FieldType;
 import com.j256.ormlite.field.SqlType;

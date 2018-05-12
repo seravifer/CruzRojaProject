@@ -18,13 +18,13 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="1002.0" style="-fx-background-color: #F1F4F5;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ReportFormController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="1002.0" style="-fx-background-color: #F1F4F5;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ReportFormController">
    <top>
       <AnchorPane prefHeight="70.0" prefWidth="802.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="50.0" fitWidth="52.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="10.0">
                <image>
-                  <Image url="@CruzRojaProject/src/main/resources/img/logo.png" />
+                  <Image url="@../img/logo.png" />
                </image>
             </ImageView>
             <Label alignment="CENTER_RIGHT" layoutX="704.0" layoutY="22.0" prefHeight="27.0" prefWidth="165.0" text="Nombre Apellido" AnchorPane.rightAnchor="133.0">
@@ -56,7 +56,7 @@
          <children>
             <ImageView fitHeight="50.0" fitWidth="52.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@CruzRojaProject/src/main/resources/img/logo.png" />
+                  <Image url="@../img/logo.png" />
                </image>
             </ImageView>
             <Label fx:id="title" layoutX="91.0" layoutY="31.0" />

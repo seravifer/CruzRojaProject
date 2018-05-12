@@ -1,8 +1,8 @@
-package Controller;
+package controller;
 
-import Controller.Component.RecordComponent;
-import Model.Record;
-import Service.DAO;
+import controller.component.RecordComponent;
+import model.Record;
+import service.DAO;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.jfoenix.controls.JFXButton;
@@ -13,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
@@ -59,24 +58,22 @@ public class RecordsController extends AnchorPane {
     private HBox noItemsID;
 
     public RecordsController() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
-        fxmlLoader.setController(this);
-        Parent parent = null;
         try {
-            parent = fxmlLoader.load();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
+            fxmlLoader.setController(this);
+            Parent parent = fxmlLoader.load();
+            SuperController.getInstance().getScene().setRoot(parent);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Scene scene = new Scene(parent);
-        SuperController.getInstance().setScene(scene);
 
         init();
     }
 
     private void init() {
         addID.setOnAction((e) -> new RecordFormController());
-        // settingsID.setOnMouseClicked((e)-> { new AdminController()});
-        // reportID.setOnMouseClicked((e) -> new ReportController());
+        // settingsID.setOnMouseClicked(e -> new AdminController());
+        // reportID.setOnMouseClicked(e -> new ReportController());
 
         //fromID.setValue(LocalDate.now());
         fromID.setValue(LocalDate.of(2018, 1,1));

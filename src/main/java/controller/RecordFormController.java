@@ -1,14 +1,15 @@
-package Controller;
+package controller;
 
-import Model.*;
-import Service.DAO;
-import Utils.EditingCell;
+import com.j256.ormlite.stmt.QueryBuilder;
+import javafx.scene.layout.AnchorPane;
+import model.*;
+import service.DAO;
+import utils.EditingCell;
 import com.jfoenix.controls.*;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.shape.SVGPath;
@@ -72,6 +73,9 @@ public class RecordFormController {
     private JFXTextField registryID;
 
     @FXML
+    private JFXTextField patientID;
+
+    @FXML
     private JFXTextField notesID;
 
     @FXML
@@ -113,19 +117,20 @@ public class RecordFormController {
     @FXML
     private TableColumn<Event, String> registryColumID;
 
+    @FXML
+    private AnchorPane eventFormID;
+
     private Record record;
 
     private void loadView() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/recordForm.fxml"));
-        fxmlLoader.setController(this);
-        Parent parent = null;
         try {
-            parent = fxmlLoader.load();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/recordForm.fxml"));
+            fxmlLoader.setController(this);
+            Parent parent = fxmlLoader.load();
+            SuperController.getInstance().getScene().setRoot(parent);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Scene scene = new Scene(parent);
-        SuperController.getInstance().setScene(scene);
 
         init();
     }
@@ -136,17 +141,19 @@ public class RecordFormController {
         codeID.setText("#" + String.valueOf(LocalDate.now().getYear()).substring(2, 4) + "/" + "00000");
         dateID.setValue(LocalDate.now());
         startTimeID.setValue(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
+        eventFormID.setDisable(true);
     }
 
     public RecordFormController(Record record) {
         loadView();
+        this.record = record;
 
         LocalDate date = LocalDate.parse(record.getDate());
         codeID.setText("#" + String.valueOf(date.getYear()).substring(2, 4) + "/" +
                 String.format("%05d", record.getCode()));
         dateID.setValue(date);
         startTimeID.setValue(LocalTime.parse(record.getStartTime()));
-        endTimeID.setValue(LocalTime.parse(record.getEndTime()));
+        if (record.getEndTime() != null) endTimeID.setValue(LocalTime.parse(record.getEndTime()));
         assemblyID.getSelectionModel().select(record.getAssembly());
         resourceID.getSelectionModel().select(record.getResource());
         applicantID.getSelectionModel().select(record.getApplicant());
@@ -158,6 +165,14 @@ public class RecordFormController {
         assistance_mID.setText(record.getAssistance_m() + "");
         registryID.setText(record.getRegistry());
         notesID.setText(record.getNotes());
+
+        try {
+            QueryBuilder<Event, Integer> queryBuilder = DAO.eventDao.queryBuilder();
+            List<Event> records = queryBuilder.where().eq("record_id", record.getID_record()).query();
+            eventsTableID.getItems().addAll(records);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         addID.setText("Guardar");
     }
@@ -182,7 +197,6 @@ public class RecordFormController {
         startTimeID.setIs24HourView(true);
         endTimeID.setIs24HourView(true);
 
-
         assistance_mID.textProperty().addListener(onlyNumbers(assistance_mID));
         assistance_hID.textProperty().addListener(onlyNumbers(assistance_hID));
         evacuated_mID.textProperty().addListener(onlyNumbers(evacuated_mID));
@@ -192,7 +206,7 @@ public class RecordFormController {
                 endTimeID.setValue(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
         });
 
-        Callback<TableColumn<Event, String>, TableCell<Event, String>> cellFactory
+        Callback<TableColumn<Event, String>, TableCell<Event, String>> cellFactoryEvent
                 = (TableColumn<Event, String> p) -> new EditingCell();
 
         subCodeColumID.setCellValueFactory(new PropertyValueFactory<>("subcode"));
@@ -202,11 +216,11 @@ public class RecordFormController {
         transferColumID.setCellValueFactory(new PropertyValueFactory<>("placeTransfer"));
         registryColumID.setCellValueFactory(new PropertyValueFactory<>("registry"));
 
-        startTimeAssistanceColumID.setCellFactory(cellFactory);
-        transferTimeAssistanceColumID.setCellFactory(cellFactory);
-        endTimeAssistanceColumID.setCellFactory(cellFactory);
-        transferColumID.setCellFactory(cellFactory);
-        registryColumID.setCellFactory(cellFactory);
+        startTimeAssistanceColumID.setCellFactory(cellFactoryEvent);
+        transferTimeAssistanceColumID.setCellFactory(cellFactoryEvent);
+        endTimeAssistanceColumID.setCellFactory(cellFactoryEvent);
+        transferColumID.setCellFactory(cellFactoryEvent);
+        registryColumID.setCellFactory(cellFactoryEvent);
 
         startTimeAssistanceColumID.setOnEditCommit(
                 (TableColumn.CellEditEvent<Event, String> t) ->
@@ -223,16 +237,30 @@ public class RecordFormController {
         transferColumID.setOnEditCommit(
                 (TableColumn.CellEditEvent<Event, String> t) ->
                         t.getTableView().getItems().get(t.getTablePosition().getRow())
-                                .setTransferTimeAssistance(t.getNewValue()));
+                                .setPlaceTransfer(t.getNewValue()));
 
         registryColumID.setOnEditCommit(
                 (TableColumn.CellEditEvent<Event, String> t) ->
                         t.getTableView().getItems().get(t.getTablePosition().getRow())
-                                .setTransferTimeAssistance(t.getNewValue()));
+                                .setRegistry(t.getNewValue()));
 
         addEventID.setOnAction(e -> {
-            eventsTableID.getItems().add(new Event(10, "prueba",
-                    "prueba", "prueba", "prueba", "" ));
+            Event event = new Event(record, eventsTableID.getItems().size() + 1, startTimeAssistanceID.getValue(),
+                    transferTimeAssistanceID.getValue(), transferID.getText(), endTimeAssistanceID.getValue(), patientID.getText());
+
+            eventsTableID.getItems().add(event);
+
+            try {
+                DAO.eventDao.create(event);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
+            startTimeAssistanceID.setValue(null);
+            endTimeAssistanceID.setValue(null);
+            transferTimeAssistanceID.setValue(null);
+            patientID.clear();
+            transferID.clear();
         });
     }
 
@@ -260,9 +288,24 @@ public class RecordFormController {
             LocalDate date = LocalDate.parse(record.getDate());
             codeID.setText("#" + String.valueOf(date.getYear()).substring(2, 4) + "/" +
                     String.format("%05d", record.getID_record()));
+            eventFormID.setDisable(false);
         } else {
             try {
-                // TODO aplicar setters
+                record.setResource(resourceID.getValue());
+                record.setAssembly(assemblyID.getValue());
+                record.setStartTime(startTimeID.getValue().toString());
+                record.setEndTime(endTimeID.getValue());
+                record.setArea(areaID.getValue());
+                record.setApplicant(applicantID.getValue());
+                record.setService(serviceID.getValue());
+                //record.setAddress();
+                record.setAssistance_h(assistance_hID.getText());
+                record.setAssistance_m(assistance_mID.getText());
+                record.setEvacuated_h(evacuated_hID.getText());
+                record.setEvacuated_m(evacuated_mID.getText());
+                record.setRegistry(registryID.getText());
+                record.setNotes(notesID.getText());
+
                 DAO.recordDao.update(record);
             } catch (SQLException e) {
                 e.printStackTrace();

@@ -1,6 +1,6 @@
-package Service;
+package service;
 
-import Model.*;
+import model.*;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 

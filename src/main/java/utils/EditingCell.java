@@ -1,6 +1,6 @@
-package Utils;
+package utils;
 
-import Model.Event;
+import model.Event;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;

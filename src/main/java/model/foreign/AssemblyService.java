@@ -1,4 +1,4 @@
-package Model.Foreign;
+package model.foreign;
 
 public class AssemblyService {
 }

@@ -1,11 +1,11 @@
-package Model;
+package model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Objects;
 
-@DatabaseTable(tableName = "Service")
+@DatabaseTable(tableName = "service")
 public class Service {
 
     @DatabaseField(generatedId = true)
