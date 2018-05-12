@@ -12,6 +12,7 @@ public class SuperController {
     protected SuperController() {
         Group root = new Group();
         Scene scene = new Scene(root, 1200, 720);
+        scene.getStylesheets().setAll(getClass().getResource("/css/style.css").toExternalForm());
 
         stage = new Stage();
         stage.setScene(scene);

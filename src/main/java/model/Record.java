@@ -1,12 +1,13 @@
 package model;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.time.LocalTime;
 
 @DatabaseTable(tableName = "Record")
-public class Record {
+public class Record extends BaseDaoEnabled<Record, Integer> {
 
     @DatabaseField(generatedId = true)
     private int ID_record;

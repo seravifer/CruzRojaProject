@@ -1,0 +1,42 @@
+.table-cell {
+    -fx-alignment: center;
+}
+
+.table-view, .table-view:focused {
+    -fx-background-color: transparent, -fx-box-border, -fx-control-inner-background;
+    -fx-background-insets: -1.4, 0, 1;
+    -fx-background-radius: 1.4, 0, 0;
+    -fx-border-color: #EEEEEE;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: white;
+    -fx-size: 45px;
+    -fx-border-color: #EEEEEE;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-insets: 0;
+}
+
+.table-view:row-selection .table-row-cell:filled:hover {
+    -fx-background-color: transparent;
+}
+
+.table-view:row-selection .table-row-cell:filled:selected:hover {
+    -fx-background-color: transparent;
+}
+
+   .table-view:row-selection .table-row-cell:filled:selected {
+       -fx-background-color: transparent;
+   }
+
+.table-row-cell:odd {
+    -fx-background-color: whitesmoke;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
+
+.table-row-cell:empty, .table-cell:empty:hover {
+    -fx-background-color: transparent;
+}

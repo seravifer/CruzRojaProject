@@ -1,5 +1,6 @@
 package model;
 
+import com.j256.ormlite.misc.BaseDaoEnabled;
 import utils.SimpleStringPropertyType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
@@ -10,7 +11,7 @@ import java.time.LocalTime;
 import static utils.Utils.nullToString;
 
 @DatabaseTable(tableName = "Event")
-public class Event {
+public class Event extends BaseDaoEnabled<Event, Integer> {
 
     @DatabaseField(generatedId = true)
     private int ID_Event;
@@ -34,7 +35,6 @@ public class Event {
     public Event(Record record, int subcode, LocalTime startTimeAssistance, LocalTime transferTimeAssistance, String placeTransfer,
                  LocalTime endTimeAssistance, String registry) {
         this.record = record;
-        System.out.println(record.getID_record());
         this.subcode = subcode;
         this.startTimeAssistance = new SimpleStringProperty(nullToString(startTimeAssistance));
         this.transferTimeAssistance = new SimpleStringProperty(nullToString(transferTimeAssistance));
@@ -51,8 +51,8 @@ public class Event {
         return record;
     }
 
-    public int getSubcode() {
-        return subcode;
+    public String getSubcode() {
+        return Integer.toString(subcode);
     }
 
     public String getStartTimeAssistance() {
