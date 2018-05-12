@@ -1,7 +1,7 @@
 package model;
 
 import com.j256.ormlite.misc.BaseDaoEnabled;
-import utils.SimpleStringPropertyType;
+import utils.StringPropertyType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,19 +19,19 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
     private Record record;
     @DatabaseField
     private int subcode;
-    @DatabaseField(persisterClass = SimpleStringPropertyType.class)
+    @DatabaseField(persisterClass = StringPropertyType.class)
     private SimpleStringProperty startTimeAssistance;
-    @DatabaseField(persisterClass = SimpleStringPropertyType.class)
+    @DatabaseField(persisterClass = StringPropertyType.class,  defaultValue = "")
     private SimpleStringProperty transferTimeAssistance;
-    @DatabaseField(persisterClass = SimpleStringPropertyType.class)
+    @DatabaseField(persisterClass = StringPropertyType.class)
     private SimpleStringProperty endTimeAssistance;
-    @DatabaseField(persisterClass = SimpleStringPropertyType.class)
+    @DatabaseField(persisterClass = StringPropertyType.class)
     private SimpleStringProperty placeTransfer;
-    @DatabaseField(persisterClass = SimpleStringPropertyType.class)
+    @DatabaseField(persisterClass = StringPropertyType.class)
     private SimpleStringProperty registry;
 
-
     public Event() {}
+
     public Event(Record record, int subcode, LocalTime startTimeAssistance, LocalTime transferTimeAssistance, String placeTransfer,
                  LocalTime endTimeAssistance, String registry) {
         this.record = record;
@@ -41,6 +41,7 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         this.placeTransfer = new SimpleStringProperty(nullToString(placeTransfer));
         this.endTimeAssistance = new SimpleStringProperty(nullToString(endTimeAssistance));
         this.registry = new SimpleStringProperty(registry);
+        System.out.println("ok");
     }
 
     public int getID_Event() {

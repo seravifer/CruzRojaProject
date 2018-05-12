@@ -54,14 +54,12 @@ public class EditingCell extends TableCell<Event, String> {
 
     private void createTextField() {
         textField = new TextField(getString());
-        textField.setMinWidth(this.getWidth() - this.getGraphicTextGap()* 2);
-        textField.focusedProperty().addListener(
-                (ObservableValue<? extends Boolean> arg0,
-                 Boolean arg1, Boolean arg2) -> {
-                    if (!arg2) {
-                        commitEdit(textField.getText());
-                    }
-                });
+        textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+
+        textField.focusedProperty().addListener((ob, o, n) -> {
+            if (!n) commitEdit(textField.getText());
+        });
+
         textField.setOnKeyPressed(t -> {
             if (t.getCode() == KeyCode.ENTER) {
                 commitEdit(textField.getText());

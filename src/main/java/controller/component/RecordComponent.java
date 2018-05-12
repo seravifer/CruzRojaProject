@@ -1,6 +1,8 @@
 package controller.component;
 
+import com.j256.ormlite.stmt.QueryBuilder;
 import controller.RecordFormController;
+import model.Event;
 import model.Record;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -8,8 +10,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.SVGPath;
+import service.DAO;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class RecordComponent extends AnchorPane {
@@ -99,12 +103,27 @@ public class RecordComponent extends AnchorPane {
         notesID.setText(record.getNotes());
 
         if (record.getEndTime() == null) {
-            statusID.setText("En servicio");
-            badgeID.setStyle("-fx-background-color: #FF9149");
+            Event event = null;
+            try {
+                QueryBuilder<Event, Integer> queryBuilder = DAO.eventDao.queryBuilder();
+                event = queryBuilder.where().eq("record_id", record.getID_record())
+                        .and().isNull("endTimeAssistance").queryForFirst();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
+            if (event == null) {
+                statusID.setText("En servicio");
+                badgeID.setStyle("-fx-background-color: #27ff46");
+            } else {
+                statusID.setText("En translado");
+                badgeID.setStyle("-fx-background-color: #FF9149");
+            }
+
             endTimeID.setText("--:--");
         } else {
             statusID.setText("Finalizado");
-            badgeID.setStyle("-fx-background-color: #27ff46");
+            badgeID.setStyle("-fx-background-color: #ff2026");
             endTimeID.setText(record.getEndTime());
         }
 

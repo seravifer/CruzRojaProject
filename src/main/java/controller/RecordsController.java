@@ -91,6 +91,8 @@ public class RecordsController extends AnchorPane {
 
         toID.valueProperty().addListener((ob, o, n) -> filter());
 
+        pendingID.selectedProperty().addListener((ob, o,  n) -> filter());
+
         limitDays();
         filter();
     }

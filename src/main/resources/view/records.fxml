@@ -76,7 +76,7 @@
             <AnchorPane layoutX="11.0" layoutY="20.0" prefHeight="52.0" prefWidth="802.0" style="-fx-background-color: #fff;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                <children>
                   <JFXCheckBox fx:id="allID" checkedColor="RED" disable="true" layoutX="14.0" layoutY="17.0" selected="true" text="Mostrar propios" textFill="#000000a9" unCheckedColor="#8d8d8d" AnchorPane.leftAnchor="15.0" />
-                  <JFXCheckBox fx:id="pendingID" checkedColor="RED" layoutX="148.0" layoutY="17.0" selected="true" text="Mostrar pendientes" textFill="#000000a9" unCheckedColor="#8d8d8d" AnchorPane.leftAnchor="148.0" />
+                  <JFXCheckBox fx:id="pendingID" checkedColor="RED" layoutX="148.0" layoutY="17.0" selected="true" text="Mostrar solo pendientes" textFill="#000000a9" unCheckedColor="#8d8d8d" AnchorPane.leftAnchor="148.0" />
                   <JFXDatePicker fx:id="toID" defaultColor="RED" layoutX="835.0" layoutY="14.0" prefHeight="25.0" prefWidth="110.0" promptText="Hasta" AnchorPane.rightAnchor="15.0" />
                   <JFXDatePicker fx:id="fromID" defaultColor="RED" layoutX="698.0" layoutY="14.0" prefHeight="25.0" prefWidth="110.0" promptText="Desde" AnchorPane.rightAnchor="154.0" />
                </children>
