@@ -3,11 +3,13 @@ package controller;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.jfoenix.controls.*;
 import javafx.beans.value.ChangeListener;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.SVGPath;
 import javafx.util.Callback;
@@ -209,7 +211,6 @@ public class RecordFormController {
         Callback<TableColumn<Event, String>, TableCell<Event, String>> cellFactoryEvent
                 = (TableColumn<Event, String> p) -> new EditingCell();
 
-
         subCodeColumID.setCellValueFactory(new PropertyValueFactory<>("subcode"));
         startTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("startTimeAssistance"));
         transferTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("transferTimeAssistance"));
@@ -223,7 +224,6 @@ public class RecordFormController {
                 super.updateItem(item, empty);
                 if (item == null || empty) setText(null);
                 else setText(codeID.getText() + "/" + item);
-
             }
         });
 
@@ -272,6 +272,13 @@ public class RecordFormController {
             transferTimeAssistanceID.setValue(null);
             patientID.clear();
             transferID.clear();
+        });
+
+        eventsTableID.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+            if( event.isControlDown()) return;
+            if ( eventsTableID.getEditingCell() == null) {
+                eventsTableID.getSelectionModel().clearSelection();
+            }
         });
     }
 

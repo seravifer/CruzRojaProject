@@ -19,7 +19,8 @@ public class EditingCell extends TableCell<Event, String> {
             createTextField();
             setText(null);
             setGraphic(textField);
-            textField.selectAll();
+            textField.requestFocus();
+            textField.deselect();
         }
     }
 
