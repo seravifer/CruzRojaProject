@@ -79,8 +79,8 @@ public class RecordComponent extends AnchorPane {
 
         try {
             fxmlLoader.load();
-        } catch (IOException exception) {
-            System.err.println("Error al cargar la vista: " + this.getClass().getSimpleName());
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
 
         init();
@@ -99,8 +99,13 @@ public class RecordComponent extends AnchorPane {
         evacuated_hID.setText(record.getEvacuated_h() + "");
         assistance_mID.setText(record.getAssistance_m() + "");
         evacuated_mID.setText(record.getEvacuated_m() + "");
-        registryID.setText(record.getRegistry());
-        notesID.setText(record.getNotes());
+
+        if (record.getRegistry().equals("")) registryID.setText("---");
+        else registryID.setText(record.getRegistry());
+
+        if (record.getNotes().equals("")) notesID.setText("---");
+        else notesID.setText(record.getNotes());
+
 
         if (record.getEndTime() == null) {
             Event event = null;
