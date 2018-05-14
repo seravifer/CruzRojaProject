@@ -28,6 +28,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.print.PrinterJob;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.SVGPath;
@@ -44,15 +46,31 @@ import service.DataBase;
 public class ReportFormController {
 
     @FXML
-    private SVGPath settingsID;
-    @FXML
-    private SVGPath reportID;
-    @FXML
     private JFXCheckBox inter_by_gender;
     @FXML
     private JFXCheckBox service_hours;
     @FXML
+    private JFXCheckBox cb_resource;
+    @FXML
+    private JFXCheckBox cb_area;
+    @FXML
+    private JFXCheckBox cb_applicant;
+    @FXML
     private JFXCheckBox total_transfer;
+    @FXML
+    private JFXComboBox<Resource> resourceID;
+    @FXML
+    private JFXComboBox<Area> areaID;
+    @FXML
+    private JFXComboBox<Service> service_areaID;
+    @FXML
+    private JFXComboBox<Applicant> applicantID;
+    @FXML
+    private JFXDatePicker init_dateID;
+    @FXML
+    private JFXDatePicker finish_dateID;
+    @FXML
+    private JFXComboBox<Assembly> assemblyID;
     @FXML
     private Label title;
     @FXML
@@ -60,46 +78,26 @@ public class ReportFormController {
     @FXML
     private JFXButton generate_button;
     @FXML
-    private JFXDatePicker startdateID;
-    @FXML
-    private JFXDatePicker finishdateID;
-    @FXML
-    private JFXComboBox<Assembly> assemblyID;
-    @FXML
-    private JFXCheckBox cb_resource;
-    @FXML
-    private JFXComboBox<Resource> resourceID;
-    @FXML
-    private JFXCheckBox cb_area;
-    @FXML
-    private JFXComboBox<Area> areaID;
-    @FXML
-    private JFXComboBox<Applicant> applicantID;
-    @FXML
-    private JFXCheckBox cb_applicant;
-    @FXML
-    private JFXComboBox<Service> service_areaID;
-    @FXML
     private AnchorPane informe;
 
     private void loadView() {
-         try {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/view/reportForm.fxml"));     
-        fxmlLoader.setController(this);
-         
-        Scene scene = new Scene(fxmlLoader.load(), 1200, 720);
-        Stage stage = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/view/reportForm.fxml"));
+            fxmlLoader.setController(this);
 
-        stage.setTitle("Generador de informes de Cruz Roja");
-        stage.setScene(scene);
-        stage.show();
-         init();
-    } catch (IOException e) {
-        Logger logger = Logger.getLogger(getClass().getName());
-        logger.log(Level.SEVERE, "Failed to create new Window.", e);
-    }
-       
+            Scene scene = new Scene(fxmlLoader.load(), 1200, 720);
+            Stage stage = new Stage();
+
+            stage.setTitle("Generador de informes de Cruz Roja");
+            stage.setScene(scene);
+            stage.show();
+            init();
+        } catch (IOException e) {
+            Logger logger = Logger.getLogger(getClass().getName());
+            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+        }
+
     }
 
     public ReportFormController() {
@@ -117,11 +115,13 @@ public class ReportFormController {
             List<Applicant> applicants = DAO.applicantDao.queryBuilder().query();
             List<Resource> resources = DAO.resourceDao.queryBuilder().query();
             List<Area> areas = DAO.areaDao.queryBuilder().query();
+            List<Service> services = DAO.servicesDao.queryBuilder().query();
 
             assemblyID.getItems().addAll(assemblies);
             resourceID.getItems().addAll(resources);
             areaID.getItems().addAll(areas);
             applicantID.getItems().addAll(applicants);
+            service_areaID.getItems().addAll(services);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -131,26 +131,64 @@ public class ReportFormController {
 
     @FXML
     private void show_report(ActionEvent event) throws SQLException {
-
-        List<Record> records = DAO.recordDao.queryBuilder().query();
-        ArrayList<Record> filtro = new ArrayList<Record>();
-        LocalDate sd = startdateID.getValue();
-        LocalDate fd = finishdateID.getValue();
-        Assembly a = assemblyID.getValue();
-        // Opcional
-        Resource r = resourceID.getValue();
-        Area ar = areaID.getValue();
-        Service s = service_areaID.getValue();
-        Applicant ap = applicantID.getValue();
-        for (Record re : records) {
-            LocalDate rdate = LocalDate.parse(re.getDate());
-            if (sd.isBefore(rdate) && fd.isAfter(rdate) && a.equals(re.getAssembly())) {
-                filtro.add(re);
+        try {
+            // Provisional, hacer con queryBuilder
+            List<Record> records = DAO.recordDao.queryBuilder().query();
+            ArrayList<Record> filtro = new ArrayList<Record>();
+            LocalDate sd = init_dateID.getValue();
+            LocalDate fd = finish_dateID.getValue();
+            Assembly a = assemblyID.getValue();
+            // Opcional
+            Resource r = null;
+            if (cb_resource.isSelected()) {
+                r = resourceID.getValue();
             }
+            Area ar = null;
+            Service s = null;
+            if (cb_area.isSelected()) {
+                ar = areaID.getValue();
+                s = service_areaID.getValue();
+            }
+            Applicant ap = null;
+            if (cb_applicant.isSelected()) {
+                ap = applicantID.getValue();
+            }
+            for (Record re : records) {
+                LocalDate rdate = LocalDate.parse(re.getDate());
+                if (sd.isBefore(rdate) && fd.isAfter(rdate) && a.equals(re.getAssembly())) {
+                    filtro.add(re);
+                }
+            }
+            title.setText("Informe - Asamblea de" + a.getName_assembly());
+            text.setText("Se han realizado " + filtro.size() + " registros de intervenciones en el lapso"
+                    + "\n de tiempo entre " + sd.toString() + " y " + fd.toString());
+        } catch (Exception e) {
+            String al = "Por favor, revisa los siguientes campos: \n";
+            if (init_dateID.getValue() == null) {
+                al = al + "- Fecha de inicio \n";
+            }
+            if (finish_dateID.getValue() == null) {
+                al = al + "- Fecha de fin \n";
+            }
+            if (assemblyID.getValue() == null) {
+                al = al + "- Asamblea \n";
+            }
+            if (cb_resource.isSelected() && resourceID.getValue() == null) {
+                al = al + "- Recurso/Recursos \n";
+            }
+            if (cb_area.isSelected() && (areaID.getValue() == null
+                    || service_areaID.getValue() == null)) {
+                al = al + "- Área y/o servicio del área \n";
+            }
+            if (cb_applicant.isSelected() && applicantID.getValue() == null) {
+                al = al + "- Solicitante \n";
+            }
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("No has introducido correctamente algún dato");
+            alert.setContentText(al);
+            alert.showAndWait();
         }
-        title.setText("Informe - Asamblea de" + a.getName_assembly());
-        text.setText("Se han realizado " + filtro.size() + " registros de intervenciones en el lapso"
-                + "\n de tiempo entre " + sd.toString() + " y " + fd.toString());
     }
 
     @FXML
@@ -172,6 +210,7 @@ public class ReportFormController {
 
     @FXML
     private void press_resource(ActionEvent event) {
+        System.out.println("Hula");
         resourceID.setDisable(!cb_resource.isSelected());
     }
 
