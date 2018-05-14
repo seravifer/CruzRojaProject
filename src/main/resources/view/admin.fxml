@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <tabs>
+      <Tab text="Servicios">
+        <content>
+          <AnchorPane style="-fx-background-color: #e9e9e9;">
+               <children>
+                  <HBox alignment="CENTER" layoutX="20.0" layoutY="30.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
+                     <children>
+                        <JFXTextField fx:id="nombreServicios" focusColor="#e53935" labelFloat="true" promptText="Nombre" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="20.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="abreviaturaServicios" focusColor="#e53935" labelFloat="true" promptText="Abreviatura" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXComboBox fx:id="areaServicios" focusColor="#e53935" labelFloat="true" promptText="Área" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" />
+                           </HBox.margin>
+                        </JFXComboBox>
+                        <JFXButton fx:id="botonServicios" alignment="CENTER_RIGHT" contentDisplay="RIGHT" ripplerFill="#ff6d6d" style="-fx-background-color: #eb2323;" text="Añadir" textFill="WHITE" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" top="15.0" />
+                     </padding>
+                  </HBox>
+                  <TableView fx:id="tablaServicios" editable="true" focusTraversable="false" layoutX="14.0" layoutY="49.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="130.0">
+                     <columns>
+                        <TableColumn fx:id="subCodeColumID" maxWidth="150.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Nombre" />
+                        <TableColumn fx:id="transferColumID" prefWidth="75.0" sortable="false" text="Abreviatura" />
+                        <TableColumn fx:id="startTimeAssistanceColumID" prefWidth="75.0" sortable="false" text="Área" />
+                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+      <Tab text="Asambleas">
+         <content>
+            <AnchorPane style="-fx-background-color: #e9e9e9;">
+               <children>
+                  <HBox maxWidth="1.7976931348623157E308" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
+                     <children>
+                        <JFXTextField fx:id="codigoAsambleas" focusColor="#e53935" labelFloat="true" promptText="Código" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="20.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="nombreAsambleas" focusColor="#e53935" labelFloat="true" promptText="Nombre" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXButton fx:id="botonAsambleas" alignment="CENTER_RIGHT" contentDisplay="RIGHT" ripplerFill="#ff6d6d" style="-fx-background-color: #eb2323;" text="Añadir" textFill="WHITE" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" top="15.0" />
+                     </padding>
+                  </HBox>
+                  <TableView fx:id="tablaAsambleas" editable="true" focusTraversable="false" layoutX="14.0" layoutY="49.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="130.0">
+                     <columns>
+                        <TableColumn fx:id="subCodeColumID1" maxWidth="150.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Código" />
+                        <TableColumn fx:id="transferColumID1" prefWidth="75.0" sortable="false" text="Nombre de Asamblea" />
+                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Recursos">
+         <content>
+            <AnchorPane style="-fx-background-color: #e9e9e9;">
+               <children>
+                  <HBox maxWidth="1.7976931348623157E308" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
+                     <children>
+                        <JFXTextField fx:id="codigoRecursos" focusColor="#e53935" labelFloat="true" promptText="Código" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="20.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="nombreRecursos" focusColor="#e53935" labelFloat="true" promptText="Nombre" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXButton fx:id="botonRecursos" alignment="CENTER_RIGHT" contentDisplay="RIGHT" ripplerFill="#ff6d6d" style="-fx-background-color: #eb2323;" text="Añadir" textFill="WHITE" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" top="15.0" />
+                     </padding>
+                  </HBox>
+                  <TableView fx:id="tablaRecursos" editable="true" focusTraversable="false" layoutX="14.0" layoutY="49.0" prefHeight="299.0" prefWidth="600.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="130.0">
+                     <columns>
+                        <TableColumn fx:id="subCodeColumID11" maxWidth="150.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Código" />
+                        <TableColumn fx:id="transferColumID11" prefWidth="75.0" sortable="false" text="Nombre de Recursos" />
+                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Area">
+         <content>
+            <AnchorPane style="-fx-background-color: #e9e9e9;">
+               <children>
+                  <HBox maxWidth="1.7976931348623157E308" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
+                     <children>
+                        <JFXTextField fx:id="nombreAreas" focusColor="#e53935" labelFloat="true" promptText="Nombre" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXButton fx:id="botonAreas" alignment="CENTER_RIGHT" contentDisplay="RIGHT" ripplerFill="#ff6d6d" style="-fx-background-color: #eb2323;" text="Añadir" textFill="WHITE" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" top="15.0" />
+                     </padding>
+                  </HBox>
+                  <TableView fx:id="tablaAreas" editable="true" focusTraversable="false" layoutX="14.0" layoutY="49.0" prefHeight="299.0" prefWidth="600.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="130.0">
+                     <columns>
+                        <TableColumn fx:id="subCodeColumID12" maxWidth="150.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Áreas" />
+                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab text="Solicitante">
+         <content>
+            <AnchorPane style="-fx-background-color: #e9e9e9;">
+               <children>
+                  <HBox maxWidth="1.7976931348623157E308" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
+                     <children>
+                        <JFXTextField fx:id="nombreSolicitantes" focusColor="#e53935" labelFloat="true" promptText="Nombre" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXButton fx:id="botonSolicitantes" alignment="CENTER_RIGHT" contentDisplay="RIGHT" ripplerFill="#ff6d6d" style="-fx-background-color: #eb2323;" text="Añadir" textFill="WHITE" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" top="15.0" />
+                     </padding>
+                  </HBox>
+                  <TableView fx:id="tablaSolicitantes" editable="true" focusTraversable="false" layoutX="14.0" layoutY="49.0" prefHeight="299.0" prefWidth="600.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="130.0">
+                     <columns>
+                        <TableColumn fx:id="subCodeColumID121" maxWidth="150.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Solicitantes" />
+                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
+                  </TableView>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+   </tabs>
+</JFXTabPane>

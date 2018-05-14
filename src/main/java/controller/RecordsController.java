@@ -72,8 +72,8 @@ public class RecordsController extends AnchorPane {
 
     private void init() {
         addID.setOnAction((e) -> new RecordFormController());
-        // settingsID.setOnMouseClicked(e -> new AdminController());
-        // reportID.setOnMouseClicked(e -> new ReportController());
+        settingsID.setOnMouseClicked(e -> new AdminController());
+        reportID.setOnMouseClicked(e -> new ReportFormController());
 
         //fromID.setValue(LocalDate.now());
         fromID.setValue(LocalDate.of(2018, 1,1));

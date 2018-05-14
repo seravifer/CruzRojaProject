@@ -20,14 +20,18 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.print.PrinterJob;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.SVGPath;
+import javafx.stage.Stage;
 import model.*;
 import service.DAO;
 import service.DataBase;
@@ -79,15 +83,23 @@ public class ReportFormController {
     private AnchorPane informe;
 
     private void loadView() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/reportForm.fxml"));
-            fxmlLoader.setController(this);
-            Parent parent = fxmlLoader.load();
-            SuperController.getInstance().getScene().setRoot(parent);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        init();
+         try {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/view/reportForm.fxml"));     
+        fxmlLoader.setController(this);
+         
+        Scene scene = new Scene(fxmlLoader.load(), 1200, 720);
+        Stage stage = new Stage();
+
+        stage.setTitle("Generador de informes de Cruz Roja");
+        stage.setScene(scene);
+        stage.show();
+         init();
+    } catch (IOException e) {
+        Logger logger = Logger.getLogger(getClass().getName());
+        logger.log(Level.SEVERE, "Failed to create new Window.", e);
+    }
+       
     }
 
     public ReportFormController() {
