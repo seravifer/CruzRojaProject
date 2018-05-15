@@ -5,8 +5,6 @@
  */
 package controller;
 
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.jfoenix.controls.JFXButton;
@@ -14,36 +12,35 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXProgressBar;
+import java.awt.Color;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.print.PrinterJob;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import model.*;
+import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
+import static net.sf.dynamicreports.report.builder.DynamicReports.col;
+import static net.sf.dynamicreports.report.builder.DynamicReports.report;
+import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
+import static net.sf.dynamicreports.report.builder.DynamicReports.type;
+import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
+import net.sf.dynamicreports.report.builder.style.StyleBuilder;
+import net.sf.dynamicreports.report.constant.HorizontalAlignment;
+import net.sf.dynamicreports.report.constant.VerticalAlignment;
+import net.sf.dynamicreports.report.datasource.DRDataSource;
+import net.sf.jasperreports.engine.JRDataSource;
 import service.DAO;
-import service.DataBase;
 
-/**
- * FXML controller class
- *
- * @author Elio
- */
 public class ReportFormController {
 
     @FXML
@@ -82,7 +79,7 @@ public class ReportFormController {
     private AnchorPane informe;
     @FXML
     private JFXProgressBar progressBar;
-    
+
     private void loadView() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -141,7 +138,56 @@ public class ReportFormController {
         Where<Record, Integer> where = qb.where().between("date", sd, fd);
         where.and().eq("assembly_id", a.getID_assembly());
         List<Record> query = where.query();
-        progressBar.setDisable(false);
+        StyleBuilder boldStyle = stl.style().bold();
+        StyleBuilder boldCenteredStyle = stl.style(boldStyle)
+                .setHorizontalAlignment(HorizontalAlignment.CENTER);
+        StyleBuilder columnTitleStyle = stl.style(boldCenteredStyle)
+                .setBorder(stl.pen1Point())
+                .setBackgroundColor(Color.WHITE);
+        StyleBuilder titleStyle = stl.style(boldCenteredStyle)
+                             .setVerticalAlignment(VerticalAlignment.MIDDLE)
+                             .setFontSize(15);
+
+
+        try {
+            TextColumnBuilder<String> resourceColumn = col.column("Resource", "resource", type.stringType()).setStyle(boldStyle);
+            report()
+                    .setColumnTitleStyle(columnTitleStyle)
+                    .highlightDetailEvenRows()
+                    .columns(
+                            col.column("ID_Record", "id_record", type.stringType()),
+                            col.column("Date", "date", type.stringType()),
+                            resourceColumn,
+                            col.column("Assistance_h", "assistance_h", type.stringType()),
+                            col.column("Assistance_m", "assistance_m", type.stringType()),
+                            col.column("Evacuated_h", "evacuated_h", type.stringType()),
+                            col.column("Evacuated_m", "evacuated_m", type.stringType()))
+                    .title(//shows report title
+                            cmp.horizontalList()
+                                    .add(
+                                            cmp.image(getClass().getResourceAsStream("/img/logo.png")).setFixedDimension(80, 80),
+                                            cmp.text("    Informe de la Cruz Roja").setStyle(titleStyle).setHorizontalAlignment(HorizontalAlignment.LEFT),
+                                            cmp.text("Asamblea de " + a.getName_assembly()).setStyle(titleStyle).setHorizontalAlignment(HorizontalAlignment.RIGHT))
+                                    .newRow()
+                                    .add(cmp.filler().setStyle(stl.style().setTopBorder(stl.pen2Point())).setFixedHeight(10)))
+                    .pageFooter(cmp.pageXofY().setStyle(boldCenteredStyle))
+                    .setDataSource(createDataSource(query))
+                    .groupBy(resourceColumn)
+                    .show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private JRDataSource createDataSource(List<Record> lista) {
+        DRDataSource dataSource = new DRDataSource("id_record", "date", "resource", "assistance_h",
+                "assistance_m", "evacuated_h", "evacuated_m");
+        for (Record re : lista) {
+            dataSource.add(re.getID_record() + "", re.getDate(),
+                    re.getResource().getName_resource(), re.getAssistance_h() + "",
+                    re.getAssistance_m() + "", re.getEvacuated_h() + "", re.getEvacuated_m() + "");
+        }
+        return dataSource;
     }
 
     @FXML
@@ -177,5 +223,4 @@ public class ReportFormController {
     private void press_applicant(ActionEvent event) {
         applicantID.setDisable(!cb_applicant.isSelected());
     }
-
 }
