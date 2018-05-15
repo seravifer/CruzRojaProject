@@ -134,65 +134,14 @@ public class ReportFormController {
 
     @FXML
     private void show_report(ActionEvent event) throws SQLException {
-        
-        try {
-            // Provisional, hacer con queryBuilder
-            List<Record> records = DAO.recordDao.queryBuilder().query();
-            ArrayList<Record> filtro = new ArrayList<Record>();
-            LocalDate sd = init_dateID.getValue();
-            LocalDate fd = finish_dateID.getValue();
-            Assembly a = assemblyID.getValue();
-            // Opcional
-            Resource r = null;
-            if (cb_resource.isSelected()) {
-                r = resourceID.getValue();
-            }
-            Area ar = null;
-            Service s = null;
-            if (cb_area.isSelected()) {
-                ar = areaID.getValue();
-                s = service_areaID.getValue();
-            }
-            Applicant ap = null;
-            if (cb_applicant.isSelected()) {
-                ap = applicantID.getValue();
-            }
-            for (Record re : records) {
-                LocalDate rdate = LocalDate.parse(re.getDate());
-                if (sd.isBefore(rdate) && fd.isAfter(rdate) && a.equals(re.getAssembly())) {
-                    filtro.add(re);
-                }
-            }
-            title.setText("Informe - Asamblea de" + a.getName_assembly());
-            text.setText("Se han realizado " + filtro.size() + " registros de intervenciones en el lapso"
-                    + "\n de tiempo entre " + sd.toString() + " y " + fd.toString());
-        } catch (Exception e) {
-            String al = "Por favor, revisa los siguientes campos: \n";
-            if (init_dateID.getValue() == null) {
-                al = al + "- Fecha de inicio \n";
-            }
-            if (finish_dateID.getValue() == null) {
-                al = al + "- Fecha de fin \n";
-            }
-            if (assemblyID.getValue() == null) {
-                al = al + "- Asamblea \n";
-            }
-            if (cb_resource.isSelected() && resourceID.getValue() == null) {
-                al = al + "- Recurso/Recursos \n";
-            }
-            if (cb_area.isSelected() && (areaID.getValue() == null
-                    || service_areaID.getValue() == null)) {
-                al = al + "- Área y/o servicio del área \n";
-            }
-            if (cb_applicant.isSelected() && applicantID.getValue() == null) {
-                al = al + "- Solicitante \n";
-            }
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("No has introducido correctamente algún dato");
-            alert.setContentText(al);
-            alert.showAndWait();
-        }
+        Assembly a = assemblyID.getValue();
+        LocalDate sd = init_dateID.getValue();
+        LocalDate fd = finish_dateID.getValue();
+        QueryBuilder<Record, Integer> qb = DAO.recordDao.queryBuilder();
+        Where<Record, Integer> where = qb.where().between("date", sd, fd);
+        where.and().eq("assembly_id", a.getID_assembly());
+        List<Record> query = where.query();
+        progressBar.setDisable(false);
     }
 
     @FXML
