@@ -2,10 +2,7 @@ package controller;
 
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXSpinner;
+import com.jfoenix.controls.*;
 import controller.component.RecordComponent;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
@@ -62,7 +59,7 @@ public class RecordsController extends AnchorPane {
     private HBox noItemsID;
 
     @FXML
-    private JFXSpinner loadID;
+    private JFXProgressBar loadID;
 
     public RecordsController() {
         try {
