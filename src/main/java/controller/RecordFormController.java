@@ -93,6 +93,9 @@ public class RecordFormController {
     private JFXTimePicker endTimeAssistanceID;
 
     @FXML
+    private JFXTextField pathologyID;
+
+    @FXML
     private JFXButton addEventID;
 
     @FXML
@@ -115,6 +118,9 @@ public class RecordFormController {
 
     @FXML
     private TableColumn<Event, String> endTimeAssistanceColumID;
+
+    @FXML
+    private TableColumn<Event, String> pathologyColumID;
 
     @FXML
     private TableColumn<Event, String> registryColumID;
@@ -235,6 +241,7 @@ public class RecordFormController {
         transferTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("transferTimeAssistance"));
         endTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("endTimeAssistance"));
         transferColumID.setCellValueFactory(new PropertyValueFactory<>("placeTransfer"));
+        pathologyColumID.setCellValueFactory(new PropertyValueFactory<>("pathology"));
         registryColumID.setCellValueFactory(new PropertyValueFactory<>("registry"));
 
         subCodeColumID.setCellFactory(cell -> new TableCell<Event, String>() {
@@ -250,6 +257,7 @@ public class RecordFormController {
         transferTimeAssistanceColumID.setCellFactory(cellFactoryEvent);
         endTimeAssistanceColumID.setCellFactory(cellFactoryEvent);
         transferColumID.setCellFactory(cellFactoryEvent);
+        pathologyColumID.setCellFactory(cellFactoryEvent);
         registryColumID.setCellFactory(cellFactoryEvent);
 
         startTimeAssistanceColumID.setOnEditCommit(
@@ -269,6 +277,11 @@ public class RecordFormController {
                         t.getTableView().getItems().get(t.getTablePosition().getRow())
                                 .setPlaceTransfer(t.getNewValue()));
 
+        pathologyColumID.setOnEditCommit(
+                (TableColumn.CellEditEvent<Event, String> t) ->
+                        t.getTableView().getItems().get(t.getTablePosition().getRow())
+                                .setPathology(t.getNewValue()));
+
         registryColumID.setOnEditCommit(
                 (TableColumn.CellEditEvent<Event, String> t) ->
                         t.getTableView().getItems().get(t.getTablePosition().getRow())
@@ -276,7 +289,8 @@ public class RecordFormController {
 
         addEventID.setOnAction(e -> {
             Event event = new Event(record, eventsTableID.getItems().size() + 1, startTimeAssistanceID.getValue(),
-                    transferTimeAssistanceID.getValue(), transferID.getText(), endTimeAssistanceID.getValue(), patientID.getText());
+                    transferTimeAssistanceID.getValue(), transferID.getText(), endTimeAssistanceID.getValue(),
+                    patientID.getText(), patientID.getText());
 
             eventsTableID.getItems().add(event);
 
@@ -296,10 +310,7 @@ public class RecordFormController {
         eventsTableID.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
             if (event.isControlDown()) return;
             if (eventsTableID.getEditingCell() == null) {
-                System.out.println(eventsTableID.getEditingCell());
                 eventsTableID.getSelectionModel().clearSelection();
-                //System.out.println(eventsTableID.getEditingCell().getRow() + " - " + eventsTableID.getEditingCell());
-
             }
         });
     }

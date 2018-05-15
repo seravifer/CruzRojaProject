@@ -59,6 +59,6 @@ public class Area {
 
     @Override
     public String toString() {
-        return name;
+        return name + " (" + short_name + ")";
     }
 }

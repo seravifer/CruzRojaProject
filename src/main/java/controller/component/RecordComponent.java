@@ -90,7 +90,7 @@ public class RecordComponent extends AnchorPane {
         codeID.setText("#" + String.valueOf(LocalDate.parse(record.getDate()).getYear()).substring(2, 4) + "/" +
                 String.format("%05d", record.getCode()));
         assemblyID.setText(record.getAssembly().getName_assembly());
-        resourceID.setText(record.getResource().getName_resource());
+        resourceID.setText(record.getResource().getCode_resource());
         dateID.setText(record.getDate());
         startTimeID.setText(record.getStartTime());
         areaID.setText(record.getArea().getName());

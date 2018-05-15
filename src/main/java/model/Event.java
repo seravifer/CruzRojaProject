@@ -28,20 +28,22 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
     @DatabaseField(persisterClass = StringPropertyType.class)
     private SimpleStringProperty placeTransfer;
     @DatabaseField(persisterClass = StringPropertyType.class)
+    private SimpleStringProperty pathology;
+    @DatabaseField(persisterClass = StringPropertyType.class)
     private SimpleStringProperty registry;
 
     public Event() {}
 
     public Event(Record record, int subcode, LocalTime startTimeAssistance, LocalTime transferTimeAssistance, String placeTransfer,
-                 LocalTime endTimeAssistance, String registry) {
+                 LocalTime endTimeAssistance, String pathology, String registry) {
         this.record = record;
         this.subcode = subcode;
         this.startTimeAssistance = new SimpleStringProperty(nullToString(startTimeAssistance));
         this.transferTimeAssistance = new SimpleStringProperty(nullToString(transferTimeAssistance));
         this.placeTransfer = new SimpleStringProperty(nullToString(placeTransfer));
         this.endTimeAssistance = new SimpleStringProperty(nullToString(endTimeAssistance));
+        this.pathology = new SimpleStringProperty(pathology);
         this.registry = new SimpleStringProperty(registry);
-        System.out.println("ok");
     }
 
     public int getID_Event() {
@@ -88,6 +90,14 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         return placeTransfer;
     }
 
+    public String getPathology() {
+        return pathology.get();
+    }
+
+    public SimpleStringProperty pathologyProperty() {
+        return pathology;
+    }
+
     public String getRegistry() {
         return registry.get();
     }
@@ -122,6 +132,10 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
 
     public void setPlaceTransfer(String placeTransfer) {
         this.placeTransfer.set(placeTransfer);
+    }
+
+    public void setPathology(String pathology) {
+        this.pathology.set(pathology);
     }
 
     public void setRegistry(String registry) {

@@ -59,6 +59,6 @@ public class Resource {
 
     @Override
     public String toString() {
-        return name_resource;
+        return code_resource;
     }
 }
