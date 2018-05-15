@@ -1,6 +1,12 @@
 package controller;
 
+import com.jfoenix.controls.JFXSpinner;
 import controller.component.RecordComponent;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
+import javafx.concurrent.Worker;
 import model.Record;
 import service.DAO;
 import com.j256.ormlite.stmt.QueryBuilder;
@@ -57,6 +63,9 @@ public class RecordsController extends AnchorPane {
     @FXML
     private HBox noItemsID;
 
+    @FXML
+    private JFXSpinner loadID;
+
     public RecordsController() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
@@ -76,7 +85,7 @@ public class RecordsController extends AnchorPane {
         reportID.setOnMouseClicked(e -> new ReportFormController());
 
         //fromID.setValue(LocalDate.now());
-        fromID.setValue(LocalDate.of(2018, 1,1));
+        fromID.setValue(LocalDate.of(2018, 1, 1));
         toID.setValue(LocalDate.now());
 
         recordsID.getChildren().addListener((ListChangeListener<Node>) c -> {
@@ -85,34 +94,48 @@ public class RecordsController extends AnchorPane {
         });
 
         fromID.valueProperty().addListener((ob, o, n) -> {
-            filter();
             limitDays();
+            filter();
         });
 
         toID.valueProperty().addListener((ob, o, n) -> filter());
 
-        pendingID.selectedProperty().addListener((ob, o,  n) -> filter());
+        pendingID.selectedProperty().addListener((ob, o, n) -> filter());
 
         limitDays();
         filter();
     }
 
     private void filter() {
-        QueryBuilder<Record, Integer> queryBuilder = DAO.recordDao.queryBuilder();
-        List<Record> records = null;
-        try {
-            Where<Record, Integer> where = queryBuilder.where();
-            where.between("date", fromID.getValue(), toID.getValue());
-            if (pendingID.isSelected()) where.and().isNull("endTime");
+        final Task task = new Task<Void>() {
+            @Override
+            public Void call() throws SQLException, InterruptedException {
+                QueryBuilder<Record, Integer> queryBuilder = DAO.recordDao.queryBuilder();
 
-            records = queryBuilder.query();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        recordsID.getChildren().clear();
-        for (Record record : records) {
-            recordsID.getChildren().add(0, new RecordComponent(record));
-        }
+                Where<Record, Integer> where = queryBuilder
+                        .where().between("date", fromID.getValue(), toID.getValue());
+
+                if (pendingID.isSelected()) where.and().isNull("endTime");
+
+                List<Record> records = queryBuilder.query();
+
+                Platform.runLater(() -> recordsID.getChildren().clear());
+
+                for (Record record : records) {
+                    Platform.runLater(() -> recordsID.getChildren().add(0, new RecordComponent(record)));
+                }
+
+                return null;
+            }
+        };
+
+        task.stateProperty().addListener((ob, o, nValue) -> {
+            if(nValue == Worker.State.RUNNING) loadID.setVisible(true);
+            else if (nValue == Worker.State.SUCCEEDED) loadID.setVisible(false);
+        });
+
+        new Thread(task).start();
+
     }
 
     private void limitDays() {

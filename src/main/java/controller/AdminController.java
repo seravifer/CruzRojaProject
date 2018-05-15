@@ -31,7 +31,7 @@ import model.Service;
 import service.DAO;
 
 /**
- * FXML Controller class
+ * FXML controller class
  *
  * @author Sergio
  */

@@ -40,7 +40,7 @@ import service.DAO;
 import service.DataBase;
 
 /**
- * FXML Controller class
+ * FXML controller class
  *
  * @author Elio
  */
