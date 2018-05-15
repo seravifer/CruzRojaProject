@@ -13,6 +13,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXProgressBar;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -79,7 +80,9 @@ public class ReportFormController {
     private JFXButton generate_button;
     @FXML
     private AnchorPane informe;
-
+    @FXML
+    private JFXProgressBar progressBar;
+    
     private void loadView() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -131,6 +134,7 @@ public class ReportFormController {
 
     @FXML
     private void show_report(ActionEvent event) throws SQLException {
+        
         try {
             // Provisional, hacer con queryBuilder
             List<Record> records = DAO.recordDao.queryBuilder().query();

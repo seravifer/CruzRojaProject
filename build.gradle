@@ -15,4 +15,5 @@ dependencies {
     compile 'org.xerial:sqlite-jdbc:3.21.0.1'
     compile 'com.j256.ormlite:ormlite-jdbc:5.1'
     compile 'com.j256.ormlite:ormlite-core:5.1'
+    compile 'net.sourceforge.dynamicreports:dynamicreports-parent:5.1.0'
 }
