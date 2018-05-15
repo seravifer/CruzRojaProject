@@ -14,10 +14,14 @@ public class Area {
     @DatabaseField(canBeNull = false, unique = true)
     private String name;
 
+    @DatabaseField(canBeNull = false, unique = true)
+    private String short_name;
+
     public Area() {}
 
-    public Area(String name) {
+    public Area(String name, String short_name) {
         this.name = name;
+        this.short_name = short_name;
     }
 
     public int getID_area() {
@@ -28,8 +32,16 @@ public class Area {
         return name;
     }
 
+    public String getShort_name() {
+        return short_name;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setShort_name(String short_name) {
+        this.short_name = short_name;
     }
 
     @Override

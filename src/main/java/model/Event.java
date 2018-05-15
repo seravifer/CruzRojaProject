@@ -1,10 +1,10 @@
 package model;
 
-import com.j256.ormlite.misc.BaseDaoEnabled;
-import utils.StringPropertyType;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
 import javafx.beans.property.SimpleStringProperty;
+import utils.StringPropertyType;
 
 import java.time.LocalTime;
 

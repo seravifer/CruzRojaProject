@@ -2,14 +2,14 @@ package controller.component;
 
 import com.j256.ormlite.stmt.QueryBuilder;
 import controller.RecordFormController;
-import model.Event;
-import model.Record;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.SVGPath;
+import model.Event;
+import model.Record;
 import service.DAO;
 
 import java.io.IOException;

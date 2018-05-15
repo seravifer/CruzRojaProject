@@ -8,30 +8,24 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.Applicant;
-import model.Area;
-import model.Assembly;
-import model.Event;
-import model.Resource;
-import model.Service;
+import model.*;
 import service.DAO;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * FXML controller class
@@ -191,18 +185,18 @@ public class AdminController implements Initializable {
        
         botonServicios.setOnAction( (event) -> {
             try{
-                    Service serv = new Service(nombreServicios.getText(), abreviaturaServicios.getText(), areaServicios.getValue());
+                    /*Service serv = new Service(nombreServicios.getText(), abreviaturaServicios.getText(), areaServicios.getValue());
                     DAO.servicesDao.create(serv);
-                    tablaServicios.getItems().add(serv);
+                    tablaServicios.getItems().add(serv);*/
             }catch (Exception e){
                 e.printStackTrace();
             }
         });
         botonAreas.setOnAction( (event) -> {
             try{
-                    Area area = new Area(nombreAreas.getText());
+                    /*Area area = new Area(nombreAreas.getText());
                     DAO.areaDao.create(area);
-                    tablaAreas.getItems().add(area);
+                    tablaAreas.getItems().add(area);*/
             }catch (Exception e){
                 e.printStackTrace();
             }

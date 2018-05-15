@@ -1,10 +1,10 @@
 package utils;
 
-import model.Event;
-import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import model.Event;
 
 public class EditingCell extends TableCell<Event, String> {
 
@@ -55,10 +55,15 @@ public class EditingCell extends TableCell<Event, String> {
 
     private void createTextField() {
         textField = new TextField(getString());
-        textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+        textField.setMinWidth(this.getWidth());
+        textField.setId("textfieldEvent");
+        textField.setAlignment(Pos.CENTER);
 
         textField.focusedProperty().addListener((ob, o, n) -> {
-            if (!n) commitEdit(textField.getText());
+            if (!n) {
+                commitEdit(textField.getText());
+            }
+            System.out.println(n);
         });
 
         textField.setOnKeyPressed(t -> {

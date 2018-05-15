@@ -1,8 +1,8 @@
 package service;
 
-import model.*;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import model.*;
 
 import java.sql.SQLException;
 

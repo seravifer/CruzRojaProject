@@ -3,12 +3,12 @@ package controller;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.jfoenix.controls.*;
 import javafx.beans.value.ChangeListener;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.SVGPath;
@@ -18,7 +18,6 @@ import service.DAO;
 import utils.EditingCell;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -185,13 +184,11 @@ public class RecordFormController {
             List<Applicant> applicants = DAO.applicantDao.queryBuilder().query();
             List<Resource> resources = DAO.resourceDao.queryBuilder().query();
             List<Area> areas = DAO.areaDao.queryBuilder().query();
-            List<Service> services = DAO.servicesDao.queryBuilder().query();
 
             assemblyID.getItems().addAll(assemblies);
             applicantID.getItems().addAll(applicants);
             resourceID.getItems().addAll(resources);
             areaID.getItems().addAll(areas);
-            serviceID.getItems().addAll(services);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -200,12 +197,34 @@ public class RecordFormController {
         endTimeID.setIs24HourView(true);
 
         assistance_mID.textProperty().addListener(onlyNumbers(assistance_mID));
+        assistance_mID.focusedProperty().addListener(minZero(assistance_mID));
+
         assistance_hID.textProperty().addListener(onlyNumbers(assistance_hID));
+        assistance_hID.focusedProperty().addListener(minZero(assistance_hID));
+
         evacuated_mID.textProperty().addListener(onlyNumbers(evacuated_mID));
+        evacuated_mID.focusedProperty().addListener(minZero(evacuated_mID));
+
         evacuated_hID.textProperty().addListener(onlyNumbers(evacuated_hID));
-        endTimeID.focusedProperty().addListener((ov, o, n) -> {
-            if (n && endTimeID.getValue() == null)
-                endTimeID.setValue(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
+        evacuated_hID.focusedProperty().addListener(minZero(evacuated_hID));
+
+        endTimeID.getEditor().setOnMouseClicked(event -> {
+            if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
+                if (endTimeID.getValue() == null)
+                    endTimeID.setValue(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
+            }
+        });
+
+        areaID.valueProperty().addListener((ob, o, n) -> {
+            try {
+                List<Service> services = DAO.servicesDao.queryBuilder()
+                        .where().eq("area_id", areaID.getValue().getID_area()).query();
+                serviceID.getItems().clear();
+                serviceID.getItems().addAll(services);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
         });
 
         Callback<TableColumn<Event, String>, TableCell<Event, String>> cellFactoryEvent
@@ -275,9 +294,12 @@ public class RecordFormController {
         });
 
         eventsTableID.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
-            if( event.isControlDown()) return;
-            if ( eventsTableID.getEditingCell() == null) {
+            if (event.isControlDown()) return;
+            if (eventsTableID.getEditingCell() == null) {
+                System.out.println(eventsTableID.getEditingCell());
                 eventsTableID.getSelectionModel().clearSelection();
+                //System.out.println(eventsTableID.getEditingCell().getRow() + " - " + eventsTableID.getEditingCell());
+
             }
         });
     }
@@ -315,7 +337,6 @@ public class RecordFormController {
             record.setArea(areaID.getValue());
             record.setApplicant(applicantID.getValue());
             record.setService(serviceID.getValue());
-            //record.setAddress();
             record.setAssistance_h(assistance_hID.getText());
             record.setAssistance_m(assistance_mID.getText());
             record.setEvacuated_h(evacuated_hID.getText());
@@ -336,11 +357,16 @@ public class RecordFormController {
     }
 
     private ChangeListener<String> onlyNumbers(TextField node) {
-        // TODO el valor minimo es 0
         return (observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
                 node.setText(newValue.replaceAll("[^\\d]", ""));
             }
+        };
+    }
+
+    private ChangeListener<? super Boolean> minZero(TextField node) {
+        return (observable, oldValue, newValue) -> {
+            if (node.getText().equals("")) node.setText("0");
         };
     }
 

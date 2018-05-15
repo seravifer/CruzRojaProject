@@ -7,18 +7,7 @@ package controller;
 
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXProgressBar;
-import java.awt.Color;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.jfoenix.controls.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,11 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.*;
-import static net.sf.dynamicreports.report.builder.DynamicReports.cmp;
-import static net.sf.dynamicreports.report.builder.DynamicReports.col;
-import static net.sf.dynamicreports.report.builder.DynamicReports.report;
-import static net.sf.dynamicreports.report.builder.DynamicReports.stl;
-import static net.sf.dynamicreports.report.builder.DynamicReports.type;
 import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
 import net.sf.dynamicreports.report.builder.style.StyleBuilder;
 import net.sf.dynamicreports.report.constant.HorizontalAlignment;
@@ -40,6 +24,16 @@ import net.sf.dynamicreports.report.constant.VerticalAlignment;
 import net.sf.dynamicreports.report.datasource.DRDataSource;
 import net.sf.jasperreports.engine.JRDataSource;
 import service.DAO;
+
+import java.awt.*;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static net.sf.dynamicreports.report.builder.DynamicReports.*;
 
 public class ReportFormController {
 

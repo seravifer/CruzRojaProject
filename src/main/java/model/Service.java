@@ -14,17 +14,13 @@ public class Service {
     @DatabaseField(canBeNull = false, unique = true)
     private String name;
 
-    @DatabaseField(canBeNull = false, unique = true)
-    private String short_name;
-
     @DatabaseField(foreign = true,foreignAutoRefresh = true)
     private Area area;
 
     public Service() {}
 
-    public Service(String name, String short_name, Area area) {
+    public Service(String name, Area area) {
         this.name = name;
-        this.short_name = short_name;
         this.area = area;
     }
 
@@ -36,20 +32,12 @@ public class Service {
         return name;
     }
 
-    public String getShort_name() {
-        return short_name;
-    }
-
     public Area getArea() {
         return area;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public void setShort_name(String short_name) {
-        this.short_name = short_name;
     }
 
     public void setArea(Area area) {

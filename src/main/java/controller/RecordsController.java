@@ -1,20 +1,16 @@
 package controller;
 
-import com.jfoenix.controls.JFXSpinner;
-import controller.component.RecordComponent;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Task;
-import javafx.concurrent.Worker;
-import model.Record;
-import service.DAO;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXSpinner;
+import controller.component.RecordComponent;
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
+import javafx.concurrent.Task;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -25,6 +21,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
+import model.Record;
+import service.DAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
