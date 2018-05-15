@@ -25,8 +25,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Applicant;
 import model.Area;
+import model.Assembly;
 import model.Event;
+import model.Resource;
 import model.Service;
 import service.DAO;
 
@@ -70,13 +73,13 @@ public class AdminController implements Initializable {
     private JFXButton botonAsambleas;
 
     @FXML
-    private TableView<?> tablaAsambleas;
+    private TableView<Assembly> tablaAsambleas;
 
     @FXML
-    private TableColumn<?, ?> codigoColumnAsamblea;
+    private TableColumn<Assembly, String> codigoColumnAsamblea;
 
     @FXML
-    private TableColumn<?, ?> nombreColumnAsamblea;
+    private TableColumn<Assembly, String> nombreColumnAsamblea;
 
     @FXML
     private JFXTextField codigoRecursos;
@@ -88,13 +91,13 @@ public class AdminController implements Initializable {
     private JFXButton botonRecursos;
 
     @FXML
-    private TableView<?> tablaRecursos;
+    private TableView<Resource> tablaRecursos;
 
     @FXML
-    private TableColumn<?, ?> codigoColumnRecursos;
+    private TableColumn<Resource, String> codigoColumnRecursos;
 
     @FXML
-    private TableColumn<?, ?> nombreColumnRecursos;
+    private TableColumn<Resource, String> nombreColumnRecursos;
 
     @FXML
     private JFXTextField nombreAreas;
@@ -103,10 +106,10 @@ public class AdminController implements Initializable {
     private JFXButton botonAreas;
 
     @FXML
-    private TableView<?> tablaAreas;
+    private TableView<Area> tablaAreas;
 
     @FXML
-    private TableColumn<?, ?> nombreColumnAreas;
+    private TableColumn<Area, String> nombreColumnAreas;
 
     @FXML
     private JFXTextField nombreSolicitantes;
@@ -115,10 +118,10 @@ public class AdminController implements Initializable {
     private JFXButton botonSolicitantes;
 
     @FXML
-    private TableView<?> tablaSolicitantes;
+    private TableView<Applicant> tablaSolicitantes;
 
     @FXML
-    private TableColumn<?, ?> nombreColumnSolicitante;
+    private TableColumn<Applicant, String> nombreColumnSolicitante;
     /**
      * Initializes the controller class.
      */
@@ -151,11 +154,32 @@ public class AdminController implements Initializable {
        try{
         List<Area> areas = DAO.areaDao.queryBuilder().query();
         List<Service> servicios = DAO.servicesDao.queryBuilder().query();
+        List<Assembly> asambleas = DAO.assemblyDao.queryBuilder().query();
+        List<Resource> recursos = DAO.resourceDao.queryBuilder().query();
+        List<Applicant> solicitantes = DAO.applicantDao.queryBuilder().query();
+        
         areaServicios.getItems().addAll(areas);
         tablaServicios.getItems().addAll(servicios);
+        tablaAreas.getItems().addAll(areas);
+        tablaAsambleas.getItems().addAll(asambleas);
+        tablaSolicitantes.getItems().addAll(solicitantes);
+       
+        tablaRecursos.getItems().addAll(recursos);
+        
         nombreColumnServicios.setCellValueFactory(new PropertyValueFactory<>("name"));
         abreviaturaColumnServicios.setCellValueFactory(new PropertyValueFactory<>("short_name"));
         areaColumnServicios.setCellValueFactory(new PropertyValueFactory<Service,Area>("area"));
+
+        nombreColumnAreas.setCellValueFactory(new PropertyValueFactory<>("name"));
+        
+        nombreColumnAsamblea.setCellValueFactory(new PropertyValueFactory<>("name_assembly"));
+        codigoColumnAsamblea.setCellValueFactory(new PropertyValueFactory<>("code"));
+        
+        nombreColumnSolicitante.setCellValueFactory(new PropertyValueFactory<>("name_applicant"));
+        
+        nombreColumnRecursos.setCellValueFactory(new PropertyValueFactory<>("name_resource"));
+        codigoColumnRecursos.setCellValueFactory(new PropertyValueFactory<>("code_resource"));
+        
         areaColumnServicios.setCellFactory(cell -> new TableCell<Service, Area>() {
                  @Override
             public void updateItem(Area item, boolean empty) {
@@ -164,14 +188,48 @@ public class AdminController implements Initializable {
                 else setText(item.getName() + "");
             }
         });
-
-        
-        
+       
         botonServicios.setOnAction( (event) -> {
             try{
                     Service serv = new Service(nombreServicios.getText(), abreviaturaServicios.getText(), areaServicios.getValue());
                     DAO.servicesDao.create(serv);
                     tablaServicios.getItems().add(serv);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+        botonAreas.setOnAction( (event) -> {
+            try{
+                    Area area = new Area(nombreAreas.getText());
+                    DAO.areaDao.create(area);
+                    tablaAreas.getItems().add(area);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+        botonAsambleas.setOnAction( (event) -> {
+            try{
+                    Assembly asamblea = new Assembly(nombreAsambleas.getText(), codigoAsambleas.getText());
+                    DAO.assemblyDao.create(asamblea);
+                    tablaAsambleas.getItems().add(asamblea);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+        botonRecursos.setOnAction( (event) -> {
+            try{
+                    Resource recurso = new Resource(nombreRecursos.getText(), codigoRecursos.getText());
+                    DAO.resourceDao.create(recurso);
+                    tablaRecursos.getItems().add(recurso);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        });
+        botonSolicitantes.setOnAction( (event) -> {
+            try{
+                    Applicant solicitante = new Applicant(nombreSolicitantes.getText());
+                    DAO.applicantDao.create(solicitante);
+                    tablaSolicitantes.getItems().add(solicitante);
             }catch (Exception e){
                 e.printStackTrace();
             }
