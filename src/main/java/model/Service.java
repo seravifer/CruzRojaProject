@@ -17,15 +17,15 @@ public class Service {
     @DatabaseField(canBeNull = false, unique = true)
     private String short_name;
 
-    @DatabaseField(canBeNull = false, unique = true)
-    private int area_id;
+    @DatabaseField(foreign = true,foreignAutoRefresh = true)
+    private Area area;
 
     public Service() {}
 
-    public Service(String name, String short_name, int area_id) {
+    public Service(String name, String short_name, Area area) {
         this.name = name;
         this.short_name = short_name;
-        this.area_id = area_id;
+        this.area = area;
     }
 
     public int getID_service() {
@@ -40,8 +40,8 @@ public class Service {
         return short_name;
     }
 
-    public int getID_area() {
-        return area_id;
+    public Area getArea() {
+        return area;
     }
 
     public void setName(String name) {
@@ -52,8 +52,8 @@ public class Service {
         this.short_name = short_name;
     }
 
-    public void setID_area(int area_id) {
-        this.area_id = area_id;
+    public void setArea(Area area) {
+        this.area = area;
     }
 
     @Override
