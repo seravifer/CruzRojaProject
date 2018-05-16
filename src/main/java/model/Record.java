@@ -43,14 +43,11 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
     private String registry;
     @DatabaseField
     private String notes;
-    @DatabaseField
-    private int user_id;
-
     public Record() {}
 
     public Record(String date, int code, Resource resource, Assembly assembly, LocalTime startTime, LocalTime endTime,
                   Area area, Applicant applicant, Service service, String address, String assistance_h,
-                  String assistance_m, String evacuated_h, String evacuated_m, String registry, String notes, int user_id) {
+                  String assistance_m, String evacuated_h, String evacuated_m, String registry, String notes) {
         this.date = date;
         this.code = code;
         this.resource = resource;
@@ -68,7 +65,6 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
         this.evacuated_m = Integer.parseInt(evacuated_m);
         this.registry = registry;
         this.notes = notes;
-        this.user_id = user_id;
     }
 
     public int getID_record() {
@@ -139,10 +135,6 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
         return notes;
     }
 
-    public int getUser_id() {
-        return user_id;
-    }
-
     public void setID(int ID_record) {
         this.ID_record = ID_record;
     }
@@ -210,10 +202,6 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
     }
 
     @Override

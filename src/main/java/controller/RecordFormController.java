@@ -2,7 +2,10 @@ package controller;
 
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.jfoenix.controls.*;
+import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -315,6 +318,11 @@ public class RecordFormController {
                 eventsTableID.getSelectionModel().clearSelection();
             }
         });
+
+        eventsTableID.widthProperty().addListener((ob, o, n) -> {
+            TableHeaderRow header = (TableHeaderRow) eventsTableID.lookup("TableHeaderRow");
+            header.reorderingProperty().addListener((ob2, o2, n2) -> header.setReordering(false));
+        });
     }
 
     @FXML
@@ -329,7 +337,7 @@ public class RecordFormController {
                     startTimeID.getValue(), endTimeID.getValue(), areaID.getValue(),
                     applicantID.getValue(), serviceID.getValue(), "", assistance_hID.getText(),
                     assistance_hID.getText(), evacuated_hID.getText(), evacuated_mID.getText(), registryID.getText(),
-                    notesID.getText(), 1);
+                    notesID.getText());
             try {
                 DAO.recordDao.create(record);
             } catch (SQLException e) {

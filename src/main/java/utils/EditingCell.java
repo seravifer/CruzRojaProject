@@ -63,7 +63,6 @@ public class EditingCell extends TableCell<Event, String> {
             if (!n) {
                 commitEdit(textField.getText());
             }
-            System.out.println(n);
         });
 
         textField.setOnKeyPressed(t -> {
