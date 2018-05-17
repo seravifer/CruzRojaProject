@@ -11,10 +11,12 @@ repositories {
 }
 
 dependencies {
+    compile group: 'log4j', name: 'log4j', version: '1.2.14'
     compile 'com.jfoenix:jfoenix:8.0.3'
+    compile 'org.controlsfx:controlsfx:8.40.14'
+    compile 'com.lowagie:itext:4.2.1'
+    compile 'net.sourceforge.dynamicreports:dynamicreports-core:5.1.0'
     compile 'org.xerial:sqlite-jdbc:3.21.0.1'
     compile 'com.j256.ormlite:ormlite-jdbc:5.1'
     compile 'com.j256.ormlite:ormlite-core:5.1'
-    compile 'com.lowagie:itext:4.2.1'
-    compile 'net.sourceforge.dynamicreports:dynamicreports-core:5.1.0'
 }

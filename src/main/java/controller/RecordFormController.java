@@ -4,8 +4,6 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.jfoenix.controls.*;
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,9 +12,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.SVGPath;
 import javafx.util.Callback;
-import javafx.util.converter.LocalTimeStringConverter;
 import model.*;
 import service.DAO;
 import utils.EditingCell;
@@ -27,9 +25,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 
 public class RecordFormController {
+
+    @FXML
+    private BorderPane rootID;
 
     @FXML
     private JFXButton addID;
@@ -134,6 +134,7 @@ public class RecordFormController {
     private AnchorPane eventFormID;
 
     private Record record;
+    JFXSnackbar snackbar;
 
     private void loadView() {
         try {
@@ -145,6 +146,7 @@ public class RecordFormController {
             e.printStackTrace();
         }
 
+        snackbar = new JFXSnackbar(rootID);
         init();
     }
 
@@ -340,8 +342,9 @@ public class RecordFormController {
                     notesID.getText());
             try {
                 DAO.recordDao.create(record);
+                snackbar.show("El registro " + codeID.getText() + " se ha guardado correctamente.", 4000);
             } catch (SQLException e) {
-                e.printStackTrace();
+                snackbar.show("Se ha producido un error al guardar el registro. Por favor, intentelo de nuevo.", 6000);
                 record = null;
             }
 
@@ -371,8 +374,10 @@ public class RecordFormController {
                 for (Event event: eventsTableID.getItems()) {
                     event.update();
                 }
+
+                snackbar.show("El registro " + codeID.getText() + " se ha guardado correctamente.", 4000);
             } catch (SQLException e) {
-                e.printStackTrace();
+                snackbar.show("Se ha producido un error al guardar el registro. Por favor, intentelo de nuevo.", 6000);
             }
         }
     }
