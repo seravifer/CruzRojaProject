@@ -6,6 +6,7 @@ import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -147,6 +148,13 @@ public class RecordFormController {
         }
 
         snackbar = new JFXSnackbar(rootID);
+        snackbar.layoutBoundsProperty().addListener((ob, o, n) -> {
+            Bounds contentBound = snackbar.getLayoutBounds();
+            double offsetX = rootID.getWidth() - contentBound.getWidth() - 20;
+            double offsetY = rootID.getHeight() - contentBound.getHeight();
+            snackbar.setLayoutX(offsetX);
+            snackbar.setLayoutY(offsetY - 20);
+        });
         init();
     }
 
