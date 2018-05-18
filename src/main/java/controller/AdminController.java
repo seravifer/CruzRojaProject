@@ -52,9 +52,6 @@ public class AdminController implements Initializable {
     private TableColumn<Service, String> nombreColumnServicios;
 
     @FXML
-    private TableColumn<Service, String> abreviaturaColumnServicios;
-
-    @FXML
     private TableColumn<Service, Area> areaColumnServicios;
 
     @FXML
@@ -95,6 +92,9 @@ public class AdminController implements Initializable {
 
     @FXML
     private JFXTextField nombreAreas;
+    
+    @FXML
+    private JFXTextField abreviaturaAreas;
 
     @FXML
     private JFXButton botonAreas;
@@ -104,6 +104,8 @@ public class AdminController implements Initializable {
 
     @FXML
     private TableColumn<Area, String> nombreColumnAreas;
+     @FXML
+    private TableColumn<Area, String> abreviaturaColumnAreas;
 
     @FXML
     private JFXTextField nombreSolicitantes;
@@ -119,6 +121,25 @@ public class AdminController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    
+    @FXML
+    private JFXTextField codigoHospital;
+
+    @FXML
+    private JFXTextField nombreHospital;
+
+    @FXML
+    private JFXButton botonHospital;
+
+    @FXML
+    private TableView<Applicant> tablaHospitales;
+
+    @FXML
+    private TableColumn<?, String> codigoColumnHospital;
+
+    @FXML
+    private TableColumn<?, String> nombreColumnHospital;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -132,6 +153,10 @@ public class AdminController implements Initializable {
          
         Scene scene = new Scene(fxmlLoader.load(), 1200, 720);
         Stage stage = new Stage();
+        stage.setMaxWidth(600);
+        stage.setMinWidth(600);
+        stage.setHeight(480);
+        stage.setMinHeight(480);
         scene.getStylesheets().setAll(getClass().getResource("/css/style.css").toExternalForm());
 
         stage.setTitle("Panel Administrador de Cruz Roja");
@@ -161,11 +186,11 @@ public class AdminController implements Initializable {
         tablaRecursos.getItems().addAll(recursos);
         
         nombreColumnServicios.setCellValueFactory(new PropertyValueFactory<>("name"));
-        abreviaturaColumnServicios.setCellValueFactory(new PropertyValueFactory<>("short_name"));
         areaColumnServicios.setCellValueFactory(new PropertyValueFactory<Service,Area>("area"));
 
         nombreColumnAreas.setCellValueFactory(new PropertyValueFactory<>("name"));
-        
+        abreviaturaColumnAreas.setCellValueFactory(new PropertyValueFactory<>("short_name"));
+  
         nombreColumnAsamblea.setCellValueFactory(new PropertyValueFactory<>("name_assembly"));
         codigoColumnAsamblea.setCellValueFactory(new PropertyValueFactory<>("code"));
         
@@ -185,18 +210,18 @@ public class AdminController implements Initializable {
        
         botonServicios.setOnAction( (event) -> {
             try{
-                    /*Service serv = new Service(nombreServicios.getText(), abreviaturaServicios.getText(), areaServicios.getValue());
+                    Service serv = new Service(nombreServicios.getText(), areaServicios.getValue());
                     DAO.servicesDao.create(serv);
-                    tablaServicios.getItems().add(serv);*/
+                    tablaServicios.getItems().add(serv);
             }catch (Exception e){
                 e.printStackTrace();
             }
         });
         botonAreas.setOnAction( (event) -> {
             try{
-                    /*Area area = new Area(nombreAreas.getText());
+                    Area area = new Area(nombreAreas.getText(),abreviaturaAreas.getText());
                     DAO.areaDao.create(area);
-                    tablaAreas.getItems().add(area);*/
+                    tablaAreas.getItems().add(area);
             }catch (Exception e){
                 e.printStackTrace();
             }
