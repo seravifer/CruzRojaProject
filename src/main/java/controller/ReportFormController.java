@@ -5,8 +5,6 @@
  */
 package controller;
 
-import com.j256.ormlite.stmt.QueryBuilder;
-import com.j256.ormlite.stmt.Where;
 import com.jfoenix.controls.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,23 +15,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.*;
-import net.sf.dynamicreports.report.builder.column.TextColumnBuilder;
-import net.sf.dynamicreports.report.builder.style.StyleBuilder;
-import net.sf.dynamicreports.report.constant.HorizontalAlignment;
-import net.sf.dynamicreports.report.constant.VerticalAlignment;
-import net.sf.dynamicreports.report.datasource.DRDataSource;
-import net.sf.jasperreports.engine.JRDataSource;
 import service.DAO;
 
-import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static net.sf.dynamicreports.report.builder.DynamicReports.*;
 
 public class ReportFormController {
 
@@ -125,64 +114,65 @@ public class ReportFormController {
 
     @FXML
     private void show_report(ActionEvent event) throws SQLException {
-        Assembly a = assemblyID.getValue();
-        LocalDate sd = init_dateID.getValue();
-        LocalDate fd = finish_dateID.getValue();
-        QueryBuilder<Record, Integer> qb = DAO.recordDao.queryBuilder();
-        Where<Record, Integer> where = qb.where().between("date", sd, fd);
-        where.and().eq("assembly_id", a.getID_assembly());
-        List<Record> query = where.query();
-        StyleBuilder boldStyle = stl.style().bold();
-        StyleBuilder boldCenteredStyle = stl.style(boldStyle)
-                .setHorizontalAlignment(HorizontalAlignment.CENTER);
-        StyleBuilder columnTitleStyle = stl.style(boldCenteredStyle)
-                .setBorder(stl.pen1Point())
-                .setBackgroundColor(Color.WHITE);
-        StyleBuilder titleStyle = stl.style(boldCenteredStyle)
-                             .setVerticalAlignment(VerticalAlignment.MIDDLE)
-                             .setFontSize(15);
-
-
-        try {
-            TextColumnBuilder<String> resourceColumn = col.column("Resource", "resource", type.stringType()).setStyle(boldStyle);
-            report()
-                    .setColumnTitleStyle(columnTitleStyle)
-                    .highlightDetailEvenRows()
-                    .columns(
-                            col.column("ID_Record", "id_record", type.stringType()),
-                            col.column("Date", "date", type.stringType()),
-                            resourceColumn,
-                            col.column("Assistance_h", "assistance_h", type.stringType()),
-                            col.column("Assistance_m", "assistance_m", type.stringType()),
-                            col.column("Evacuated_h", "evacuated_h", type.stringType()),
-                            col.column("Evacuated_m", "evacuated_m", type.stringType()))
-                    .title(//shows report title
-                            cmp.horizontalList()
-                                    .add(
-                                            cmp.image(getClass().getResourceAsStream("/img/logo.png")).setFixedDimension(80, 80),
-                                            cmp.text("    Informe de la Cruz Roja").setStyle(titleStyle).setHorizontalAlignment(HorizontalAlignment.LEFT),
-                                            cmp.text("Asamblea de " + a.getName_assembly()).setStyle(titleStyle).setHorizontalAlignment(HorizontalAlignment.RIGHT))
-                                    .newRow()
-                                    .add(cmp.filler().setStyle(stl.style().setTopBorder(stl.pen2Point())).setFixedHeight(10)))
-                    .pageFooter(cmp.pageXofY().setStyle(boldCenteredStyle))
-                    .setDataSource(createDataSource(query))
-                    .groupBy(resourceColumn)
-                    .show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private JRDataSource createDataSource(List<Record> lista) {
-        DRDataSource dataSource = new DRDataSource("id_record", "date", "resource", "assistance_h",
-                "assistance_m", "evacuated_h", "evacuated_m");
-        for (Record re : lista) {
-            dataSource.add(re.getID_record() + "", re.getDate(),
-                    re.getResource().getName_resource(), re.getAssistance_h() + "",
-                    re.getAssistance_m() + "", re.getEvacuated_h() + "", re.getEvacuated_m() + "");
-        }
-        return dataSource;
-    }
+//        Assembly a = assemblyID.getValue();
+//        LocalDate sd = init_dateID.getValue();
+//        LocalDate fd = finish_dateID.getValue();
+//        QueryBuilder<Record, Integer> qb = DAO.recordDao.queryBuilder();
+//        Where<Record, Integer> where = qb.where().between("date", sd, fd);
+//        where.and().eq("assembly_id", a.getID_assembly());
+//        List<Record> query = where.query();
+//        StyleBuilder boldStyle = stl.style().bold();
+//        StyleBuilder boldCenteredStyle = stl.style(boldStyle)
+//                .setHorizontalAlignment(HorizontalAlignment.CENTER);
+//        StyleBuilder columnTitleStyle = stl.style(boldCenteredStyle)
+//                .setBorder(stl.pen1Point())
+//                .setBackgroundColor(Color.WHITE);
+//        StyleBuilder titleStyle = stl.style(boldCenteredStyle)
+//                             .setVerticalAlignment(VerticalAlignment.MIDDLE)
+//                             .setFontSize(15);
+//              
+//        
+//        try {
+//            TextColumnBuilder<String> resourceColumn = col.column("Resource", "resource", type.stringType()).setStyle(boldStyle);
+//            report()
+//                    .setColumnTitleStyle(columnTitleStyle)
+//                    .highlightDetailEvenRows()
+//                    .columns(
+//                            col.column("ID_Record", "id_record", type.stringType()),
+//                            col.column("Date", "date", type.stringType()),
+//                            resourceColumn,
+//                            col.column("Assistance_h", "assistance_h", type.stringType()),
+//                            col.column("Assistance_m", "assistance_m", type.stringType()),
+//                            col.column("Evacuated_h", "evacuated_h", type.stringType()),
+//                            col.column("Evacuated_m", "evacuated_m", type.stringType()))
+//                    .title(//shows report title
+//                            cmp.horizontalList()
+//                                    .add(
+//                                            cmp.image(getClass().getResourceAsStream("/img/logo.png")).setFixedDimension(80, 80),
+//                                            cmp.text("    Informe de la Cruz Roja").setStyle(titleStyle).setHorizontalAlignment(HorizontalAlignment.LEFT),
+//                                            cmp.text("Asamblea de " + a.getName_assembly()).setStyle(titleStyle).setHorizontalAlignment(HorizontalAlignment.RIGHT))
+//                                    .newRow()
+//                                    .add(cmp.filler().setStyle(stl.style().setTopBorder(stl.pen2Point())).setFixedHeight(10)))
+//                    .pageFooter(cmp.pageXofY().setStyle(boldCenteredStyle))
+//                    .setDataSource(createDataSource(query))
+//                    .groupBy(resourceColumn)
+//                    .show();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        
+//    }
+//
+//    private JRDataSource createDataSource(List<Record> lista) {
+//        DRDataSource dataSource = new DRDataSource("id_record", "date", "resource", "assistance_h",
+//                "assistance_m", "evacuated_h", "evacuated_m");
+//        for (Record re : lista) {
+//            dataSource.add(re.getID_record() + "", re.getDate(),
+//                    re.getResource().getName_resource(), re.getAssistance_h() + "",
+//                    re.getAssistance_m() + "", re.getEvacuated_h() + "", re.getEvacuated_m() + "");
+//        }
+//        return dataSource;
+}
 
     @FXML
     private void generate_report(ActionEvent event) {
