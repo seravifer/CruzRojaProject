@@ -94,11 +94,11 @@ public class ReportFormController {
             service_areaID.setDisable(true);
             applicantID.setDisable(true);
 
-            List<Assembly> assemblies = DAO.assemblyDao.queryBuilder().query();
-            List<Applicant> applicants = DAO.applicantDao.queryBuilder().query();
-            List<Resource> resources = DAO.resourceDao.queryBuilder().query();
-            List<Area> areas = DAO.areaDao.queryBuilder().query();
-            List<Service> services = DAO.servicesDao.queryBuilder().query();
+            List<Assembly> assemblies = DAO.assembly.queryBuilder().query();
+            List<Applicant> applicants = DAO.applicant.queryBuilder().query();
+            List<Resource> resources = DAO.resource.queryBuilder().query();
+            List<Area> areas = DAO.area.queryBuilder().query();
+            List<Service> services = DAO.services.queryBuilder().query();
 
             assemblyID.getItems().addAll(assemblies);
             resourceID.getItems().addAll(resources);
@@ -117,7 +117,7 @@ public class ReportFormController {
 //        Assembly a = assemblyID.getValue();
 //        LocalDate sd = init_dateID.getValue();
 //        LocalDate fd = finish_dateID.getValue();
-//        QueryBuilder<Record, Integer> qb = DAO.recordDao.queryBuilder();
+//        QueryBuilder<Record, Integer> qb = DAO.record.queryBuilder();
 //        Where<Record, Integer> where = qb.where().between("date", sd, fd);
 //        where.and().eq("assembly_id", a.getID_assembly());
 //        List<Record> query = where.query();

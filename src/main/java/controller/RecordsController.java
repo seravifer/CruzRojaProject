@@ -105,7 +105,7 @@ public class RecordsController extends AnchorPane {
         final Task task = new Task<Void>() {
             @Override
             public Void call() throws SQLException, InterruptedException {
-                QueryBuilder<Record, Integer> queryBuilder = DAO.recordDao.queryBuilder();
+                QueryBuilder<Record, Integer> queryBuilder = DAO.record.queryBuilder();
 
                 Where<Record, Integer> where = queryBuilder
                         .where().between("date", fromID.getValue(), toID.getValue());

@@ -110,7 +110,7 @@ public class RecordComponent extends AnchorPane {
         if (record.getEndTime() == null) {
             Event event = null;
             try {
-                QueryBuilder<Event, Integer> queryBuilder = DAO.eventDao.queryBuilder();
+                QueryBuilder<Event, Integer> queryBuilder = DAO.event.queryBuilder();
                 event = queryBuilder.where().eq("record_id", record.getID_record())
                         .and().isNull("endTimeAssistance").queryForFirst();
             } catch (SQLException ex) {

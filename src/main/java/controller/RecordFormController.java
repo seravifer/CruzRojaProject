@@ -134,8 +134,9 @@ public class RecordFormController {
     @FXML
     private AnchorPane eventFormID;
 
+    private JFXSnackbar snackbar;
+
     private Record record;
-    JFXSnackbar snackbar;
 
     private void loadView() {
         try {
@@ -147,14 +148,6 @@ public class RecordFormController {
             e.printStackTrace();
         }
 
-        snackbar = new JFXSnackbar(rootID);
-        snackbar.layoutBoundsProperty().addListener((ob, o, n) -> {
-            Bounds contentBound = snackbar.getLayoutBounds();
-            double offsetX = rootID.getWidth() - contentBound.getWidth() - 20;
-            double offsetY = rootID.getHeight() - contentBound.getHeight();
-            snackbar.setLayoutX(offsetX);
-            snackbar.setLayoutY(offsetY - 20);
-        });
         init();
     }
 
@@ -189,7 +182,7 @@ public class RecordFormController {
         notesID.setText(record.getNotes());
 
         try {
-            QueryBuilder<Event, Integer> queryBuilder = DAO.eventDao.queryBuilder();
+            QueryBuilder<Event, Integer> queryBuilder = DAO.event.queryBuilder();
             List<Event> records = queryBuilder.where().eq("record_id", record.getID_record()).query();
             eventsTableID.getItems().addAll(records);
         } catch (SQLException e) {
@@ -201,10 +194,10 @@ public class RecordFormController {
 
     private void init() {
         try {
-            List<Assembly> assemblies = DAO.assemblyDao.queryBuilder().query();
-            List<Applicant> applicants = DAO.applicantDao.queryBuilder().query();
-            List<Resource> resources = DAO.resourceDao.queryBuilder().query();
-            List<Area> areas = DAO.areaDao.queryBuilder().query();
+            List<Assembly> assemblies = DAO.assembly.queryBuilder().query();
+            List<Applicant> applicants = DAO.applicant.queryBuilder().query();
+            List<Resource> resources = DAO.resource.queryBuilder().query();
+            List<Area> areas = DAO.area.queryBuilder().query();
 
             assemblyID.getItems().addAll(assemblies);
             applicantID.getItems().addAll(applicants);
@@ -214,20 +207,23 @@ public class RecordFormController {
             e.printStackTrace();
         }
 
+        snackbar = new JFXSnackbar(rootID);
+        snackbar.layoutBoundsProperty().addListener((ob, o, n) -> {
+            Bounds contentBound = snackbar.getLayoutBounds();
+            double offsetX = rootID.getWidth() - contentBound.getWidth() - 20;
+            double offsetY = rootID.getHeight() - contentBound.getHeight() - 20;
+            snackbar.setLayoutX(offsetX);
+            snackbar.setLayoutY(offsetY);
+        });
+
         startTimeID.setIs24HourView(true);
         endTimeID.setIs24HourView(true);
 
-        assistance_mID.textProperty().addListener(onlyNumbers(assistance_mID));
-        assistance_mID.focusedProperty().addListener(minZero(assistance_mID));
-
-        assistance_hID.textProperty().addListener(onlyNumbers(assistance_hID));
-        assistance_hID.focusedProperty().addListener(minZero(assistance_hID));
-
-        evacuated_mID.textProperty().addListener(onlyNumbers(evacuated_mID));
-        evacuated_mID.focusedProperty().addListener(minZero(evacuated_mID));
-
-        evacuated_hID.textProperty().addListener(onlyNumbers(evacuated_hID));
-        evacuated_hID.focusedProperty().addListener(minZero(evacuated_hID));
+        JFXTextField[] nodes = {assistance_mID, assistance_hID, evacuated_hID, evacuated_mID};
+        for (JFXTextField node : nodes) {
+            node.textProperty().addListener(onlyNumbers(node));
+            node.focusedProperty().addListener(minZero(node));
+        }
 
         endTimeID.getEditor().setOnMouseClicked(event -> {
             if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
@@ -238,7 +234,7 @@ public class RecordFormController {
 
         areaID.valueProperty().addListener((ob, o, n) -> {
             try {
-                List<Service> services = DAO.servicesDao.queryBuilder()
+                List<Service> services = DAO.services.queryBuilder()
                         .where().eq("area_id", areaID.getValue().getID_area()).query();
                 serviceID.getItems().clear();
                 serviceID.getItems().addAll(services);
@@ -310,7 +306,7 @@ public class RecordFormController {
             eventsTableID.getItems().add(event);
 
             try {
-                DAO.eventDao.create(event);
+                DAO.event.create(event);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
@@ -324,9 +320,8 @@ public class RecordFormController {
 
         eventsTableID.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
             if (event.isControlDown()) return;
-            if (eventsTableID.getEditingCell() == null) {
+            if (eventsTableID.getEditingCell() == null)
                 eventsTableID.getSelectionModel().clearSelection();
-            }
         });
 
         eventsTableID.widthProperty().addListener((ob, o, n) -> {
@@ -349,18 +344,18 @@ public class RecordFormController {
                     assistance_hID.getText(), evacuated_hID.getText(), evacuated_mID.getText(), registryID.getText(),
                     notesID.getText());
             try {
-                DAO.recordDao.create(record);
+                DAO.record.create(record);
                 snackbar.show("El registro " + codeID.getText() + " se ha guardado correctamente.", 4000);
+
+                addID.setText("Guardar");
+                LocalDate date = LocalDate.parse(record.getDate());
+                codeID.setText("#" + String.valueOf(date.getYear()).substring(2, 4) + "/" +
+                        String.format("%05d", record.getID_record()));
+                eventFormID.setDisable(false); // TODO no es necesario registrar para hacerlo
             } catch (SQLException e) {
                 snackbar.show("Se ha producido un error al guardar el registro. Por favor, intentelo de nuevo.", 6000);
                 record = null;
             }
-
-            addID.setText("Guardar");
-            LocalDate date = LocalDate.parse(record.getDate());
-            codeID.setText("#" + String.valueOf(date.getYear()).substring(2, 4) + "/" +
-                    String.format("%05d", record.getID_record()));
-            eventFormID.setDisable(false);
         } else {
             record.setResource(resourceID.getValue());
             record.setAssembly(assemblyID.getValue());
