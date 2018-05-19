@@ -5,8 +5,8 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXProgressBar?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
@@ -26,27 +27,30 @@
                   <Image url="@../img/logo.png" />
                </image>
             </ImageView>
+            <JFXButton fx:id="generate_button" layoutX="262.0" layoutY="20.0" onAction="#generate_report" prefHeight="27.0" prefWidth="159.0" ripplerFill="RED" style="-fx-background-color: #f44336;" text="Exportar documento" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton layoutX="100.0" layoutY="21.0" onAction="#show_report" prefHeight="30.0" prefWidth="131.0" ripplerFill="RED" style="-fx-background-color: #f44336;" text="Mostrar informe" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
          </children>
          <effect>
-            <DropShadow color="#0000005d" height="28.42" radius="8.15" spread="0.14" width="6.18" />
+            <DropShadow color="#0000005d" height="17.3" radius="5.37" spread="0.14" width="6.18" />
          </effect>
       </AnchorPane>
    </top>
-   <center>
-      <AnchorPane fx:id="informe" prefHeight="517.0" prefWidth="727.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="50.0" fitWidth="52.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/logo.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="title" layoutX="58.0" layoutY="23.0" />
-            <Label fx:id="text" layoutX="25.0" layoutY="63.0" />
-         </children>
-      </AnchorPane>
-   </center>
    <left>
-      <AnchorPane prefHeight="517.0" prefWidth="240.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="514.0" prefWidth="255.0" style="-fx-background-color: #fff; -fx-border-color: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent); -fx-border-style: solid; -fx-border-width: 4px 0 0 0;" BorderPane.alignment="CENTER">
          <children>
             <GridPane layoutX="22.0" layoutY="152.0" prefHeight="347.0" prefWidth="200.0">
               <columnConstraints>
@@ -68,45 +72,36 @@
                <children>
                   <JFXCheckBox fx:id="inter_by_gender" checkedColor="RED" text="Intervenciones por género" unCheckedColor="RED" GridPane.rowIndex="6" />
                   <JFXCheckBox fx:id="service_hours" checkedColor="RED" text="Horas de servicio" unCheckedColor="RED" GridPane.rowIndex="7" />
-                  <JFXCheckBox fx:id="cb_resource" checkedColor="RED" onAction="#press_resource" text=" " unCheckedColor="RED" />
-                  <JFXCheckBox fx:id="cb_area" checkedColor="RED" onAction="#press_area" text=" " unCheckedColor="RED" GridPane.rowIndex="1" />
-                  <JFXCheckBox fx:id="cb_applicant" checkedColor="RED" onAction="#press_applicant" text=" " unCheckedColor="RED" GridPane.rowIndex="3" />
+                  <JFXCheckBox fx:id="cb_resource" checkedColor="RED" onAction="#press_resource" text=" " unCheckedColor="RED" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <JFXCheckBox fx:id="cb_area" checkedColor="RED" onAction="#press_area" text=" " unCheckedColor="RED" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <JFXCheckBox fx:id="cb_applicant" checkedColor="RED" onAction="#press_applicant" text=" " unCheckedColor="RED" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                   <JFXCheckBox fx:id="total_transfer" checkedColor="RED" text="Total de traslados" unCheckedColor="RED" GridPane.rowIndex="5" />
-                  <JFXButton onAction="#show_report" ripplerFill="RED" style="-fx-background-color: #f44336;" text="Mostrar informe" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="9">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </JFXButton>
                   <JFXComboBox fx:id="resourceID" focusColor="#e53935" labelFloat="true" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="164.0" promptText="Recursos" GridPane.columnIndex="1" />
                   <JFXComboBox fx:id="areaID" focusColor="#e53935" labelFloat="true" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="164.0" promptText="Area" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <JFXComboBox fx:id="service_areaID" focusColor="#e53935" labelFloat="true" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="164.0" promptText="Servicio del área elegida" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <JFXComboBox fx:id="applicantID" focusColor="#e53935" labelFloat="true" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="164.0" promptText="Solicitantes" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
-            <JFXDatePicker fx:id="init_dateID" defaultColor="#e53935" layoutX="40.0" layoutY="31.0" promptText="Fecha de inicio" showWeekNumbers="true" />
-            <JFXDatePicker fx:id="finish_dateID" defaultColor="#e53935" layoutX="37.0" layoutY="73.0" promptText="Fecha de inicio" showWeekNumbers="true" />
-            <JFXComboBox fx:id="assemblyID" focusColor="#e53935" labelFloat="true" layoutX="40.0" layoutY="118.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="164.0" promptText="Asamblea" />
+            <JFXDatePicker fx:id="init_dateID" defaultColor="#e53935" layoutX="37.0" layoutY="70.0" prefHeight="25.0" prefWidth="204.0" promptText="Fecha de inicio" showWeekNumbers="true" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="21.0" />
+            <JFXDatePicker fx:id="finish_dateID" defaultColor="#e53935" layoutX="30.0" layoutY="116.0" promptText="Fecha de inicio" showWeekNumbers="true" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="21.0" />
+            <JFXComboBox fx:id="assemblyID" focusColor="#e53935" labelFloat="true" layoutX="32.0" layoutY="21.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="181.0" promptText="Asamblea" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0" />
          </children>
       </AnchorPane>
    </left>
-   <right>
-      <AnchorPane prefHeight="517.0" prefWidth="213.0" BorderPane.alignment="CENTER">
-         <children>
-            <JFXButton fx:id="generate_button" layoutX="33.0" layoutY="472.0" onAction="#generate_report" ripplerFill="RED" style="-fx-background-color: #f44336;" text="Generar documento" textFill="WHITE">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-         </children>
-      </AnchorPane>
-   </right>
    <bottom>
-      <JFXProgressBar fx:id="progressBar" disable="true" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER" />
+      <JFXProgressBar fx:id="progressBar" disable="true" maxWidth="1.7976931348623157E308" visible="false" BorderPane.alignment="CENTER" />
    </bottom>
+   <center>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="514.0" prefWidth="697.0" style="-fx-background-color: #fff;" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets bottom="20.0" top="20.0" />
+         </BorderPane.margin>
+      </HBox>
+   </center>
 </BorderPane>
