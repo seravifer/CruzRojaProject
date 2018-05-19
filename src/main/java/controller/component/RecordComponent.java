@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
 import model.Event;
 import model.Record;
@@ -64,6 +65,9 @@ public class RecordComponent extends AnchorPane {
     private SVGPath editID;
 
     @FXML
+    private SVGPath deleteID;
+
+    @FXML
     private Label statusID;
 
     @FXML
@@ -106,7 +110,6 @@ public class RecordComponent extends AnchorPane {
         if (record.getNotes().equals("")) notesID.setText("---");
         else notesID.setText(record.getNotes());
 
-
         if (record.getEndTime() == null) {
             Event event = null;
             try {
@@ -132,6 +135,22 @@ public class RecordComponent extends AnchorPane {
             endTimeID.setText(record.getEndTime());
         }
 
-        editID.setOnMouseClicked((event) -> Platform.runLater(() -> new RecordFormController(record)));
+        editID.setOnMouseClicked(e -> Platform.runLater(() -> new RecordFormController(record)));
+        deleteID.setOnMouseClicked(e -> Platform.runLater(() -> {
+            try {
+                record.delete();
+                ((VBox) this.getParent()).getChildren().remove(this);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }));
+    }
+
+    public Record getRecord() {
+        return record;
+    }
+
+    public void refresh() {
+        init();
     }
 }

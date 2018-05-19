@@ -38,9 +38,6 @@ public class RecordsController extends AnchorPane {
     private SVGPath reportID;
 
     @FXML
-    private JFXCheckBox allID;
-
-    @FXML
     private JFXCheckBox pendingID;
 
     @FXML
@@ -61,6 +58,12 @@ public class RecordsController extends AnchorPane {
     @FXML
     private JFXProgressBar loadID;
 
+    @FXML
+    private AnchorPane optionsID;
+
+    @FXML
+    private SVGPath refreshID;
+
     public RecordsController() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
@@ -78,6 +81,7 @@ public class RecordsController extends AnchorPane {
         addID.setOnAction((e) -> new RecordFormController());
         settingsID.setOnMouseClicked(e -> new AdminController());
         reportID.setOnMouseClicked(e -> new ReportController());
+        refreshID.setOnMouseClicked(e -> refresh());
 
         //fromID.setValue(LocalDate.now());
         fromID.setValue(LocalDate.of(2018, 1, 1));
@@ -89,11 +93,16 @@ public class RecordsController extends AnchorPane {
         });
 
         fromID.valueProperty().addListener((ob, o, n) -> {
+            if (n == null) fromID.setValue(LocalDate.now());
             limitDays();
             filter();
         });
 
-        toID.valueProperty().addListener((ob, o, n) -> filter());
+        toID.valueProperty().addListener((ob, o, n) -> {
+            if (n == null || toID.getValue().isBefore(fromID.getValue()))
+                toID.setValue(fromID.getValue());
+            filter();
+        });
 
         pendingID.selectedProperty().addListener((ob, o, n) -> filter());
 
@@ -125,12 +134,34 @@ public class RecordsController extends AnchorPane {
         };
 
         task.stateProperty().addListener((ob, o, nValue) -> {
-            if(nValue == Worker.State.RUNNING) loadID.setVisible(true);
-            else if (nValue == Worker.State.SUCCEEDED) loadID.setVisible(false);
+            if(nValue == Worker.State.RUNNING) {
+                optionsID.setDisable(true);
+                loadID.setVisible(true);
+            }
+            else if (nValue == Worker.State.SUCCEEDED) {
+                optionsID.setDisable(false);
+                loadID.setVisible(false);
+            }
         });
 
         new Thread(task).start();
+    }
 
+    private void refresh() {
+        loadID.setVisible(true);
+        List<Node> records = recordsID.getChildren();
+
+        try {
+            for (Node node : records) {
+                RecordComponent recordComponent = (RecordComponent) node;
+                recordComponent.getRecord().refresh();
+                recordComponent.refresh();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            loadID.setVisible(false);
+        }
     }
 
     private void limitDays() {

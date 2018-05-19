@@ -64,12 +64,16 @@
    <center>
       <AnchorPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane layoutX="11.0" layoutY="20.0" prefHeight="52.0" prefWidth="802.0" style="-fx-background-color: #fff;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <AnchorPane fx:id="optionsID" layoutX="11.0" layoutY="20.0" prefHeight="52.0" prefWidth="802.0" style="-fx-background-color: #fff;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                <children>
-                  <JFXCheckBox fx:id="allID" checkedColor="#c42126" disable="true" layoutX="17.0" layoutY="18.0" selected="true" text="Mostrar propios" textFill="#000000a9" unCheckedColor="#8d8d8d" AnchorPane.leftAnchor="17.0" />
-                  <JFXCheckBox fx:id="pendingID" checkedColor="#c42126" layoutX="151.0" layoutY="18.0" selected="true" text="Mostrar solo pendientes" textFill="#000000a9" unCheckedColor="#8d8d8d" AnchorPane.leftAnchor="151.0" />
+                  <JFXCheckBox fx:id="pendingID" checkedColor="#c42126" layoutX="51.0" layoutY="18.0" selected="true" text="Mostrar solo pendientes" textFill="#000000a9" unCheckedColor="#8d8d8d" AnchorPane.leftAnchor="51.0" />
                   <JFXDatePicker fx:id="toID" defaultColor="#c42126" layoutX="835.0" layoutY="14.0" prefHeight="25.0" prefWidth="110.0" promptText="Hasta" AnchorPane.rightAnchor="15.0" />
                   <JFXDatePicker fx:id="fromID" defaultColor="#c42126" layoutX="698.0" layoutY="14.0" prefHeight="25.0" prefWidth="110.0" promptText="Desde" AnchorPane.rightAnchor="154.0" />
+                  <SVGPath fx:id="refreshID" content="M12,6V9L16,5L12,1V4A8,8 0 0,0 4,12C4,13.57 4.46,15.03 5.24,16.26L6.7,14.8C6.25,13.97 6,13 6,12A6,6 0 0,1 12,6M18.76,7.74L17.3,9.2C17.74,10.04 18,11 18,12A6,6 0 0,1 12,18V15L8,19L12,23V20A8,8 0 0,0 20,12C20,10.43 19.54,8.97 18.76,7.74Z" fill="#686868" layoutX="14.0" layoutY="14.0" pickOnBounds="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </SVGPath>
                   </children>
             </AnchorPane>
             <StackPane layoutY="90.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">

@@ -11,9 +11,10 @@ import javafx.stage.Stage;
 import java.util.Optional;
 
 public class SuperController {
-    private Stage stage;
 
     private static SuperController instance = null;
+
+    private Stage stage;
 
     protected SuperController() {
         Group root = new Group();
@@ -34,6 +35,8 @@ public class SuperController {
             }
         };*/
         stage.setScene(scene);
+        stage.setMinWidth(1040);
+        stage.setMinHeight(640);
         stage.setTitle("Registro Cruz Roja");
         stage.show();
     }

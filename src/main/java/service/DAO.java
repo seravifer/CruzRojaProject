@@ -15,16 +15,18 @@ public class DAO {
     public static Dao<Resource, Integer> resource;
     public static Dao<Record, Integer> record;
     public static Dao<Event, Integer> event;
+    public static Dao<Hospital, Integer> hospital;
 
     static {
         try {
-            assembly = DaoManager.createDao(DataBase.get(), Assembly.class);
-            applicant = DaoManager.createDao(DataBase.get(), Applicant.class);
-            services = DaoManager.createDao(DataBase.get(), Service.class);
-            area = DaoManager.createDao(DataBase.get(), Area.class);
-            resource = DaoManager.createDao(DataBase.get(), Resource.class);
-            record = DaoManager.createDao(DataBase.get(), Record.class);
-            event = DaoManager.createDao(DataBase.get(), Event.class);
+            assembly = DaoManager.createDao(DB.get(), Assembly.class);
+            applicant = DaoManager.createDao(DB.get(), Applicant.class);
+            services = DaoManager.createDao(DB.get(), Service.class);
+            area = DaoManager.createDao(DB.get(), Area.class);
+            resource = DaoManager.createDao(DB.get(), Resource.class);
+            record = DaoManager.createDao(DB.get(), Record.class);
+            event = DaoManager.createDao(DB.get(), Event.class);
+            hospital = DaoManager.createDao(DB.get(), Hospital.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }

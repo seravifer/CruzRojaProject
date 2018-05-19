@@ -6,12 +6,13 @@ import com.j256.ormlite.support.ConnectionSource;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class DataBase {
-    private static DataBase instance = null;
+public class DB {
+
+    private static DB instance = null;
 
     private ConnectionSource db;
 
-    private DataBase() {
+    private DB() {
         try {
             db = new JdbcConnectionSource("jdbc:sqlite:db");
         } catch (SQLException e) {
@@ -34,7 +35,7 @@ public class DataBase {
 
     public static ConnectionSource get() {
         if(instance == null) {
-            instance = new DataBase();
+            instance = new DB();
         }
         return instance.getJdbi();
     }
