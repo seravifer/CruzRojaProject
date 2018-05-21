@@ -121,7 +121,7 @@ public class ReportController {
         }
         if (total_resourcesID.isSelected()) {
             BarChart list_by_resources = showByResources(query);
-           // reportID.getChildren().add(list_by_resources);
+           reportID.getChildren().add(list_by_resources);
         }
         if (total_servicesID.isSelected()) {
 //            BarChart list_by_services = showByServices(query);
