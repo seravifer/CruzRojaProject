@@ -1,5 +1,7 @@
 package controller;
 
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
 import com.jfoenix.controls.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,66 +16,43 @@ import service.DAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 
 
 public class ReportController {
 
     @FXML
-    private JFXCheckBox inter_by_gender;
-
-    @FXML
-    private JFXCheckBox service_hours;
-
-    @FXML
-    private JFXCheckBox cb_resource;
-
-    @FXML
-    private JFXCheckBox cb_area;
-
-    @FXML
-    private JFXCheckBox cb_applicant;
-
-    @FXML
-    private JFXCheckBox total_transfer;
-
-    @FXML
-    private JFXComboBox<Resource> resourceID;
-
-    @FXML
-    private JFXComboBox<Area> areaID;
-
-    @FXML
-    private JFXComboBox<Service> service_areaID;
-
-    @FXML
-    private JFXComboBox<Applicant> applicantID;
-
-    @FXML
-    private JFXDatePicker init_dateID;
-
-    @FXML
-    private JFXDatePicker finish_dateID;
-
+    private JFXButton generate_button;
     @FXML
     private JFXComboBox<Assembly> assemblyID;
-
     @FXML
-    private Label title;
-
+    private JFXDatePicker init_dateID;
     @FXML
-    private Label text;
-
+    private JFXDatePicker finish_dateID;
     @FXML
-    private JFXButton generate_button;
-
+    private JFXCheckBox total_recordsID;
     @FXML
-    private AnchorPane informe;
-
+    private JFXCheckBox total_resourcesID;
+    @FXML
+    private JFXCheckBox total_servicesID;
+    @FXML
+    private JFXCheckBox total_areaID;
+    @FXML
+    private JFXCheckBox total_hoursID;
     @FXML
     private JFXProgressBar progressBar;
+     @FXML
+    private AnchorPane reportID;
 
     public ReportController() {
         try {
@@ -93,14 +72,9 @@ public class ReportController {
             logger.log(Level.SEVERE, "Failed to create new Window.", e);
         }
     }
-
+    
     private void init() {
         try {
-            resourceID.setDisable(true);
-            areaID.setDisable(true);
-            service_areaID.setDisable(true);
-            applicantID.setDisable(true);
-
             List<Assembly> assemblies = DAO.assembly.queryBuilder().query();
             List<Applicant> applicants = DAO.applicant.queryBuilder().query();
             List<Resource> resources = DAO.resource.queryBuilder().query();
@@ -108,84 +82,20 @@ public class ReportController {
             List<Service> services = DAO.services.queryBuilder().query();
 
             assemblyID.getItems().addAll(assemblies);
-            resourceID.getItems().addAll(resources);
-            areaID.getItems().addAll(areas);
-            applicantID.getItems().addAll(applicants);
-            service_areaID.getItems().addAll(services);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    @FXML
-    private void show_report(ActionEvent event) throws SQLException {
-//        Assembly a = assemblyID.getValue();
-//        LocalDate sd = init_dateID.getValue();
-//        LocalDate fd = finish_dateID.getValue();
-//        QueryBuilder<Record, Integer> qb = DAO.record.queryBuilder();
-//        Where<Record, Integer> where = qb.where().between("date", sd, fd);
-//        where.and().eq("assembly_id", a.getID_assembly());
-//        List<Record> query = where.query();
-//        StyleBuilder boldStyle = stl.style().bold();
-//        StyleBuilder boldCenteredStyle = stl.style(boldStyle)
-//                .setHorizontalAlignment(HorizontalAlignment.CENTER);
-//        StyleBuilder columnTitleStyle = stl.style(boldCenteredStyle)
-//                .setBorder(stl.pen1Point())
-//                .setBackgroundColor(Color.WHITE);
-//        StyleBuilder titleStyle = stl.style(boldCenteredStyle)
-//                             .setVerticalAlignment(VerticalAlignment.MIDDLE)
-//                             .setFontSize(15);
-//              
-//        
-//        try {
-//            TextColumnBuilder<String> resourceColumn = col.column("Resource", "resource", type.stringType()).setStyle(boldStyle);
-//            report()
-//                    .setColumnTitleStyle(columnTitleStyle)
-//                    .highlightDetailEvenRows()
-//                    .columns(
-//                            col.column("ID_Record", "id_record", type.stringType()),
-//                            col.column("Date", "date", type.stringType()),
-//                            resourceColumn,
-//                            col.column("Assistance_h", "assistance_h", type.stringType()),
-//                            col.column("Assistance_m", "assistance_m", type.stringType()),
-//                            col.column("Evacuated_h", "evacuated_h", type.stringType()),
-//                            col.column("Evacuated_m", "evacuated_m", type.stringType()))
-//                    .title(//shows report title
-//                            cmp.horizontalList()
-//                                    .add(
-//                                            cmp.image(getClass().getResourceAsStream("/img/logo.png")).setFixedDimension(80, 80),
-//                                            cmp.text("    Informe de la Cruz Roja").setStyle(titleStyle).setHorizontalAlignment(HorizontalAlignment.LEFT),
-//                                            cmp.text("Asamblea de " + a.getName_assembly()).setStyle(titleStyle).setHorizontalAlignment(HorizontalAlignment.RIGHT))
-//                                    .newRow()
-//                                    .add(cmp.filler().setStyle(stl.style().setTopBorder(stl.pen2Point())).setFixedHeight(10)))
-//                    .pageFooter(cmp.pageXofY().setStyle(boldCenteredStyle))
-//                    .setDataSource(createDataSource(query))
-//                    .groupBy(resourceColumn)
-//                    .show();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        
-//    }
-//
-//    private JRDataSource createDataSource(List<Record> lista) {
-//        DRDataSource dataSource = new DRDataSource("id_record", "date", "resource", "assistance_h",
-//                "assistance_m", "evacuated_h", "evacuated_m");
-//        for (Record re : lista) {
-//            dataSource.add(re.getID_record() + "", re.getDate(),
-//                    re.getResource().getName_resource(), re.getAssistance_h() + "",
-//                    re.getAssistance_m() + "", re.getEvacuated_h() + "", re.getEvacuated_m() + "");
-//        }
-//        return dataSource;
-    }
-
+    
     @FXML
     private void generate_report(ActionEvent event) {
         PrinterJob job = PrinterJob.createPrinterJob();
         if (job != null) {
             System.out.println(job.jobStatusProperty().asString());
 
-            boolean printed = job.printPage(informe);
+            boolean printed = job.printPage(reportID);
             if (printed) {
                 job.endJob();
             } else {
@@ -197,19 +107,90 @@ public class ReportController {
     }
 
     @FXML
-    private void press_resource(ActionEvent event) {
-        System.out.println("Hula");
-        resourceID.setDisable(!cb_resource.isSelected());
+    private void show_report(ActionEvent event) throws SQLException {
+        Assembly a = assemblyID.getValue();
+        LocalDate sd = init_dateID.getValue();
+        LocalDate fd = finish_dateID.getValue();
+        QueryBuilder<Record, Integer> qb = DAO.record.queryBuilder();
+        Where<Record, Integer> where = qb.where().between("date", sd, fd);
+        where.and().eq("assembly_id", a.getID_assembly());
+        List<Record> query = where.query();
+        if (total_recordsID.isSelected()) {
+            PieChart list_by_gender = showByGender(query);
+            reportID.getChildren().add(list_by_gender);
+        }
+        if (total_resourcesID.isSelected()) {
+            BarChart list_by_resources = showByResources(query);
+           // reportID.getChildren().add(list_by_resources);
+        }
+        if (total_servicesID.isSelected()) {
+//            BarChart list_by_services = showByServices(query);
+        }
+    }   
+    
+//    private BarChart showByServices (List<Record> list) {
+//        return new BarChart();
+//    }
+    
+    private BarChart showByResources (List<Record> list) {
+        int u_ambu = 0, u_tango = 0, u_embar = 0, u_quad = 0, u_moto = 0;
+        for (Record r : list) {
+            switch(r.getResource().getName_resource()) {
+                case "Ambulancia":
+                    u_ambu = u_ambu + 1;
+                    break;
+                case "Tango":
+                    u_tango = u_tango + 1;
+                    break;
+                case "Embarcación":
+                    u_embar = u_embar + 1;
+                    break;
+                case "Quad":
+                    u_quad = u_quad + 1;
+                    break;
+                case "Moto acuática":
+                    u_moto = u_moto + 1;
+                    break;
+            }
+        }
+        
+        final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        final BarChart<String,Number> bc = 
+            new BarChart<String,Number>(xAxis,yAxis);
+        bc.setTitle("Uso de recursos y desglose");
+        xAxis.setLabel("Recursos");       
+        yAxis.setLabel("Utilizados");
+        
+        XYChart.Series serie = new XYChart.Series();
+        serie.getData().add(new XYChart.Data("Ambulancias", u_ambu));
+        serie.getData().add(new XYChart.Data("Tangos", u_tango));
+        serie.getData().add(new XYChart.Data("Embarcaciones", u_embar));
+        serie.getData().add(new XYChart.Data("Quads", u_quad));
+        serie.getData().add(new XYChart.Data("Motos acuáticas", u_moto));
+        
+        bc.getData().add(serie);
+        return bc;
+         
     }
-
-    @FXML
-    private void press_area(ActionEvent event) {
-        areaID.setDisable(!cb_area.isSelected());
-        service_areaID.setDisable(!cb_area.isSelected());
-    }
-
-    @FXML
-    private void press_applicant(ActionEvent event) {
-        applicantID.setDisable(!cb_applicant.isSelected());
+    
+    private PieChart showByGender (List<Record> list) {
+       int as_h = 0, as_m = 0, ev_h = 0, ev_m = 0;
+       for (Record r : list) {
+           as_h = as_h + r.getAssistance_h();
+           as_m = as_m + r.getAssistance_m();
+           ev_h = ev_h + r.getEvacuated_h();
+           ev_m = ev_m + r.getEvacuated_m();
+       }
+       int t = as_h + as_m + ev_h + ev_m;
+       ObservableList<PieChart.Data> pieChartData =
+               FXCollections.observableArrayList(
+                       new PieChart.Data("Hombres asistidos: " + as_h, as_h),
+                       new PieChart.Data("Mujeres asistidas: " + as_m, as_m),
+                       new PieChart.Data("Hombres evacuados: " + ev_h, ev_h),
+                       new PieChart.Data("Mujeres evacuadas: " + ev_m, ev_m));
+       final PieChart chart = new PieChart(pieChartData);
+       chart.setTitle("Registros totales (" + t + ") y desglose por género");
+       return chart;
     }
 }
