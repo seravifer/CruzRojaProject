@@ -19,6 +19,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.scene.shape.SVGPath;
 
 public class AdminController {
 
@@ -44,6 +46,9 @@ public class AdminController {
     private TableColumn<Service, Area> areaColumnServicios;
 
     @FXML
+    private TableColumn<Service, Service> iconosColumnServicios;
+    
+    @FXML
     private JFXTextField codigoAsambleas;
 
     @FXML
@@ -62,6 +67,9 @@ public class AdminController {
     private TableColumn<Assembly, String> nombreColumnAsamblea;
 
     @FXML
+    private TableColumn<Assembly, Assembly> iconosColumnAsamblea;
+    
+    @FXML
     private JFXTextField codigoRecursos;
 
     @FXML
@@ -78,6 +86,9 @@ public class AdminController {
 
     @FXML
     private TableColumn<Resource, String> nombreColumnRecursos;
+    
+    @FXML
+    private TableColumn<Resource, Resource> iconosColumnRecursos;
 
     @FXML
     private JFXTextField nombreAreas;
@@ -96,6 +107,9 @@ public class AdminController {
 
     @FXML
     private TableColumn<Area, String> abreviaturaColumnAreas;
+    
+    @FXML
+    private TableColumn<Area, Area> iconosColumnAreas;
 
     @FXML
     private JFXTextField nombreSolicitantes;
@@ -108,7 +122,10 @@ public class AdminController {
 
     @FXML
     private TableColumn<Applicant, String> nombreColumnSolicitante;
-
+    
+    @FXML
+    private TableColumn<Applicant, Applicant> iconosColumnSolicitante;
+    
     @FXML
     private JFXTextField codigoHospital;
 
@@ -122,11 +139,14 @@ public class AdminController {
     private TableView<Applicant> tablaHospitales;
 
     @FXML
-    private TableColumn<?, String> codigoColumnHospital;
+    private TableColumn<Hospital, String> codigoColumnHospital;
 
     @FXML
-    private TableColumn<?, String> nombreColumnHospital;
-
+    private TableColumn<Hospital, String> nombreColumnHospital;
+    
+    @FXML
+    private TableColumn<Hospital, Hospital> iconosColumnHospital;
+    
     public AdminController() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -170,6 +190,25 @@ public class AdminController {
 
             nombreColumnServicios.setCellValueFactory(new PropertyValueFactory<>("name"));
             areaColumnServicios.setCellValueFactory(new PropertyValueFactory<>("area"));
+            iconosColumnServicios.setCellValueFactory(
+                    param -> new ReadOnlyObjectWrapper<>(param.getValue())
+            );
+            SVGPath iconDelete = new SVGPath();
+            iconDelete.setContent("M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z");
+                
+            iconosColumnServicios.setCellFactory(param -> new TableCell<Service,Service>(){              
+                protected void updateItem(Service servicio, boolean empty) {
+                super.updateItem(servicio, empty);
+                if (servicio == null) {
+                    setGraphic(null);
+                    return;
+                }
+                setGraphic(iconDelete);
+                iconDelete.setOnMouseClicked((event) -> {
+                    getTableView().getItems().remove(servicio);
+                });
+    }
+            });
 
             nombreColumnAreas.setCellValueFactory(new PropertyValueFactory<>("name"));
             abreviaturaColumnAreas.setCellValueFactory(new PropertyValueFactory<>("short_name"));
