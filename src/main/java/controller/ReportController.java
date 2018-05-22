@@ -87,8 +87,7 @@ public class ReportController {
             e.printStackTrace();
         }
     }
-
-    
+ 
     @FXML
     private void generate_report(ActionEvent event) {
         PrinterJob job = PrinterJob.createPrinterJob();
@@ -127,10 +126,6 @@ public class ReportController {
 //            BarChart list_by_services = showByServices(query);
         }
     }   
-    
-//    private BarChart showByServices (List<Record> list) {
-//        return new BarChart();
-//    }
     
     private BarChart showByResources (List<Record> list) {
         int u_ambu = 0, u_tango = 0, u_embar = 0, u_quad = 0, u_moto = 0;
