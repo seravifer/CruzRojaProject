@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXProgressBar?>
 <?import javafx.geometry.Insets?>
@@ -17,6 +15,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.CheckComboBox?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="1002.0" style="-fx-background-color: #F1F4F5;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <top>
@@ -61,17 +60,14 @@
          <children>
             <VBox layoutX="8.0" layoutY="14.0" prefHeight="479.0" prefWidth="254.0" spacing="15.0">
                <children>
-                  <JFXComboBox fx:id="assemblyID" focusColor="#e53935" labelFloat="true" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="181.0" promptText="Asamblea">
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin></JFXComboBox>
-                  <JFXDatePicker fx:id="init_dateID" defaultColor="#e53935" prefHeight="25.0" prefWidth="204.0" promptText="Fecha de inicio" showWeekNumbers="true" />
-                  <JFXDatePicker fx:id="finish_dateID" defaultColor="#e53935" promptText="Fecha de finalización" showWeekNumbers="true" />
-                  <JFXCheckBox fx:id="total_recordsID" text="Mostrar registros y desglose" />
-                  <JFXCheckBox fx:id="total_resourcesID" text="Mostrar recursos y desglose" />
-                  <JFXCheckBox fx:id="total_servicesID" text="Mostrar servicios y desglose" />
-                  <JFXCheckBox fx:id="total_areaID" text="Mostrar áreas y desglose" />
-                  <JFXCheckBox fx:id="total_hoursID" text="Mostrar horas de trabajo y desglose" />
+                  <JFXDatePicker fx:id="init_dateID" defaultColor="#e53935" prefHeight="25.0" prefWidth="295.0" promptText="Fecha de inicio" showWeekNumbers="true" />
+                  <JFXDatePicker fx:id="finish_dateID" defaultColor="#e53935" prefHeight="25.0" prefWidth="262.0" promptText="Fecha de finalización" showWeekNumbers="true" />
+                  <CheckComboBox fx:id="assemblyID" prefHeight="25.0" prefWidth="267.0" />
+                  <CheckComboBox fx:id="resourceID" prefHeight="25.0" prefWidth="431.0" />
+                  <CheckComboBox fx:id="serviceID" prefHeight="25.0" prefWidth="359.0" />
+                  <CheckComboBox fx:id="areaID" prefHeight="25.0" prefWidth="379.0" />
+                  <CheckComboBox fx:id="hospitalID" prefHeight="25.0" prefWidth="340.0" />
+                  <CheckComboBox fx:id="applicantID" prefHeight="25.0" prefWidth="306.0" />
                </children>
             </VBox>
          </children>
