@@ -113,7 +113,7 @@ public class RecordsController extends AnchorPane {
     private void filter() {
         final Task task = new Task<Void>() {
             @Override
-            public Void call() throws SQLException, InterruptedException {
+            public Void call() throws SQLException {
                 QueryBuilder<Record, Integer> queryBuilder = DAO.record.queryBuilder();
 
                 Where<Record, Integer> where = queryBuilder
@@ -137,8 +137,7 @@ public class RecordsController extends AnchorPane {
             if(nValue == Worker.State.RUNNING) {
                 optionsID.setDisable(true);
                 loadID.setVisible(true);
-            }
-            else if (nValue == Worker.State.SUCCEEDED) {
+            } else if (nValue == Worker.State.SUCCEEDED) {
                 optionsID.setDisable(false);
                 loadID.setVisible(false);
             }
@@ -147,7 +146,7 @@ public class RecordsController extends AnchorPane {
         new Thread(task).start();
     }
 
-    private void refresh() {
+    private void refresh() { // TODO ejecutar en un thread
         loadID.setVisible(true);
         List<Node> records = recordsID.getChildren();
 

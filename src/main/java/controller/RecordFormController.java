@@ -3,10 +3,12 @@ package controller;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.jfoenix.controls.*;
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Bounds;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -14,6 +16,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
 import javafx.util.Callback;
 import model.*;
@@ -26,6 +30,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 public class RecordFormController {
 
@@ -132,6 +137,9 @@ public class RecordFormController {
     private TableColumn<Event, String> registryColumID;
 
     @FXML
+    private TableColumn<Event, Event> iconColumnID;
+
+    @FXML
     private AnchorPane eventFormID;
 
     private JFXSnackbar snackbar;
@@ -210,8 +218,8 @@ public class RecordFormController {
         snackbar = new JFXSnackbar(rootID);
         snackbar.layoutBoundsProperty().addListener((ob, o, n) -> {
             Bounds contentBound = snackbar.getLayoutBounds();
-            double offsetX = rootID.getWidth() - contentBound.getWidth() - 20;
-            double offsetY = rootID.getHeight() - contentBound.getHeight() - 20;
+            double offsetX = rootID.getWidth() - contentBound.getWidth() - 40;
+            double offsetY = rootID.getHeight() - contentBound.getHeight() - 40;
             snackbar.setLayoutX(offsetX);
             snackbar.setLayoutY(offsetY);
         });
@@ -254,6 +262,7 @@ public class RecordFormController {
         transferColumID.setCellValueFactory(new PropertyValueFactory<>("placeTransfer"));
         pathologyColumID.setCellValueFactory(new PropertyValueFactory<>("pathology"));
         registryColumID.setCellValueFactory(new PropertyValueFactory<>("registry"));
+        iconColumnID.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 
         subCodeColumID.setCellFactory(cell -> new TableCell<Event, String>() {
             @Override
@@ -307,15 +316,16 @@ public class RecordFormController {
 
             try {
                 DAO.event.create(event);
+
+                startTimeAssistanceID.setValue(null);
+                endTimeAssistanceID.setValue(null);
+                transferTimeAssistanceID.setValue(null);
+                patientID.clear();
+                transferID.clear();
+                pathologyID.clear();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-
-            startTimeAssistanceID.setValue(null);
-            endTimeAssistanceID.setValue(null);
-            transferTimeAssistanceID.setValue(null);
-            patientID.clear();
-            transferID.clear();
         });
 
         eventsTableID.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
@@ -327,6 +337,44 @@ public class RecordFormController {
         eventsTableID.widthProperty().addListener((ob, o, n) -> {
             TableHeaderRow header = (TableHeaderRow) eventsTableID.lookup("TableHeaderRow");
             header.reorderingProperty().addListener((ob2, o2, n2) -> header.setReordering(false));
+        });
+
+        iconColumnID.setCellFactory(param -> new TableCell<Event,Event>(){
+            protected void updateItem(Event event, boolean empty) {
+                super.updateItem(event, empty);
+                SVGPath icon = new SVGPath();
+                icon.setContent("M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z");
+                icon.setCursor(Cursor.HAND);
+                icon.setFill(Paint.valueOf("#545454"));
+
+                if (event == null || empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setGraphic(icon);
+                    icon.setOnMouseClicked(e -> {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Dialogo de confirmación");
+                        alert.setHeaderText(null);
+                        alert.setContentText("¿Estas seguro de que quieres borrar el evento? " +
+                                "No se podra revertir la acción.");
+
+                        ButtonType yesButton = new ButtonType("Sí");
+                        ButtonType noButton = new ButtonType("No");
+                        alert.getButtonTypes().setAll(yesButton, noButton);
+
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.get() == yesButton) {
+                            try {
+                                event.delete();
+                                getTableView().getItems().remove(event);
+                            } catch (SQLException e1) {
+                                e1.printStackTrace();
+                            }
+                        } else alert.close();
+                    });
+                }
+            }
         });
     }
 
@@ -351,7 +399,7 @@ public class RecordFormController {
                 LocalDate date = LocalDate.parse(record.getDate());
                 codeID.setText("#" + String.valueOf(date.getYear()).substring(2, 4) + "/" +
                         String.format("%05d", record.getID_record()));
-                eventFormID.setDisable(false); // TODO no es necesario registrar para hacerlo
+                eventFormID.setDisable(false); // TODO no es necesario guardar el registro
             } catch (SQLException e) {
                 snackbar.show("Se ha producido un error al guardar el registro. Por favor, intentelo de nuevo.", 6000);
                 record = null;

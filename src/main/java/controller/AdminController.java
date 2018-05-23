@@ -3,6 +3,7 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,6 +11,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import model.*;
 import service.DAO;
@@ -19,8 +21,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.scene.shape.SVGPath;
 
 public class AdminController {
 
@@ -47,7 +47,7 @@ public class AdminController {
 
     @FXML
     private TableColumn<Service, Service> iconosColumnServicios;
-    
+
     @FXML
     private JFXTextField codigoAsambleas;
 
@@ -68,7 +68,7 @@ public class AdminController {
 
     @FXML
     private TableColumn<Assembly, Assembly> iconosColumnAsamblea;
-    
+
     @FXML
     private JFXTextField codigoRecursos;
 
@@ -86,7 +86,7 @@ public class AdminController {
 
     @FXML
     private TableColumn<Resource, String> nombreColumnRecursos;
-    
+
     @FXML
     private TableColumn<Resource, Resource> iconosColumnRecursos;
 
@@ -107,7 +107,7 @@ public class AdminController {
 
     @FXML
     private TableColumn<Area, String> abreviaturaColumnAreas;
-    
+
     @FXML
     private TableColumn<Area, Area> iconosColumnAreas;
 
@@ -122,10 +122,10 @@ public class AdminController {
 
     @FXML
     private TableColumn<Applicant, String> nombreColumnSolicitante;
-    
+
     @FXML
     private TableColumn<Applicant, Applicant> iconosColumnSolicitante;
-    
+
     @FXML
     private JFXTextField codigoHospital;
 
@@ -143,10 +143,10 @@ public class AdminController {
 
     @FXML
     private TableColumn<Hospital, String> nombreColumnHospital;
-    
+
     @FXML
     private TableColumn<Hospital, Hospital> iconosColumnHospital;
-    
+
     public AdminController() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -193,21 +193,22 @@ public class AdminController {
             iconosColumnServicios.setCellValueFactory(
                     param -> new ReadOnlyObjectWrapper<>(param.getValue())
             );
-            SVGPath iconDelete = new SVGPath();
-            iconDelete.setContent("M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z");
-                
-            iconosColumnServicios.setCellFactory(param -> new TableCell<Service,Service>(){              
+
+
+            iconosColumnServicios.setCellFactory(param -> new TableCell<Service, Service>() {
                 protected void updateItem(Service servicio, boolean empty) {
-                super.updateItem(servicio, empty);
-                if (servicio == null) {
-                    setGraphic(null);
-                    return;
+                    super.updateItem(servicio, empty);
+                    SVGPath iconDelete = new SVGPath();
+                    iconDelete.setContent("M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z");
+                    if (servicio == null) {
+                        setGraphic(null);
+                        return;
+                    }
+                    setGraphic(iconDelete);
+                    iconDelete.setOnMouseClicked((event) -> {
+                        getTableView().getItems().remove(servicio);
+                    });
                 }
-                setGraphic(iconDelete);
-                iconDelete.setOnMouseClicked((event) -> {
-                    getTableView().getItems().remove(servicio);
-                });
-    }
             });
 
             nombreColumnAreas.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -283,6 +284,5 @@ public class AdminController {
             ex.printStackTrace();
         }
     }
-
 
 }

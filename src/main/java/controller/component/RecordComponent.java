@@ -5,6 +5,9 @@ import controller.RecordFormController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -16,6 +19,7 @@ import service.DAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class RecordComponent extends AnchorPane {
 
@@ -137,11 +141,26 @@ public class RecordComponent extends AnchorPane {
 
         editID.setOnMouseClicked(e -> Platform.runLater(() -> new RecordFormController(record)));
         deleteID.setOnMouseClicked(e -> Platform.runLater(() -> {
-            try {
-                record.delete();
-                ((VBox) this.getParent()).getChildren().remove(this);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Dialogo de confirmación");
+            alert.setHeaderText(null);
+            alert.setContentText("¿Estas seguro de que quieres borrar el registro " + codeID.getText()
+                    + "? No se podra revertir la acción.");
+
+            ButtonType yesButton = new ButtonType("Sí");
+            ButtonType noButton = new ButtonType("No");
+            alert.getButtonTypes().setAll(yesButton, noButton);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == yesButton){
+                try {
+                    record.delete();
+                    ((VBox) this.getParent()).getChildren().remove(this);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                alert.close();
             }
         }));
     }

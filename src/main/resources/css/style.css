@@ -1,3 +1,8 @@
+.root {
+    -fx-font-family: "Roboto";
+    -fx-font-smoothing-type: gray;
+}
+
 /* Table view */
 .table-cell {
     -fx-alignment: center;
@@ -120,9 +125,13 @@
 .jfx-snackbar-content {
     -fx-background-color: #323232;
     -fx-background-radius: 2px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);*/
 }
 
 .jfx-snackbar-toast {
     -fx-text-fill: #fff;
+}
+
+.jfx-snackbar-action {
+    -fx-text-fill: #ff4081;
 }
