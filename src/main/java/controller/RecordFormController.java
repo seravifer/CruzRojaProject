@@ -38,9 +38,6 @@ public class RecordFormController {
     private BorderPane rootID;
 
     @FXML
-    private JFXButton addID;
-
-    @FXML
     private SVGPath settingsID;
 
     @FXML
@@ -196,8 +193,6 @@ public class RecordFormController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        addID.setText("Guardar");
     }
 
     private void init() {
@@ -215,14 +210,16 @@ public class RecordFormController {
             e.printStackTrace();
         }
 
-        snackbar = new JFXSnackbar(rootID);
-        snackbar.layoutBoundsProperty().addListener((ob, o, n) -> {
-            Bounds contentBound = snackbar.getLayoutBounds();
-            double offsetX = rootID.getWidth() - contentBound.getWidth() - 40;
-            double offsetY = rootID.getHeight() - contentBound.getHeight() - 40;
-            snackbar.setLayoutX(offsetX);
-            snackbar.setLayoutY(offsetY);
-        });
+        snackbar = new JFXSnackbar(rootID) {
+            @Override
+            public void refreshPopup() {
+                Bounds contentBound = this.getLayoutBounds();
+                double offsetX = getPopupContainer().getWidth() - contentBound.getWidth() - 40;
+                double offsetY = getPopupContainer().getHeight() - contentBound.getHeight() - 40;
+                snackbar.setLayoutX(offsetX);
+                snackbar.setLayoutY(offsetY);
+            }
+        };
 
         startTimeID.setIs24HourView(true);
         endTimeID.setIs24HourView(true);
@@ -249,7 +246,6 @@ public class RecordFormController {
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-
         });
 
         Callback<TableColumn<Event, String>, TableCell<Event, String>> cellFactoryEvent
@@ -395,7 +391,6 @@ public class RecordFormController {
                 DAO.record.create(record);
                 snackbar.show("El registro " + codeID.getText() + " se ha guardado correctamente.", 4000);
 
-                addID.setText("Guardar");
                 LocalDate date = LocalDate.parse(record.getDate());
                 codeID.setText("#" + String.valueOf(date.getYear()).substring(2, 4) + "/" +
                         String.format("%05d", record.getID_record()));

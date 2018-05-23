@@ -165,11 +165,8 @@ public class RecordComponent extends AnchorPane {
         }));
     }
 
-    public Record getRecord() {
-        return record;
-    }
-
-    public void refresh() {
+    public void refresh() throws SQLException {
+        record.refresh();
         init();
     }
 }

@@ -153,14 +153,13 @@ public class RecordsController extends AnchorPane {
         try {
             for (Node node : records) {
                 RecordComponent recordComponent = (RecordComponent) node;
-                recordComponent.getRecord().refresh();
                 recordComponent.refresh();
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
-            loadID.setVisible(false);
         }
+
+        loadID.setVisible(false);
     }
 
     private void limitDays() {
