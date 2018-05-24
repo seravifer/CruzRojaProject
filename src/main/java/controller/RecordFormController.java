@@ -3,6 +3,7 @@ package controller;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.jfoenix.controls.*;
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
@@ -20,6 +21,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
+import javafx.util.converter.LocalTimeStringConverter;
 import model.*;
 import service.DAO;
 import utils.EditingCell;
@@ -29,7 +32,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 public class RecordFormController {
@@ -224,6 +229,10 @@ public class RecordFormController {
         startTimeID.setIs24HourView(true);
         endTimeID.setIs24HourView(true);
 
+        StringConverter<LocalTime> esConverter = new LocalTimeStringConverter(FormatStyle.SHORT, Locale.FRENCH);
+        startTimeID.setConverter(esConverter);
+        endTimeID.setConverter(esConverter);
+
         JFXTextField[] nodes = {assistance_mID, assistance_hID, evacuated_hID, evacuated_mID};
         for (JFXTextField node : nodes) {
             node.textProperty().addListener(onlyNumbers(node));
@@ -389,11 +398,14 @@ public class RecordFormController {
                     notesID.getText());
             try {
                 DAO.record.create(record);
-                snackbar.show("El registro " + codeID.getText() + " se ha guardado correctamente.", 4000);
+                record.refresh();
 
                 LocalDate date = LocalDate.parse(record.getDate());
                 codeID.setText("#" + String.valueOf(date.getYear()).substring(2, 4) + "/" +
-                        String.format("%05d", record.getID_record()));
+                        String.format("%05d", record.getCode()));
+
+                snackbar.show("El registro " + codeID.getText() + " se ha guardado correctamente.", 4000);
+
                 eventFormID.setDisable(false); // TODO no es necesario guardar el registro
             } catch (SQLException e) {
                 snackbar.show("Se ha producido un error al guardar el registro. Por favor, intentelo de nuevo.", 6000);
@@ -438,6 +450,10 @@ public class RecordFormController {
 
     private ChangeListener<? super Boolean> minZero(TextField node) {
         return (observable, oldValue, newValue) -> {
+            Platform.runLater(() -> {
+                if (node.isFocused()) node.selectAll();
+            });
+
             if (node.getText().equals("")) node.setText("0");
         };
     }

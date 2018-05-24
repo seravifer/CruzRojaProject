@@ -56,6 +56,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor></SVGPath>
             <JFXProgressBar fx:id="loadID" layoutX="-212.0" layoutY="67.0" maxWidth="1.7976931348623157E308" prefHeight="4.0" prefWidth="1002.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="67.0" />
+            <Line endY="40.0" layoutX="198.0" layoutY="15.0" stroke="#c3c3c36b" AnchorPane.bottomAnchor="15.0" AnchorPane.topAnchor="15.0" />
          </children>
          <effect>
             <DropShadow color="#0000005d" height="29.53" offsetY="-1.0" radius="8.4275" width="6.18" />
@@ -67,7 +68,7 @@
          <children>
             <AnchorPane fx:id="optionsID" layoutX="11.0" layoutY="20.0" prefHeight="52.0" prefWidth="802.0" style="-fx-background-color: #fff;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                <children>
-                  <JFXCheckBox fx:id="pendingID" checkedColor="#c42126" layoutX="63.0" layoutY="18.0" selected="true" text="Mostrar solo pendientes" textFill="#000000a9" unCheckedColor="#8d8d8d" AnchorPane.leftAnchor="63.0" />
+                  <JFXCheckBox fx:id="pendingID" checkedColor="#c42126" layoutX="63.0" layoutY="18.0" selected="true" text="Mostrar solo en servicio" textFill="#000000a9" unCheckedColor="#8d8d8d" AnchorPane.leftAnchor="63.0" />
                   <JFXDatePicker fx:id="toID" defaultColor="#c42126" layoutX="835.0" layoutY="14.0" prefHeight="25.0" prefWidth="110.0" promptText="Hasta" AnchorPane.rightAnchor="15.0" />
                   <JFXDatePicker fx:id="fromID" defaultColor="#c42126" layoutX="698.0" layoutY="14.0" prefHeight="25.0" prefWidth="110.0" promptText="Desde" AnchorPane.rightAnchor="154.0" />
                   <SVGPath fx:id="refreshID" content="M12,6V9L16,5L12,1V4A8,8 0 0,0 4,12C4,13.57 4.46,15.03 5.24,16.26L6.7,14.8C6.25,13.97 6,13 6,12A6,6 0 0,1 12,6M18.76,7.74L17.3,9.2C17.74,10.04 18,11 18,12A6,6 0 0,1 12,18V15L8,19L12,23V20A8,8 0 0,0 20,12C20,10.43 19.54,8.97 18.76,7.74Z" fill="#656565" layoutX="11.0" layoutY="14.0" pickOnBounds="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
@@ -82,7 +83,7 @@
                <children>
                   <ScrollPane fx:id="itemsID" fitToWidth="true" hbarPolicy="NEVER" pickOnBounds="false" prefHeight="359.0" prefWidth="802.0" style="-fx-background: #FAFAFA; -fx-background-color: transparent;">
                      <content>
-                        <VBox fx:id="recordsID" spacing="20.0" style="-fx-background-color: #FAFAFA;">
+                        <VBox fx:id="recordsID" spacing="10.0" style="-fx-background-color: #FAFAFA;">
                            <padding>
                               <Insets bottom="20.0" left="20.0" right="20.0" />
                            </padding>
