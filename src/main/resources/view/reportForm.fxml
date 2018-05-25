@@ -33,7 +33,6 @@
                         <Font size="15.0" />
                      </font>
                      <cursor>
-                        <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
                   <JFXButton fx:id="generate_button" onAction="#generate_report" prefHeight="29.0" prefWidth="165.0" ripplerFill="RED" style="-fx-background-color: #f44336;" text="Exportar documento" textFill="WHITE">
@@ -41,7 +40,6 @@
                         <Font size="15.0" />
                      </font>
                      <cursor>
-                        <Cursor fx:constant="HAND" />
                      </cursor>
                      <HBox.margin>
                         <Insets left="20.0" />
