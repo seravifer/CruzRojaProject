@@ -4,7 +4,6 @@
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXProgressBar?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.effect.DropShadow?>
@@ -60,7 +59,7 @@
                <children>
                   <JFXDatePicker fx:id="init_dateID" defaultColor="#e53935" prefHeight="25.0" prefWidth="295.0" promptText="Fecha de inicio" showWeekNumbers="true" />
                   <JFXDatePicker fx:id="finish_dateID" defaultColor="#e53935" prefHeight="25.0" prefWidth="262.0" promptText="Fecha de finalización" showWeekNumbers="true" />
-                  <CheckComboBox fx:id="assemblyID" prefHeight="25.0" prefWidth="267.0" />
+                  <CheckComboBox id="choice" fx:id="assemblyID" prefHeight="35.0" prefWidth="249.0" />
                   <CheckComboBox fx:id="resourceID" prefHeight="25.0" prefWidth="431.0" />
                   <CheckComboBox fx:id="serviceID" prefHeight="25.0" prefWidth="359.0" />
                   <CheckComboBox fx:id="areaID" prefHeight="25.0" prefWidth="379.0" />

@@ -65,6 +65,7 @@ public class ReportController {
             fxmlLoader.setController(this);
 
             Scene scene = new Scene(fxmlLoader.load(), 1200, 720);
+            scene.getStylesheets().setAll(getClass().getResource("/css/style.css").toExternalForm());
             Stage stage = new Stage();
 
             stage.setTitle("Generador de informes de Cruz Roja");

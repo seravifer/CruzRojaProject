@@ -84,23 +84,12 @@
     -fx-background-color: #FFFFFF;;
 }
 
-.jfx-tab-pane .headers-region .tab:closable {
-    -fx-border-color: rgba(255,255,255, 1);
-    -fx-border-width: 0 2 0 0;
-    -fx-border-style: dotted;
-    -fx-border-insets: 8 0 8 0;
-    -fx-padding: 0 8 0 8;
-}
 
 .jfx-tab-pane .headers-region .tab .tab-container .tab-label {
     -fx-text-fill: rgba(255,255,255, 1);
     -fx-font-weight: BOLD;
     -fx-padding: 6 10 6 10;
     -fx-font-size: 16;
-}
-
-.jfx-tab-pane .headers-region .tab:closable .tab-container .tab-label{
-    -fx-padding: 0 8 0 6;
 }
 
 .jfx-tab-pane .headers-region .tab:selected .tab-container .tab-label {
@@ -134,4 +123,39 @@
 
 .jfx-snackbar-action {
     -fx-text-fill: #ff4081;
+}
+
+#choice .combo-box-base, #choice .choice-box {
+    -fx-background-color: transparent;
+    -fx-border-color: #2196F3;
+    -fx-border-width: 0 0 2 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+}
+
+#choice .combo-box:focused, #choice .choice-box:focused {
+    -fx-border-color: #2196F3;
+}
+
+#choice .combo-box-base>.label, #choice .choice-box>.label {
+    -fx-padding: 0.7em 0.7em 0.7em 0em;
+}
+
+#choice .combo-box-base>.arrow-button, #choice .choice-box>.open-button {
+    -fx-padding: 1.2em 0.7em 1.2em 0.5em;
+    -fx-background-radius: 0.0 2.0 2.0 0.0;
+}
+
+#choice .combo-box-base>.arrow-button>.arrow, #choice .choice-box>.open-button>.arrow {
+    -fx-background-color: rgb(200.0, 200.0, 200.0);
+}
+
+#choice .combo-box-base .arrow-button:hover .arrow,
+#choice .spinner .increment-arrow-button:hover .increment-arrow,
+#choice .spinner .decrement-arrow-button:hover .decrement-arrow {
+    -fx-background-color: rgb(150.0, 150.0, 150.0);
+}
+
+#choice .menu-item:focused {
+    -fx-background-color: rgb(230.0, 230.0, 230.0);
 }
