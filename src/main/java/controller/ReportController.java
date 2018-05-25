@@ -96,6 +96,9 @@ public class ReportController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        init_dateID.setValue(LocalDate.of(2017, 12, 1));
+        finish_dateID.setValue(LocalDate.now());
     }
 
     @FXML
@@ -122,20 +125,36 @@ public class ReportController {
         LocalDate fd = finish_dateID.getValue();
         
         QueryBuilder<Record, Integer> qb = DAO.record.queryBuilder();
-        Where<Record, Integer> where = qb.where().between("date", sd, fd);
-        
+        Where<Record, Integer> where = qb.where();
+        where.between("date", sd, fd);
+        int total = 1;
+        /*where
+                .eq("assembly_id", 1)
+                .or()
+                .eq("assembly_id", 2);
+        where.and(2);*/
+
         ObservableList<Assembly> checkedAssembly = assemblyID.getCheckModel().getCheckedItems();
         ObservableList<Applicant> checkedApplicant = applicantID.getCheckModel().getCheckedItems();
         ObservableList<Resource> checkedResource = resourceID.getCheckModel().getCheckedItems();
         ObservableList<Area> checkedArea = areaID.getCheckModel().getCheckedItems();
         ObservableList<Service> checkedService = serviceID.getCheckModel().getCheckedItems();
         ObservableList<Hospital> checkedHospital = hospitalID.getCheckModel().getCheckedItems();
-        
-        for (Assembly a : checkedAssembly) {
-            where.or().eq("assembly_id", a.getID_assembly());
+
+
+        for (int i = 0; i < checkedAssembly.size(); i++) {
+            if (i == checkedAssembly.size() - 1) {
+                where.eq("assembly_id", checkedAssembly.get(i).getID_assembly());
+                total++;
+            } else {
+                where.eq("assembly_id", checkedAssembly.get(i).getID_assembly()).or();
+            }
         }
+
+        where.and(total);
+
         
-        for (Applicant a : checkedApplicant) {
+        /*for (Applicant a : checkedApplicant) {
             where.or().eq("applicant_id", a.getID_applicant());
         }
         
@@ -153,7 +172,7 @@ public class ReportController {
         
         for (Hospital h : checkedHospital) {
             where.or().eq("hospital_id", h.getID());
-        }
+        }*/
         
         List<Record> query = where.query();
         System.out.println(query.size() + "");
