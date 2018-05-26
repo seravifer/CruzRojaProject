@@ -125,7 +125,7 @@
     -fx-text-fill: #ff4081;
 }
 
-#choice .combo-box-base, #choice .choice-box {
+/*#choice .combo-box-base, #choice .choice-box {
     -fx-background-color: transparent;
     -fx-border-color: #2196F3;
     -fx-border-width: 0 0 2 0;
@@ -158,4 +158,12 @@
 
 #choice .menu-item:focused {
     -fx-background-color: rgb(230.0, 230.0, 230.0);
+}*/
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
 }

@@ -12,24 +12,24 @@ public class Applicant {
     private int ID_applicant;
 
     @DatabaseField(canBeNull = false, unique = true)
-    private String name_applicant;
+    private String name;
 
     public Applicant() {}
 
-    public Applicant(String name_applicant) {
-        this.name_applicant = name_applicant;
+    public Applicant(String name) {
+        this.name = name;
     }
 
-    public int getID_applicant() {
+    public int getID() {
         return ID_applicant;
     }
 
-    public String getName_applicant() {
-        return name_applicant;
+    public String getName() {
+        return name;
     }
 
-    public void setName_applicant(String name_applicant) {
-        this.name_applicant = name_applicant;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -47,6 +47,6 @@ public class Applicant {
 
     @Override
     public String toString() {
-        return name_applicant;
+        return name;
     }
 }

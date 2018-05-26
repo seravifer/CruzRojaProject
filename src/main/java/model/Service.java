@@ -24,7 +24,7 @@ public class Service {
         this.area = area;
     }
 
-    public int getID_service() {
+    public int getID() {
         return ID_service;
     }
 

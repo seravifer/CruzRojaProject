@@ -24,7 +24,7 @@ public class Area {
         this.short_name = short_name;
     }
 
-    public int getID_area() {
+    public int getID() {
         return ID_area;
     }
 
@@ -32,7 +32,7 @@ public class Area {
         return name;
     }
 
-    public String getShort_name() {
+    public String getShortName() {
         return short_name;
     }
 
@@ -40,7 +40,7 @@ public class Area {
         this.name = name;
     }
 
-    public void setShort_name(String short_name) {
+    public void setShortName(String short_name) {
         this.short_name = short_name;
     }
 

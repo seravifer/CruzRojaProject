@@ -10,36 +10,36 @@ public class Resource {
     private int ID_resource;
 
     @DatabaseField(canBeNull = false, unique = true)
-    private String name_resource;
+    private String name;
 
     @DatabaseField(canBeNull = false, unique = true)
-    private String code_resource;
+    private String code;
 
     public Resource() {}
 
-    public Resource(String name_resource, String code_resource) {
-        this.name_resource = name_resource;
-        this.code_resource = code_resource;
+    public Resource(String name, String code) {
+        this.name = name;
+        this.code = code;
     }
 
-    public int getID_resource() {
+    public int getID() {
         return ID_resource;
     }
 
-    public String getName_resource() {
-        return name_resource;
+    public String getName() {
+        return name;
     }
 
-    public String getCode_resource() {
-        return code_resource;
+    public String getCode() {
+        return code;
     }
 
-    public void setName_resource(String name_resource) {
-        this.name_resource = name_resource;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setCode_resource(String code_resource) {
-        this.code_resource = code_resource;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     @Override
@@ -59,6 +59,6 @@ public class Resource {
 
     @Override
     public String toString() {
-        return code_resource;
+        return code;
     }
 }

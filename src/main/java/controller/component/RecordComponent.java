@@ -96,7 +96,7 @@ public class RecordComponent extends AnchorPane {
     private void init() {
         codeID.setText("#" + String.valueOf(LocalDate.parse(record.getDate()).getYear()).substring(2, 4) + "/" +
                 String.format("%05d", record.getCode()));
-        assemblyID.setText(record.getAssembly().getName_assembly());
+        assemblyID.setText(record.getAssembly().getName());
         dateID.setText(record.getDate());
         startTimeID.setText(record.getStartTime());
         areaID.setText(record.getArea().getName());
@@ -109,7 +109,7 @@ public class RecordComponent extends AnchorPane {
         if (record.getResource() == null) {
             //((VBox)resourceID.getParent()).getChildren().remove(resourceID);
             resourceID.setText(""); // TODO eleminar si no existe
-        } else resourceID.setText(record.getResource().getCode_resource());
+        } else resourceID.setText(record.getResource().getCode());
 
         if (record.getRegistry().equals("")) registryID.setText("---");
         else registryID.setText(record.getRegistry());

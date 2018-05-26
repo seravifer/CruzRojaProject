@@ -32,10 +32,6 @@ public class Hospital {
         return name;
     }
 
-    public void setID(int ID_hospital) {
-        this.ID_hospital = ID_hospital;
-    }
-
     public void setCode(String code) {
         this.code = code;
     }

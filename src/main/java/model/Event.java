@@ -46,7 +46,7 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         this.registry = new SimpleStringProperty(registry);
     }
 
-    public int getID_Event() {
+    public int getID() {
         return ID_Event;
     }
 
@@ -106,7 +106,7 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         return registry;
     }
 
-    public void setID_Event(int ID_Event) {
+    public void setID(int ID_Event) {
         this.ID_Event = ID_Event;
     }
 

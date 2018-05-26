@@ -13,21 +13,21 @@ public class Assembly {
     @DatabaseField(canBeNull = false, unique = true)
     private String code;
     @DatabaseField(canBeNull = false, unique = true)
-    private String name_assembly;
+    private String name;
 
     public Assembly() {}
 
-    public Assembly(String name_assembly, String code) {
+    public Assembly(String name, String code) {
         this.code = code;
-        this.name_assembly = name_assembly;
+        this.name = name;
     }
 
-    public int getID_assembly() {
+    public int getID() {
         return ID_assembly;
     }
 
-    public String getName_assembly() {
-        return name_assembly;
+    public String getName() {
+        return name;
     }
 
     public String getCode() {
@@ -38,8 +38,8 @@ public class Assembly {
         this.code = code;
     }
 
-    public void setName_assembly(String name_assembly) {
-        this.name_assembly = name_assembly;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -57,6 +57,6 @@ public class Assembly {
 
     @Override
     public String toString() {
-        return name_assembly;
+        return name;
     }
 }

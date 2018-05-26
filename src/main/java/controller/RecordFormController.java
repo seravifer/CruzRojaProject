@@ -248,7 +248,7 @@ public class RecordFormController {
         areaID.valueProperty().addListener((ob, o, n) -> {
             try {
                 List<Service> services = DAO.services.queryBuilder()
-                        .where().eq("area_id", areaID.getValue().getID_area()).query();
+                        .where().eq("area_id", areaID.getValue().getID()).query();
                 serviceID.getItems().clear();
                 serviceID.getItems().addAll(services);
             } catch (SQLException ex) {
