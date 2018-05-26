@@ -1,10 +1,12 @@
 package controller;
 
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -15,6 +17,8 @@ public class SuperController {
     private static SuperController instance = null;
 
     private Stage stage;
+    private Parent home;
+    private RecordsController controller;
 
     protected SuperController() {
         Group root = new Group();
@@ -37,14 +41,30 @@ public class SuperController {
         stage.setScene(scene);
         stage.setMinWidth(1040);
         stage.setMinHeight(640);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/icon.png")));
         stage.setTitle("Registro Cruz Roja");
         stage.show();
     }
 
-    public static Stage getInstance() {
+    public void setPage(Parent page) {
+        stage.getScene().setRoot(page);
+    }
+
+    public void setHome(Parent home, RecordsController controller) {
+        stage.getScene().setRoot(home);
+        this.home = home;
+        this.controller = controller;
+    }
+
+    public void goBack() {
+        stage.getScene().setRoot(home);
+        controller.refresh();
+    }
+
+    public static SuperController getInstance() {
         if(instance == null) {
             instance = new SuperController();
         }
-        return instance.stage;
+        return instance;
     }
 }

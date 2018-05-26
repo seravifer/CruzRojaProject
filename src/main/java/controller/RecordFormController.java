@@ -152,7 +152,7 @@ public class RecordFormController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/recordForm.fxml"));
             fxmlLoader.setController(this);
             Parent parent = fxmlLoader.load();
-            SuperController.getInstance().getScene().setRoot(parent);
+            SuperController.getInstance().setPage(parent);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -384,7 +384,7 @@ public class RecordFormController {
 
     @FXML
     void onClose() {
-        new RecordsController();
+        SuperController.getInstance().goBack();
     }
 
     @FXML

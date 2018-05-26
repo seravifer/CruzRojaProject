@@ -11,4 +11,9 @@ public final class Utils {
         if (o == null) return null;
         else return o.toString();
     }
+
+    public static String generateCode(String date, int code) {
+        return null; // TODO refactoring
+    }
+
 }

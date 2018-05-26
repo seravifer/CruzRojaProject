@@ -26,7 +26,7 @@
          <children>
             <ImageView fitHeight="47.0" fitWidth="138.0" layoutX="35.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="35.0">
                <image>
-                  <Image url="@../img/logo_2.png" />
+                  <Image url="@../img/logo.png" />
                </image>
             </ImageView>
             <Label alignment="CENTER_RIGHT" layoutX="700.0" layoutY="22.0" prefHeight="27.0" prefWidth="165.0" text="Nombre Apellido" textFill="#656565" AnchorPane.rightAnchor="137.0">

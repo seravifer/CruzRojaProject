@@ -2,7 +2,10 @@ package controller;
 
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
-import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXProgressBar;
 import controller.component.RecordComponent;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
@@ -69,7 +72,7 @@ public class RecordsController extends AnchorPane {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
             fxmlLoader.setController(this);
             Parent parent = fxmlLoader.load();
-            SuperController.getInstance().getScene().setRoot(parent);
+            SuperController.getInstance().setHome(parent, this);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -133,11 +136,11 @@ public class RecordsController extends AnchorPane {
             }
         };
 
-        task.stateProperty().addListener((ob, o, nValue) -> {
-            if(nValue == Worker.State.RUNNING) {
+        task.stateProperty().addListener((ob, o, status) -> {
+            if(status == Worker.State.RUNNING) {
                 optionsID.setDisable(true);
                 loadID.setVisible(true);
-            } else if (nValue == Worker.State.SUCCEEDED) {
+            } else if (status == Worker.State.SUCCEEDED) {
                 optionsID.setDisable(false);
                 loadID.setVisible(false);
             }
@@ -146,20 +149,32 @@ public class RecordsController extends AnchorPane {
         new Thread(task).start();
     }
 
-    private void refresh() { // TODO ejecutar en un thread
-        loadID.setVisible(true);
-        List<Node> records = recordsID.getChildren();
+    public void refresh() { // TODO refactoring
+        final Task task = new Task<Void>() {
+            @Override
+            public Void call() {
+                List<Node> records = recordsID.getChildren();
 
-        try {
-            for (Node node : records) {
-                RecordComponent recordComponent = (RecordComponent) node;
-                recordComponent.refresh();
+                for (Node node : records) {
+                    RecordComponent recordComponent = (RecordComponent) node;
+                    Platform.runLater(recordComponent::refresh);
+                }
+
+                return null;
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        };
 
-        loadID.setVisible(false);
+        task.stateProperty().addListener((ob, o, status) -> {
+            if(status == Worker.State.RUNNING) {
+                optionsID.setDisable(true);
+                loadID.setVisible(true);
+            } else if (status == Worker.State.SUCCEEDED) {
+                optionsID.setDisable(false);
+                loadID.setVisible(false);
+            }
+        });
+
+        new Thread(task).start();
     }
 
     private void limitDays() {
@@ -171,4 +186,5 @@ public class RecordsController extends AnchorPane {
             }
         });
     }
+
 }

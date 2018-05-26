@@ -65,24 +65,24 @@
                   <Label fx:id="serviceID" alignment="CENTER" contentDisplay="CENTER" layoutX="99.0" layoutY="56.0" text="Maritimo" textAlignment="CENTER" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
                </children>
             </AnchorPane>
-            <HBox alignment="CENTER" prefHeight="98.0" prefWidth="175.0" HBox.hgrow="ALWAYS">
+            <HBox alignment="CENTER" prefHeight="98.0" prefWidth="135.0" HBox.hgrow="ALWAYS">
                <children>
-                  <AnchorPane maxWidth="170.0" prefHeight="98.0" prefWidth="150.0">
+                  <AnchorPane maxWidth="170.0" prefHeight="98.0" prefWidth="126.0">
                      <children>
-                        <Label fx:id="assistance_hID" layoutX="51.0" layoutY="29.0" text="00" />
-                        <Label fx:id="evacuated_hID" layoutX="50.0" layoutY="56.0" prefHeight="17.0" prefWidth="14.0" text="02" />
-                        <Label fx:id="assistance_mID" layoutX="115.0" layoutY="29.0" text="00" />
-                        <Label fx:id="evacuated_mID" layoutX="115.0" layoutY="56.0" text="01" />
-                        <SVGPath content="M9,9C10.29,9 11.5,9.41 12.47,10.11L17.58,5H13V3H21V11H19V6.41L13.89,11.5C14.59,12.5 15,13.7 15,15A6,6 0 0,1 9,21A6,6 0 0,1 3,15A6,6 0 0,1 9,9M9,11A4,4 0 0,0 5,15A4,4 0 0,0 9,19A4,4 0 0,0 13,15A4,4 0 0,0 9,11Z" fill="#2711e8" layoutX="27.0" layoutY="23.0" />
-                        <SVGPath content="M12,4A6,6 0 0,1 18,10C18,12.97 15.84,15.44 13,15.92V18H15V20H13V22H11V20H9V18H11V15.92C8.16,15.44 6,12.97 6,10A6,6 0 0,1 12,4M12,6A4,4 0 0,0 8,10A4,4 0 0,0 12,14A4,4 0 0,0 16,10A4,4 0 0,0 12,6Z" fill="#ce20da" layoutX="24.0" layoutY="51.0" />
-                        <SVGPath content="M9,9C10.29,9 11.5,9.41 12.47,10.11L17.58,5H13V3H21V11H19V6.41L13.89,11.5C14.59,12.5 15,13.7 15,15A6,6 0 0,1 9,21A6,6 0 0,1 3,15A6,6 0 0,1 9,9M9,11A4,4 0 0,0 5,15A4,4 0 0,0 9,19A4,4 0 0,0 13,15A4,4 0 0,0 9,11Z" fill="#2711e8" layoutX="92.0" layoutY="23.0" />
-                        <SVGPath content="M12,4A6,6 0 0,1 18,10C18,12.97 15.84,15.44 13,15.92V18H15V20H13V22H11V20H9V18H11V15.92C8.16,15.44 6,12.97 6,10A6,6 0 0,1 12,4M12,6A4,4 0 0,0 8,10A4,4 0 0,0 12,14A4,4 0 0,0 16,10A4,4 0 0,0 12,6Z" fill="#ce20da" layoutX="90.0" layoutY="50.0" />
-                        <Label contentDisplay="CENTER" layoutX="-5.0" layoutY="40.0" prefHeight="17.0" prefWidth="51.0" rotate="-90.0" text="Asistidos" textAlignment="JUSTIFY" textFill="#949494">
+                        <Label fx:id="assistance_hID" alignment="CENTER" contentDisplay="CENTER" layoutX="40.0" layoutY="29.0" minWidth="18.0" text="00" textAlignment="CENTER" />
+                        <Label fx:id="evacuated_hID" alignment="CENTER" layoutX="39.0" layoutY="56.0" minWidth="18.0" prefHeight="17.0" prefWidth="14.0" text="02" />
+                        <Label fx:id="assistance_mID" alignment="CENTER" layoutX="104.0" layoutY="29.0" minWidth="18.0" text="0" />
+                        <Label fx:id="evacuated_mID" alignment="CENTER" layoutX="104.0" layoutY="56.0" minWidth="18.0" text="01" />
+                        <SVGPath content="M9,9C10.29,9 11.5,9.41 12.47,10.11L17.58,5H13V3H21V11H19V6.41L13.89,11.5C14.59,12.5 15,13.7 15,15A6,6 0 0,1 9,21A6,6 0 0,1 3,15A6,6 0 0,1 9,9M9,11A4,4 0 0,0 5,15A4,4 0 0,0 9,19A4,4 0 0,0 13,15A4,4 0 0,0 9,11Z" fill="#2711e8" layoutX="16.0" layoutY="23.0" />
+                        <SVGPath content="M12,4A6,6 0 0,1 18,10C18,12.97 15.84,15.44 13,15.92V18H15V20H13V22H11V20H9V18H11V15.92C8.16,15.44 6,12.97 6,10A6,6 0 0,1 12,4M12,6A4,4 0 0,0 8,10A4,4 0 0,0 12,14A4,4 0 0,0 16,10A4,4 0 0,0 12,6Z" fill="#ce20da" layoutX="13.0" layoutY="51.0" />
+                        <SVGPath content="M9,9C10.29,9 11.5,9.41 12.47,10.11L17.58,5H13V3H21V11H19V6.41L13.89,11.5C14.59,12.5 15,13.7 15,15A6,6 0 0,1 9,21A6,6 0 0,1 3,15A6,6 0 0,1 9,9M9,11A4,4 0 0,0 5,15A4,4 0 0,0 9,19A4,4 0 0,0 13,15A4,4 0 0,0 9,11Z" fill="#2711e8" layoutX="81.0" layoutY="23.0" />
+                        <SVGPath content="M12,4A6,6 0 0,1 18,10C18,12.97 15.84,15.44 13,15.92V18H15V20H13V22H11V20H9V18H11V15.92C8.16,15.44 6,12.97 6,10A6,6 0 0,1 12,4M12,6A4,4 0 0,0 8,10A4,4 0 0,0 12,14A4,4 0 0,0 16,10A4,4 0 0,0 12,6Z" fill="#ce20da" layoutX="79.0" layoutY="50.0" />
+                        <Label contentDisplay="CENTER" layoutX="-16.0" layoutY="37.0" prefHeight="17.0" prefWidth="51.0" rotate="-90.0" text="Asistidos" textFill="#949494">
                            <font>
                               <Font size="10.0" />
                            </font>
                         </Label>
-                        <Label contentDisplay="CENTER" layoutX="62.0" layoutY="40.0" prefHeight="17.0" prefWidth="51.0" rotate="-90.0" text="Evacuados" textFill="#9e9e9e">
+                        <Label contentDisplay="CENTER" layoutX="51.0" layoutY="40.0" prefHeight="17.0" prefWidth="51.0" rotate="-90.0" text="Evacuados" textFill="#9e9e9e">
                            <font>
                               <Font size="10.0" />
                            </font>

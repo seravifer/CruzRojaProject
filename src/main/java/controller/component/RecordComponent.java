@@ -6,7 +6,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -108,7 +107,8 @@ public class RecordComponent extends AnchorPane {
         evacuated_mID.setText(record.getEvacuated_m() + "");
 
         if (record.getResource() == null) {
-            ((VBox)resourceID.getParent()).getChildren().remove(resourceID);
+            //((VBox)resourceID.getParent()).getChildren().remove(resourceID);
+            resourceID.setText(""); // TODO eleminar si no existe
         } else resourceID.setText(record.getResource().getCode_resource());
 
         if (record.getRegistry().equals("")) registryID.setText("---");
@@ -168,8 +168,12 @@ public class RecordComponent extends AnchorPane {
         }));
     }
 
-    public void refresh() throws SQLException {
-        record.refresh();
+    public void refresh() {
+        try {
+            record.refresh();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         init();
     }
 }
