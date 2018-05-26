@@ -358,15 +358,15 @@ public class AdminController {
             });
 
             nombreColumnAreas.setCellValueFactory(new PropertyValueFactory<>("name"));
-            abreviaturaColumnAreas.setCellValueFactory(new PropertyValueFactory<>("short_name"));
+            abreviaturaColumnAreas.setCellValueFactory(new PropertyValueFactory<>("shortName"));
 
-            nombreColumnAsamblea.setCellValueFactory(new PropertyValueFactory<>("name_assembly"));
+            nombreColumnAsamblea.setCellValueFactory(new PropertyValueFactory<>("name"));
             codigoColumnAsamblea.setCellValueFactory(new PropertyValueFactory<>("code"));
 
-            nombreColumnSolicitante.setCellValueFactory(new PropertyValueFactory<>("name_applicant"));
+            nombreColumnSolicitante.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-            nombreColumnRecursos.setCellValueFactory(new PropertyValueFactory<>("name_resource"));
-            codigoColumnRecursos.setCellValueFactory(new PropertyValueFactory<>("code_resource"));
+            nombreColumnRecursos.setCellValueFactory(new PropertyValueFactory<>("name"));
+            codigoColumnRecursos.setCellValueFactory(new PropertyValueFactory<>("code"));
 
             nombreColumnHospital.setCellValueFactory(new PropertyValueFactory<>("name"));
             codigoColumnHospital.setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -441,8 +441,8 @@ public class AdminController {
                         hospital_update.setName(nombreHospital.getText());
                         DAO.hospital.update(hospital_update);
                         tablaHospitales.refresh();
-                        codigoHospital.setText(" ");
-                        nombreHospital.setText(" ");
+                        codigoHospital.clear();
+                        nombreHospital.clear();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

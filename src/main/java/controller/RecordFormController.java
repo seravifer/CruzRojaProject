@@ -242,6 +242,9 @@ public class RecordFormController {
         AutoComplete.set(resourceID,
                 (typedText, itemToCompare) -> itemToCompare.getCode().toLowerCase().contains(typedText.toLowerCase()));
 
+        AutoComplete.set(assemblyID,
+                (typedText, itemToCompare) -> itemToCompare.getName().toLowerCase().contains(typedText.toLowerCase()));
+
         endTimeID.getEditor().setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                 if (endTimeID.getValue() == null)
@@ -260,9 +263,6 @@ public class RecordFormController {
             }
         });
 
-        Callback<TableColumn<Event, String>, TableCell<Event, String>> cellFactoryEvent
-                = (TableColumn<Event, String> p) -> new EditingCell();
-
         subCodeColumID.setCellValueFactory(new PropertyValueFactory<>("subcode"));
         startTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("startTimeAssistance"));
         transferTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("transferTimeAssistance"));
@@ -280,6 +280,9 @@ public class RecordFormController {
                 else setText(codeID.getText() + "/" + item);
             }
         });
+
+        Callback<TableColumn<Event, String>, TableCell<Event, String>> cellFactoryEvent
+                = (TableColumn<Event, String> p) -> new EditingCell();
 
         startTimeAssistanceColumID.setCellFactory(cellFactoryEvent);
         transferTimeAssistanceColumID.setCellFactory(cellFactoryEvent);
@@ -398,8 +401,8 @@ public class RecordFormController {
         }
 
         if (record == null) {
-            record = new Record(dateID.getValue().toString(), 0, resourceID.getValue(), assemblyID.getValue(),
-                    startTimeID.getValue(), endTimeID.getValue(), areaID.getValue(),
+            record = new Record(dateID.getValue().toString(), 0, AutoComplete.getValue(resourceID),
+                    AutoComplete.getValue(assemblyID), startTimeID.getValue(), endTimeID.getValue(), areaID.getValue(),
                     applicantID.getValue(), serviceID.getValue(), "", assistance_hID.getText(),
                     assistance_hID.getText(), evacuated_hID.getText(), evacuated_mID.getText(), registryID.getText(),
                     notesID.getText());
@@ -413,14 +416,14 @@ public class RecordFormController {
 
                 snackbar.show("El registro " + codeID.getText() + " se ha guardado correctamente.", 4000);
 
-                eventFormID.setDisable(false); // TODO no es necesario guardar el registro
+                eventFormID.setDisable(false); // TODO no deberia ser necesario guardar el registro
             } catch (SQLException e) {
                 snackbar.show("Se ha producido un error al guardar el registro. Por favor, intentelo de nuevo.", 6000);
                 record = null;
             }
         } else {
             record.setResource(AutoComplete.getValue(resourceID));
-            record.setAssembly(assemblyID.getValue());
+            record.setAssembly(AutoComplete.getValue(assemblyID));
             record.setStartTime(startTimeID.getValue().toString());
             record.setEndTime(endTimeID.getValue());
             record.setArea(areaID.getValue());
