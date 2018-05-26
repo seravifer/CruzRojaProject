@@ -24,6 +24,7 @@ import javafx.util.StringConverter;
 import javafx.util.converter.LocalTimeStringConverter;
 import model.*;
 import service.DAO;
+import utils.AutoComplete;
 import utils.EditingCell;
 
 import java.io.IOException;
@@ -238,8 +239,11 @@ public class RecordFormController {
             node.focusedProperty().addListener(minZero(node));
         }
 
+        AutoComplete.set(resourceID,
+                (typedText, itemToCompare) -> itemToCompare.getCode().toLowerCase().contains(typedText.toLowerCase()));
+
         endTimeID.getEditor().setOnMouseClicked(event -> {
-            if(event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                 if (endTimeID.getValue() == null)
                     endTimeID.setValue(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
             }
@@ -343,7 +347,7 @@ public class RecordFormController {
             header.reorderingProperty().addListener((ob2, o2, n2) -> header.setReordering(false));
         });
 
-        iconColumnID.setCellFactory(param -> new TableCell<Event,Event>(){
+        iconColumnID.setCellFactory(param -> new TableCell<Event, Event>() {
             protected void updateItem(Event event, boolean empty) {
                 super.updateItem(event, empty);
                 SVGPath icon = new SVGPath();
@@ -383,14 +387,18 @@ public class RecordFormController {
     }
 
     @FXML
-    void onClose() {
+    private void onClose() {
         SuperController.getInstance().goBack();
     }
 
     @FXML
-    void onSave() {
+    private void onSave() {
+        if (validate()) {
+            return;
+        }
+
         if (record == null) {
-             record = new Record(dateID.getValue().toString(), 0, resourceID.getValue(), assemblyID.getValue(),
+            record = new Record(dateID.getValue().toString(), 0, resourceID.getValue(), assemblyID.getValue(),
                     startTimeID.getValue(), endTimeID.getValue(), areaID.getValue(),
                     applicantID.getValue(), serviceID.getValue(), "", assistance_hID.getText(),
                     assistance_hID.getText(), evacuated_hID.getText(), evacuated_mID.getText(), registryID.getText(),
@@ -411,7 +419,7 @@ public class RecordFormController {
                 record = null;
             }
         } else {
-            record.setResource(resourceID.getValue());
+            record.setResource(AutoComplete.getValue(resourceID));
             record.setAssembly(assemblyID.getValue());
             record.setStartTime(startTimeID.getValue().toString());
             record.setEndTime(endTimeID.getValue());
@@ -428,7 +436,7 @@ public class RecordFormController {
             try {
                 record.update();
 
-                for (Event event: eventsTableID.getItems()) {
+                for (Event event : eventsTableID.getItems()) {
                     event.update();
                 }
 
@@ -437,6 +445,12 @@ public class RecordFormController {
                 snackbar.show("Se ha producido un error al guardar el registro. Por favor, intentelo de nuevo.", 6000);
             }
         }
+    }
+
+    private boolean validate() {
+        return assemblyID.getValue() == null || areaID.getSelectionModel().getSelectedItem() == null ||
+                serviceID.getSelectionModel().getSelectedItem() == null || applicantID.getSelectionModel().getSelectedItem() == null ||
+                dateID.getValue() == null || startTimeID.getValue() == null;
     }
 
     private ChangeListener<String> onlyNumbers(TextField node) {

@@ -72,9 +72,9 @@
                   <JFXDatePicker fx:id="dateID" defaultColor="#e53935" layoutX="246.0" layoutY="32.0" promptText="Fecha" />
                   <JFXTimePicker fx:id="startTimeID" defaultColor="#e53935" layoutX="25.0" layoutY="116.0" maxWidth="1.7976931348623157E308" promptText="Hora de inicio" />
                   <JFXTimePicker fx:id="endTimeID" defaultColor="#e53935" layoutX="25.0" layoutY="177.0" maxWidth="1.7976931348623157E308" promptText="Hora de fin" />
-                  <JFXComboBox fx:id="assemblyID" focusColor="#e53935" labelFloat="true" layoutX="249.0" layoutY="116.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="164.0" promptText="Asamblea" />
-                  <JFXComboBox fx:id="resourceID" focusColor="#e53935" labelFloat="true" layoutX="248.0" layoutY="177.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="166.0" promptText="Recurso" />
-                  <JFXComboBox fx:id="areaID" focusColor="#e53935" labelFloat="true" layoutX="456.0" layoutY="116.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="235.0" promptText="Área" />
+                  <JFXComboBox fx:id="assemblyID" focusColor="#e53935" labelFloat="true" layoutX="249.0" layoutY="116.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="164.0" promptText="Asamblea" visibleRowCount="20" />
+                  <JFXComboBox fx:id="resourceID" focusColor="#e53935" labelFloat="true" layoutX="248.0" layoutY="177.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="166.0" promptText="Recurso" visibleRowCount="20" />
+                  <JFXComboBox fx:id="areaID" focusColor="#e53935" labelFloat="true" layoutX="456.0" layoutY="116.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="235.0" promptText="Área" visibleRowCount="20" />
                   <JFXComboBox fx:id="serviceID" focusColor="#e53935" labelFloat="true" layoutX="457.0" layoutY="177.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="234.0" promptText="Servicio" />
                   <JFXComboBox fx:id="applicantID" focusColor="#e53935" labelFloat="true" layoutX="724.0" layoutY="116.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="111.0" promptText="Solicitante" />
                   <JFXTextField fx:id="evacuated_hID" alignment="CENTER" focusColor="#e53935" layoutX="53.0" layoutY="256.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="33.0" text="0" unFocusColor="#2711e8" />

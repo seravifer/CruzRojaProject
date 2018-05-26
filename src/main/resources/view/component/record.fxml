@@ -14,7 +14,7 @@
          <children>
             <AnchorPane maxHeight="-Infinity" maxWidth="160.0" prefHeight="98.0" prefWidth="145.0">
                <children>
-                  <Label fx:id="codeID" layoutX="27.0" layoutY="21.0" text="#18/0001">
+                  <Label fx:id="codeID" layoutX="22.0" layoutY="21.0" text="#18/00001">
                      <font>
                         <Font size="22.0" />
                      </font>
@@ -101,14 +101,14 @@
                   <Label fx:id="notesID" alignment="CENTER" layoutX="32.0" layoutY="41.0" text="Nota" wrapText="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
                </children>
             </AnchorPane>
-            <AnchorPane maxWidth="200.0" prefHeight="98.0" prefWidth="88.0" HBox.hgrow="ALWAYS">
+            <AnchorPane maxWidth="200.0" prefHeight="98.0" prefWidth="88.0" HBox.hgrow="NEVER">
                <children>
-                  <SVGPath fx:id="editID" content="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" fill="#000000ab" layoutX="12.042476654052734" layoutY="37.0" pickOnBounds="true" AnchorPane.rightAnchor="52.95502471923828">
+                  <SVGPath fx:id="editID" content="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" fill="#000000ab" layoutX="12.042476654052734" layoutY="37.0" pickOnBounds="true" AnchorPane.rightAnchor="52.0">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </SVGPath>
-                  <SVGPath fx:id="deleteID" content="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" fill="#000000ab" layoutX="47.0" layoutY="37.0" pickOnBounds="true">
+                  <SVGPath fx:id="deleteID" content="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" fill="#000000ab" layoutX="47.0" layoutY="37.0" pickOnBounds="true" AnchorPane.rightAnchor="24.0">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
