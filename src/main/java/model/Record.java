@@ -180,19 +180,19 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
         this.address = address;
     }
 
-    public void setAssistance_h(String assistance_h) {
+    public void setAssistanceH(String assistance_h) {
         this.assistance_h = Integer.parseInt(assistance_h);
     }
 
-    public void setAssistance_m(String assistance_m) {
+    public void setAssistanceM(String assistance_m) {
         this.assistance_m = Integer.parseInt(assistance_m);
     }
 
-    public void setEvacuated_h(String evacuated_h) {
+    public void setEvacuatedH(String evacuated_h) {
         this.evacuated_h = Integer.parseInt(evacuated_h);
     }
 
-    public void setEvacuated_m(String evacuated_m) {
+    public void setEvacuatedM(String evacuated_m) {
         this.evacuated_m = Integer.parseInt(evacuated_m);
     }
 

@@ -27,7 +27,6 @@ public class EditingCell extends TableCell<Event, String> {
     @Override
     public void cancelEdit() {
         super.cancelEdit();
-
         setText(getItem());
         setGraphic(null);
     }
@@ -35,7 +34,6 @@ public class EditingCell extends TableCell<Event, String> {
     @Override
     public void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
-
         if (empty) {
             setText(null);
             setGraphic(null);
@@ -58,13 +56,11 @@ public class EditingCell extends TableCell<Event, String> {
         textField.setMinWidth(this.getWidth());
         textField.setId("textfieldEvent");
         textField.setAlignment(Pos.CENTER);
-
         textField.focusedProperty().addListener((ob, o, n) -> {
             if (!n) {
                 commitEdit(textField.getText());
             }
         });
-
         textField.setOnKeyPressed(t -> {
             if (t.getCode() == KeyCode.ENTER) {
                 commitEdit(textField.getText());

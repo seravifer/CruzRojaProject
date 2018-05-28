@@ -171,9 +171,9 @@ public class RecordComponent extends AnchorPane {
     public void refresh() {
         try {
             record.refresh();
+            init();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        init();
     }
 }

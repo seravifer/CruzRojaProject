@@ -1,5 +1,6 @@
 package controller;
 
+import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.jfoenix.controls.*;
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
@@ -341,8 +342,7 @@ public class RecordFormController {
 
         eventsTableID.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
             if (event.isControlDown()) return;
-            if (eventsTableID.getEditingCell() == null)
-                eventsTableID.getSelectionModel().clearSelection();
+            eventsTableID.getSelectionModel().clearSelection();
         });
 
         eventsTableID.widthProperty().addListener((ob, o, n) -> {
@@ -429,10 +429,10 @@ public class RecordFormController {
             record.setArea(areaID.getValue());
             record.setApplicant(applicantID.getValue());
             record.setService(serviceID.getValue());
-            record.setAssistance_h(assistance_hID.getText());
-            record.setAssistance_m(assistance_mID.getText());
-            record.setEvacuated_h(evacuated_hID.getText());
-            record.setEvacuated_m(evacuated_mID.getText());
+            record.setAssistanceH(assistance_hID.getText());
+            record.setAssistanceM(assistance_mID.getText());
+            record.setEvacuatedH(evacuated_hID.getText());
+            record.setEvacuatedM(evacuated_mID.getText());
             record.setRegistry(registryID.getText());
             record.setNotes(notesID.getText());
 
@@ -451,9 +451,8 @@ public class RecordFormController {
     }
 
     private boolean validate() {
-        return assemblyID.getValue() == null || areaID.getSelectionModel().getSelectedItem() == null ||
-                serviceID.getSelectionModel().getSelectedItem() == null || applicantID.getSelectionModel().getSelectedItem() == null ||
-                dateID.getValue() == null || startTimeID.getValue() == null;
+        return AutoComplete.getValue(assemblyID) == null || areaID.getValue() == null || serviceID.getValue() == null
+                || applicantID.getValue() == null || dateID.getValue() == null || startTimeID.getValue() == null;
     }
 
     private ChangeListener<String> onlyNumbers(TextField node) {
@@ -473,5 +472,7 @@ public class RecordFormController {
             if (node.getText().equals("")) node.setText("0");
         };
     }
+
+
 
 }

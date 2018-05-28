@@ -21,6 +21,7 @@ public class AutoComplete {
             if (comboBox.getSelectionModel().getSelectedIndex() < 0) {
                 comboBox.getEditor().setText(null);
             }
+            comboBox.setItems(data);
         });
         comboBox.addEventHandler(KeyEvent.KEY_PRESSED, t -> comboBox.hide());
         comboBox.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {

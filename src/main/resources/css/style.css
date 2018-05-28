@@ -23,18 +23,26 @@
     -fx-border-insets: 0;
 }
 
+.table-row-cell:odd {
+    -fx-background-color: #fff;
+}
+
+.table-column:filled:odd {
+    -fx-border-color: transparent -fx-table-cell-border-color -fx-table-cell-border-color transparent;
+}
+
 .table-row-cell:filled:selected {
-    -fx-background: -fx-control-inner-background;
-    -fx-background-color: -fx-table-cell-border-color, -fx-background;
+    -fx-background: -fx-control-inner-background ;
+    -fx-background-color: -fx-table-cell-border-color, -fx-background ;
     -fx-background-insets: 0, 0 0 1 0 ;
     -fx-table-cell-border-color: derive(-fx-color, 5%);
 }
-.table-row-cell:odd:filled:selected {
-    -fx-background: -fx-control-inner-background-alt;
-}
 
-.table-row-cell:odd {
-    -fx-background-color: whitesmoke;
+.table-row-cell:odd:filled:selected {
+    -fx-background: -fx-control-inner-background ;
+    -fx-background-color: -fx-table-cell-border-color, -fx-background ;
+    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-table-cell-border-color: derive(-fx-color, 5%);
 }
 
 .table-row-cell:empty .table-cell {
@@ -44,6 +52,7 @@
 .table-row-cell:empty, .table-cell:empty:hover {
     -fx-background-color: transparent;
 }
+
 
 /* Tab Pane */
 .jfx-tab-pane .tab-header-background {
