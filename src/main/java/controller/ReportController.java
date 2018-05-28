@@ -20,6 +20,8 @@ import service.DAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.ObservableList;
@@ -66,6 +68,15 @@ public class ReportController {
     @FXML
     private AnchorPane pageID;
 
+    @FXML
+    private JFXCheckBox cb_gender;
+
+    @FXML
+    private JFXCheckBox cb_areas;
+
+    @FXML
+    private JFXCheckBox cb_hours;
+
     public ReportController() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/report.fxml"));
@@ -110,8 +121,11 @@ public class ReportController {
             @Override
             public void updateItem(Assembly item, boolean empty) {
                 super.updateItem(item, empty);
-                if (item == null || empty) setText(null);
-                else setText(item.getName() + "");
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    setText(item.getName() + "");
+                }
             }
         });
 
@@ -171,11 +185,88 @@ public class ReportController {
             total++;
         }
 
-        // TODO aplicar a todos los filtros
+        if (!checkedService.isEmpty()) {
+            where.or(checkedService.size());
+            total++;
+        }
+
+        for (Applicant applicant : checkedApplicant) {
+            where.eq("applicant_id", applicant.getID());
+        }
+
+        if (!checkedApplicant.isEmpty()) {
+            where.or(checkedApplicant.size());
+            total++;
+        }
+
+        for (Resource resource : checkedResource) {
+            where.eq("resource_id", resource.getID());
+        }
+
+        if (!checkedResource.isEmpty()) {
+            where.or(checkedResource.size());
+            total++;
+        }
 
         where.and(total);
 
         List<Record> query = where.query();
+
+        // Desglose por genero  
+        if (cb_gender.isSelected()) {
+            int at_h = 0;
+            int at_m = 0;
+            int ev_h = 0;
+            int ev_m = 0;
+            for (Record record : query) {
+                at_h += record.getAssistance_h();
+                at_m += record.getAssistance_m();
+                ev_h += record.getEvacuated_h();
+                ev_m += record.getEvacuated_m();
+            }
+            int total_r = query.size();
+            String s = (at_h + " " + at_m + " " + ev_h + " " + ev_m);
+            System.out.println(s);
+        }
+
+        // Horas de servicio totales
+        if (cb_hours.isSelected()) {
+            int hours = 0;
+            int minutes = 0;
+            for (Record record : query) {
+                try {
+                    LocalTime start = LocalTime.parse(record.getStartTime());
+                    LocalTime finish = LocalTime.parse(record.getEndTime());
+                    hours = hours + Math.abs(finish.getHour() - start.getHour());
+                    minutes = minutes + Math.abs(finish.getMinute() - start.getMinute());
+                } catch (Exception e) {
+                    // Podrán haber Record que no hayan acabado (por error o porque aún están operativos)
+                }
+            }
+        }
+
+        // Desglose por area
+        if (cb_areas.isSelected()) {
+            List<Area> queryA = DAO.area.queryBuilder().query();
+            List<String> lista_areas = new ArrayList<String>();
+            List<String> lista_info = new ArrayList<String>();
+            for (Record record : query) {
+                lista_areas.add(record.getArea().getName());
+            }
+            for (Area area : queryA) {
+                int count = 0;
+                for (String s : lista_areas) {
+                    if (area.getName().equals(s)) {
+                        count++;
+                    }
+                }
+                String s = area.getName() + ": " + count;
+                lista_info.add(s);
+            }
+            for (String s : lista_info) {
+                System.out.println(s);
+            }
+        }
 
         recordTableID.getItems().clear();
         recordTableID.getItems().addAll(query);
