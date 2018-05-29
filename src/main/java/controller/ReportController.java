@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import org.controlsfx.control.CheckComboBox;
 
 public class ReportController {
@@ -54,28 +56,28 @@ public class ReportController {
     private CheckComboBox<Applicant> applicantID;
 
     @FXML
-    private TableView<Record> recordTableID;
-
-    @FXML
-    private TableColumn<Record, Integer> codeColumID;
-
-    @FXML
-    private TableColumn<Record, String> dateColumID;
-
-    @FXML
-    private TableColumn<Record, Assembly> assemblyColumID;
-
-    @FXML
     private AnchorPane pageID;
 
     @FXML
     private JFXCheckBox cb_gender;
 
     @FXML
+    private JFXCheckBox cb_service;
+
+    @FXML
     private JFXCheckBox cb_areas;
 
     @FXML
+    private JFXCheckBox cb_resource;
+
+    @FXML
+    private JFXCheckBox cb_applicant;
+
+    @FXML
     private JFXCheckBox cb_hours;
+
+    @FXML
+    private VBox tabla_info;
 
     public ReportController() {
         try {
@@ -113,22 +115,6 @@ public class ReportController {
             e.printStackTrace();
         }
 
-        codeColumID.setCellValueFactory(new PropertyValueFactory<>("code"));
-        dateColumID.setCellValueFactory(new PropertyValueFactory<>("date"));
-        assemblyColumID.setCellValueFactory(new PropertyValueFactory<>("assembly"));
-
-        assemblyColumID.setCellFactory(cell -> new TableCell<Record, Assembly>() {
-            @Override
-            public void updateItem(Assembly item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) {
-                    setText(null);
-                } else {
-                    setText(item.getName() + "");
-                }
-            }
-        });
-
         // DEBUG
         startDateID.setValue(LocalDate.of(2017, 12, 1));
         endDateID.setValue(LocalDate.now());
@@ -140,7 +126,7 @@ public class ReportController {
         if (job != null) {
             System.out.println(job.jobStatusProperty().asString());
 
-            boolean printed = job.printPage(pageID);
+            boolean printed = job.printPage(tabla_info);
             if (printed) {
                 job.endJob();
             } else {
@@ -153,6 +139,7 @@ public class ReportController {
 
     @FXML
     private void generate(ActionEvent event) throws SQLException {
+        tabla_info.getChildren().clear();
         LocalDate sd = startDateID.getValue();
         LocalDate ed = endDateID.getValue();
 
@@ -211,6 +198,9 @@ public class ReportController {
         where.and(total);
 
         List<Record> query = where.query();
+        
+        tabla_info.setSpacing(10);
+        tabla_info.getChildren().add(new Label("Informe de la Cruz Roja - Asamblea de " + checkedAssembly.get(0)));
 
         // Desglose por genero  
         if (cb_gender.isSelected()) {
@@ -218,31 +208,48 @@ public class ReportController {
             int at_m = 0;
             int ev_h = 0;
             int ev_m = 0;
+
             for (Record record : query) {
                 at_h += record.getAssistance_h();
                 at_m += record.getAssistance_m();
                 ev_h += record.getEvacuated_h();
                 ev_m += record.getEvacuated_m();
             }
-            int total_r = query.size();
-            String s = (at_h + " " + at_m + " " + ev_h + " " + ev_m);
-            System.out.println(s);
+            
+            int total_r = at_h + at_m + ev_h + ev_m;
+            
+            String info = "Desglose de los servicios por genero: \n";
+            info += "       - Hombres atendidos: " + at_h + "\n";
+            info += "       - Mujeres atendidas: " + at_m + "\n";
+            info += "       - Hombres evacuados: " + ev_h + "\n";
+            info += "       - Mujeres evacuadas: " + ev_m + "\n";
+            info += "El total de gente tratada es de " + total_r + " en " + query.size() + " registros.";
+            tabla_info.getChildren().add(new Label(info));
         }
 
-        // Horas de servicio totales
-        if (cb_hours.isSelected()) {
-            int hours = 0;
-            int minutes = 0;
+        // Desglose por servicio
+        if (cb_service.isSelected()) {
+            List<Service> queryS = DAO.services.queryBuilder().query();
+            List<String> lista_services = new ArrayList<String>();
+            List<String> lista_info = new ArrayList<String>();
             for (Record record : query) {
-                try {
-                    LocalTime start = LocalTime.parse(record.getStartTime());
-                    LocalTime finish = LocalTime.parse(record.getEndTime());
-                    hours = hours + Math.abs(finish.getHour() - start.getHour());
-                    minutes = minutes + Math.abs(finish.getMinute() - start.getMinute());
-                } catch (Exception e) {
-                    // Podrán haber Record que no hayan acabado (por error o porque aún están operativos)
-                }
+                lista_services.add(record.getService().getName());
             }
+            for (Service service : queryS) {
+                int count = 0;
+                for (String s : lista_services) {
+                    if (service.getName().equals(s)) {
+                        count++;
+                    }
+                }
+                String s = service.getName() + ": " + count;
+                lista_info.add(s);
+            }
+            String info = "Desglose de los registros filtrados por servicio: \n";
+            for (String s : lista_info) {
+                info += "       - " + s + "\n";
+            }
+            tabla_info.getChildren().add(new Label(info));
         }
 
         // Desglose por area
@@ -263,13 +270,84 @@ public class ReportController {
                 String s = area.getName() + ": " + count;
                 lista_info.add(s);
             }
+            String info = "Desglose de los registros filtrados por area: \n";
             for (String s : lista_info) {
-                System.out.println(s);
+                info += "       - " + s + "\n";
             }
+            tabla_info.getChildren().add(new Label(info));
         }
 
-        recordTableID.getItems().clear();
-        recordTableID.getItems().addAll(query);
+        // Desglose por recurso
+        if (cb_resource.isSelected()) {
+            List<Resource> queryR = DAO.resource.queryBuilder().query();
+            List<String> lista_resource = new ArrayList<String>();
+            List<String> lista_info = new ArrayList<String>();
+            for (Record record : query) {
+                if (record.getResource() != null) {
+                    lista_resource.add(record.getResource().getName());
+                }
+            }
+            for (Resource resource : queryR) {
+                int count = 0;
+                for (String s : lista_resource) {
+                    if (resource.getName().equals(s)) {
+                        count++;
+                    }
+                }
+                String s = resource.getName() + ": " + count;
+                lista_info.add(s);
+            }
+            String info = "Desglose de los registros filtrados por recurso: \n";
+            for (String s : lista_info) {
+                info += "       - " + s + "\n";
+            }
+            tabla_info.getChildren().add(new Label(info));
+        }
+
+        // Desglose por solicitante
+        if (cb_applicant.isSelected()) {
+            List<Applicant> queryA = DAO.applicant.queryBuilder().query();
+            List<String> lista_applicant = new ArrayList<String>();
+            List<String> lista_info = new ArrayList<String>();
+            for (Record record : query) {
+                lista_applicant.add(record.getApplicant().getName());
+            }
+            for (Applicant applicant : queryA) {
+                int count = 0;
+                for (String s : lista_applicant) {
+                    if (applicant.getName().equals(s)) {
+                        count++;
+                    }
+                }
+                String s = applicant.getName() + ": " + count;
+                lista_info.add(s);
+            }
+            String info = "Desglose de los registros filtrados por solicitante: \n";
+            for (String s : lista_info) {
+                info += "       - " + s + "\n";
+            }
+            tabla_info.getChildren().add(new Label(info));
+        }
+
+        // Horas de servicio totales
+        if (cb_hours.isSelected()) {
+            int days = 0;
+            int hours = 0;
+            int minutes = 0;
+            for (Record record : query) {
+                try {
+                    LocalTime start = LocalTime.parse(record.getStartTime());
+                    LocalTime finish = LocalTime.parse(record.getEndTime());
+                    hours = hours + Math.abs(finish.getHour() - start.getHour());
+                    minutes = minutes + Math.abs(finish.getMinute() - start.getMinute());
+                } catch (Exception e) {
+                    // Podrán haber Record que no hayan acabado (por error o porque aún están operativos)
+                }
+            }
+            String info = "Se han trabajado en total " + days + " dias, " + hours + " horas y "
+                    + minutes + " minutos.";
+            tabla_info.getChildren().add(new Label(info));
+        }
     }
 
 }

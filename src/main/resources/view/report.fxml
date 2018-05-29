@@ -7,8 +7,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -57,18 +55,21 @@
    <left>
       <AnchorPane prefHeight="514.0" prefWidth="255.0" style="-fx-background-color: #fff; -fx-border-color: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent); -fx-border-style: solid; -fx-border-width: 4px 0 0 0;" BorderPane.alignment="CENTER">
          <children>
-            <VBox layoutX="8.0" layoutY="14.0" prefHeight="479.0" prefWidth="254.0" spacing="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <VBox layoutX="8.0" layoutY="14.0" prefHeight="479.0" prefWidth="254.0" spacing="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                <children>
                   <JFXDatePicker fx:id="startDateID" defaultColor="#e53935" prefHeight="25.0" prefWidth="295.0" promptText="Fecha de inicio" showWeekNumbers="true" />
                   <JFXDatePicker fx:id="endDateID" defaultColor="#e53935" prefHeight="25.0" prefWidth="262.0" promptText="Fecha de fin" showWeekNumbers="true" />
                   <CheckComboBox id="choice" fx:id="assemblyID" prefHeight="25.0" prefWidth="215.0" />
-                  <CheckComboBox id="choice" fx:id="areaID" prefHeight="25.0" prefWidth="379.0" />
                   <CheckComboBox id="choice" fx:id="serviceID" prefHeight="25.0" prefWidth="359.0" />
+                  <CheckComboBox id="choice" fx:id="areaID" prefHeight="25.0" prefWidth="379.0" />
                   <CheckComboBox id="choice" fx:id="resourceID" prefHeight="25.0" prefWidth="431.0" />
                   <CheckComboBox id="choice" fx:id="applicantID" prefHeight="25.0" prefWidth="306.0" />
                   <JFXCheckBox fx:id="cb_gender" checkedColor="#c42126" text="Desglosar por género" />
-                  <JFXCheckBox fx:id="cb_areas" text="Desglosar por áreas" />
-                  <JFXCheckBox fx:id="cb_hours" text="Mostrar horas de servicio" />
+                  <JFXCheckBox fx:id="cb_service" checkedColor="#c42126" text="Desglosar por servicio" />
+                  <JFXCheckBox fx:id="cb_areas" checkedColor="#c42126" text="Desglosar por áreas" />
+                  <JFXCheckBox fx:id="cb_resource" checkedColor="#c42126" text="Desglosar por recurso" />
+                  <JFXCheckBox fx:id="cb_applicant" checkedColor="#c42126" text="Desglosar por solicitante" />
+                  <JFXCheckBox fx:id="cb_hours" checkedColor="#c42126" text="Mostrar horas de servicio" />
                </children>
             </VBox>
          </children>
@@ -82,24 +83,15 @@
                   <HBox alignment="TOP_CENTER">
                      <children>
                         <AnchorPane fx:id="pageID" prefHeight="363.0" prefWidth="602.0" style="-fx-background-color: #fff;">
-                           <children>
-                              <TableView fx:id="recordTableID" layoutX="40.0" layoutY="40.0" prefHeight="595.0" prefWidth="562.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <columns>
-                                  <TableColumn fx:id="codeColumID" prefWidth="75.0" text="Código" />
-                                  <TableColumn fx:id="dateColumID" prefWidth="75.0" text="Fecha" />
-                                    <TableColumn fx:id="assemblyColumID" prefWidth="75.0" text="Asamblea" />
-                                </columns>
-                                 <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                 </columnResizePolicy>
-                              </TableView>
-                           </children>
                            <HBox.margin>
                               <Insets bottom="20.0" top="20.0" />
                            </HBox.margin>
                            <padding>
                               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                            </padding>
+                           <children>
+                              <VBox fx:id="tabla_info" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                           </children>
                         </AnchorPane>
                      </children>
                   </HBox>
