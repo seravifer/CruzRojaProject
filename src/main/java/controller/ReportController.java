@@ -53,9 +53,6 @@ public class ReportController {
     private CheckComboBox<Resource> resourceID;
 
     @FXML
-    private CheckComboBox<Applicant> applicantID;
-
-    @FXML
     private AnchorPane pageID;
 
     @FXML
@@ -101,13 +98,11 @@ public class ReportController {
     private void init() {
         try {
             List<Assembly> assemblies = DAO.assembly.queryBuilder().query();
-            List<Applicant> applicants = DAO.applicant.queryBuilder().query();
             List<Resource> resources = DAO.resource.queryBuilder().query();
             List<Area> areas = DAO.area.queryBuilder().query();
             List<Service> services = DAO.services.queryBuilder().query();
 
             assemblyID.getItems().addAll(assemblies);
-            applicantID.getItems().addAll(applicants);
             resourceID.getItems().addAll(resources);
             areaID.getItems().addAll(areas);
             serviceID.getItems().addAll(services);
@@ -151,7 +146,6 @@ public class ReportController {
         ObservableList<Assembly> checkedAssembly = assemblyID.getCheckModel().getCheckedItems();
         ObservableList<Area> checkedArea = areaID.getCheckModel().getCheckedItems();
         ObservableList<Service> checkedService = serviceID.getCheckModel().getCheckedItems();
-        ObservableList<Applicant> checkedApplicant = applicantID.getCheckModel().getCheckedItems();
         ObservableList<Resource> checkedResource = resourceID.getCheckModel().getCheckedItems();
 
         for (Assembly assembly : checkedAssembly) {
@@ -174,15 +168,6 @@ public class ReportController {
 
         if (!checkedService.isEmpty()) {
             where.or(checkedService.size());
-            total++;
-        }
-
-        for (Applicant applicant : checkedApplicant) {
-            where.eq("applicant_id", applicant.getID());
-        }
-
-        if (!checkedApplicant.isEmpty()) {
-            where.or(checkedApplicant.size());
             total++;
         }
 
@@ -304,33 +289,6 @@ public class ReportController {
                 }
             }
             String info = "Desglose de los registros filtrados por recurso: \n";
-            for (String s : lista_info) {
-                info += "       - " + s + "\n";
-            }
-            tabla_info.getChildren().add(new Label(info));
-        }
-
-        // Desglose por solicitante
-        if (cb_applicant.isSelected()) {
-            List<Applicant> queryA = DAO.applicant.queryBuilder().query();
-            List<String> lista_applicant = new ArrayList<String>();
-            List<String> lista_info = new ArrayList<String>();
-            for (Record record : query) {
-                lista_applicant.add(record.getApplicant().getName());
-            }
-            for (Applicant applicant : queryA) {
-                int count = 0;
-                for (String s : lista_applicant) {
-                    if (applicant.getName().equals(s)) {
-                        count++;
-                    }
-                }
-                if (count != 0) {
-                    String s = applicant.getName() + ": " + count;
-                    lista_info.add(s);
-                }
-            }
-            String info = "Desglose de los registros filtrados por solicitante: \n";
             for (String s : lista_info) {
                 info += "       - " + s + "\n";
             }

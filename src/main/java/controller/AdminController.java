@@ -120,14 +120,6 @@ public class AdminController {
     @FXML
     private JFXButton botonSolicitantes;
 
-    @FXML
-    private TableView<Applicant> tablaSolicitantes;
-
-    @FXML
-    private TableColumn<Applicant, String> nombreColumnSolicitante;
-
-    @FXML
-    private TableColumn<Applicant, Applicant> iconosColumnSolicitante;
 
     @FXML
     private JFXTextField codigoHospital;
@@ -154,7 +146,6 @@ public class AdminController {
     private Assembly asamblea_update;
     private Resource recurso_update;
     private Area area_update;
-    private Applicant solicitante_update;
     private Hospital hospital_update;
 
     public AdminController() {
@@ -188,14 +179,12 @@ public class AdminController {
             List<Service> servicios = DAO.services.queryBuilder().query();
             List<Assembly> asambleas = DAO.assembly.queryBuilder().query();
             List<Resource> recursos = DAO.resource.queryBuilder().query();
-            List<Applicant> solicitantes = DAO.applicant.queryBuilder().query();
             List<Hospital> hospitales = DAO.hospital.queryBuilder().query();
 
             areaServicios.getItems().addAll(areas);
             tablaServicios.getItems().addAll(servicios);
             tablaAreas.getItems().addAll(areas);
             tablaAsambleas.getItems().addAll(asambleas);
-            tablaSolicitantes.getItems().addAll(solicitantes);
             tablaHospitales.getItems().addAll(hospitales);
             tablaRecursos.getItems().addAll(recursos);
 
@@ -214,9 +203,6 @@ public class AdminController {
                     param -> new ReadOnlyObjectWrapper<>(param.getValue())
             );
             iconosColumnHospital.setCellValueFactory(
-                    param -> new ReadOnlyObjectWrapper<>(param.getValue())
-            );
-            iconosColumnSolicitante.setCellValueFactory(
                     param -> new ReadOnlyObjectWrapper<>(param.getValue())
             );
 
@@ -334,36 +320,12 @@ public class AdminController {
                     });
                 }
             });
-            iconosColumnSolicitante.setCellFactory(param -> new TableCell<Applicant, Applicant>() {
-                protected void updateItem(Applicant solicitante, boolean empty) {
-                    super.updateItem(solicitante, empty);
-                    SVGPath iconDelete = new SVGPath();
-                    iconDelete.setContent("M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z");
-                    iconDelete.setCursor(Cursor.HAND);
-                    iconDelete.setFill(Paint.valueOf("#545454"));
-                    if (solicitante == null) {
-                        setGraphic(null);
-                        return;
-                    }
-                    setGraphic(iconDelete);
-                    iconDelete.setOnMouseClicked((event) -> {
-                        getTableView().getItems().remove(solicitante);
-                        try {
-                            DAO.applicant.delete(solicitante);
-                        } catch (SQLException ex) {
-                            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    });
-                }
-            });
 
             nombreColumnAreas.setCellValueFactory(new PropertyValueFactory<>("name"));
             abreviaturaColumnAreas.setCellValueFactory(new PropertyValueFactory<>("shortName"));
 
             nombreColumnAsamblea.setCellValueFactory(new PropertyValueFactory<>("name"));
             codigoColumnAsamblea.setCellValueFactory(new PropertyValueFactory<>("code"));
-
-            nombreColumnSolicitante.setCellValueFactory(new PropertyValueFactory<>("name"));
 
             nombreColumnRecursos.setCellValueFactory(new PropertyValueFactory<>("name"));
             codigoColumnRecursos.setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -465,24 +427,6 @@ public class AdminController {
                 }
             });
 
-            botonSolicitantes.setOnAction((event) -> {
-                try {                    
-                    if (solicitante_update == null) {
-                    Applicant solicitante = new Applicant(nombreSolicitantes.getText());
-                    DAO.applicant.create(solicitante);
-                    tablaSolicitantes.getItems().add(solicitante);
-                    } else {                     
-                        solicitante_update.setName(nombreSolicitantes.getText());
-                        DAO.applicant.update(solicitante_update);
-                        tablaSolicitantes.refresh();
-                        solicitante_update = null;
-                        botonSolicitantes.setText("Enviar");
-                        nombreSolicitantes.clear();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
             botonHospital.setOnAction((event) -> {
                 try {
                     if (hospital_update == null) {
@@ -559,18 +503,7 @@ public class AdminController {
             });
             return row;
         });
-        tablaSolicitantes.setRowFactory(tv -> {
-            TableRow<Applicant> row = new TableRow<>();
-            row.setCursor(Cursor.HAND); 
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                    nombreSolicitantes.setText(row.getItem().getName());
-                    solicitante_update = row.getItem();                                   
-                    botonSolicitantes.setText("Guardar");
-                }
-            });
-            return row;
-        });
+
         tablaHospitales.setRowFactory(tv -> {
             TableRow<Hospital> row = new TableRow<>();
             row.setCursor(Cursor.HAND);

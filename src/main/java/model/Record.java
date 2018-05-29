@@ -26,8 +26,6 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Area area;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
-    private Applicant applicant;
-    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Service service;
     @DatabaseField
     private String address;
@@ -46,7 +44,7 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
     public Record() {}
 
     public Record(String date, int code, Resource resource, Assembly assembly, LocalTime startTime, LocalTime endTime,
-                  Area area, Applicant applicant, Service service, String address, String assistance_h,
+                  Area area, Service service, String address, String assistance_h,
                   String assistance_m, String evacuated_h, String evacuated_m, String registry, String notes) {
         this.date = date;
         this.code = code;
@@ -56,7 +54,6 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
         if (endTime == null) this.endTime = null;
         else this.endTime = endTime.toString();
         this.area = area;
-        this.applicant = applicant;
         this.service = service;
         this.address = address;
         this.assistance_h = Integer.parseInt(assistance_h);
@@ -97,10 +94,6 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
 
     public Area getArea() {
         return area;
-    }
-
-    public Applicant getApplicant() {
-        return applicant;
     }
 
     public Service getService() {
@@ -166,10 +159,6 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
 
     public void setArea(Area area) {
         this.area = area;
-    }
-
-    public void setApplicant(Applicant applicant) {
-        this.applicant = applicant;
     }
 
     public void setService(Service service) {

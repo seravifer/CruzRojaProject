@@ -9,7 +9,6 @@ import java.sql.SQLException;
 public class DAO {
 
     public static Dao<Assembly, Integer> assembly;
-    public static Dao<Applicant, Integer> applicant;
     public static Dao<Service, Integer> services;
     public static Dao<Area, Integer> area;
     public static Dao<Resource, Integer> resource;
@@ -20,7 +19,6 @@ public class DAO {
     static {
         try {
             assembly = DaoManager.createDao(DB.get(), Assembly.class);
-            applicant = DaoManager.createDao(DB.get(), Applicant.class);
             services = DaoManager.createDao(DB.get(), Service.class);
             area = DaoManager.createDao(DB.get(), Area.class);
             resource = DaoManager.createDao(DB.get(), Resource.class);

@@ -57,6 +57,6 @@ public class Assembly {
 
     @Override
     public String toString() {
-        return name;
+        return name + " (" + code + ")";
     }
 }

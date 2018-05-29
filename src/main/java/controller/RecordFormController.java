@@ -19,9 +19,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
-import javafx.util.Callback;
-import javafx.util.StringConverter;
-import javafx.util.converter.LocalTimeStringConverter;
 import model.*;
 import service.DAO;
 import utils.AutoComplete;
@@ -33,9 +30,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import static utils.Utils.timeConverter;
@@ -67,9 +62,6 @@ public class RecordFormController {
     private JFXComboBox<Resource> resourceID;
 
     @FXML
-    private JFXComboBox<Applicant> applicantID;
-
-    @FXML
     private JFXComboBox<Area> areaID;
 
     @FXML
@@ -92,6 +84,9 @@ public class RecordFormController {
 
     @FXML
     private JFXTextField patientID;
+
+    @FXML
+    private JFXTextField addressID;
 
     @FXML
     private JFXTextField notesID;
@@ -401,9 +396,8 @@ public class RecordFormController {
         if (record == null) {
             record = new Record(dateID.getValue().toString(), 0, AutoComplete.getValue(resourceID),
                     AutoComplete.getValue(assemblyID), startTimeID.getValue(), endTimeID.getValue(), areaID.getValue(),
-                    applicantID.getValue(), serviceID.getValue(), "", assistance_hID.getText(),
-                    assistance_hID.getText(), evacuated_hID.getText(), evacuated_mID.getText(), registryID.getText(),
-                    notesID.getText());
+                    serviceID.getValue(), "", assistance_hID.getText(), assistance_hID.getText(),
+                    evacuated_hID.getText(), evacuated_mID.getText(), registryID.getText(), notesID.getText());
             try {
                 DAO.record.create(record);
                 record.refresh();
@@ -425,12 +419,12 @@ public class RecordFormController {
             record.setStartTime(startTimeID.getValue().toString());
             record.setEndTime(endTimeID.getValue());
             record.setArea(areaID.getValue());
-            record.setApplicant(applicantID.getValue());
             record.setService(serviceID.getValue());
             record.setAssistanceH(assistance_hID.getText());
             record.setAssistanceM(assistance_mID.getText());
             record.setEvacuatedH(evacuated_hID.getText());
             record.setEvacuatedM(evacuated_mID.getText());
+            record.setAddress(addressID.getText());
             record.setRegistry(registryID.getText());
             record.setNotes(notesID.getText());
 
@@ -450,7 +444,7 @@ public class RecordFormController {
 
     private boolean validate() {
         return AutoComplete.getValue(assemblyID) == null || areaID.getValue() == null || serviceID.getValue() == null
-                || applicantID.getValue() == null || dateID.getValue() == null || startTimeID.getValue() == null;
+                || dateID.getValue() == null || startTimeID.getValue() == null;
     }
 
     private ChangeListener<String> onlyNumbers(TextField node) {
