@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
+import static utils.Utils.timeConverter;
+
 public class RecordFormController {
 
     @FXML
@@ -182,7 +184,6 @@ public class RecordFormController {
         if (record.getEndTime() != null) endTimeID.setValue(LocalTime.parse(record.getEndTime()));
         assemblyID.getSelectionModel().select(record.getAssembly());
         resourceID.getSelectionModel().select(record.getResource());
-        applicantID.getSelectionModel().select(record.getApplicant());
         areaID.getSelectionModel().select(record.getArea());
         serviceID.getSelectionModel().select(record.getService());
         evacuated_hID.setText(record.getEvacuated_h() + "");
@@ -204,12 +205,10 @@ public class RecordFormController {
     private void init() {
         try {
             List<Assembly> assemblies = DAO.assembly.queryBuilder().query();
-            List<Applicant> applicants = DAO.applicant.queryBuilder().query();
             List<Resource> resources = DAO.resource.queryBuilder().query();
             List<Area> areas = DAO.area.queryBuilder().query();
 
             assemblyID.getItems().addAll(assemblies);
-            applicantID.getItems().addAll(applicants);
             resourceID.getItems().addAll(resources);
             areaID.getItems().addAll(areas);
         } catch (SQLException e) {
@@ -230,9 +229,11 @@ public class RecordFormController {
         startTimeID.setIs24HourView(true);
         endTimeID.setIs24HourView(true);
 
-        StringConverter<LocalTime> esConverter = new LocalTimeStringConverter(FormatStyle.SHORT, Locale.FRENCH);
-        startTimeID.setConverter(esConverter);
-        endTimeID.setConverter(esConverter);
+        startTimeID.setConverter(timeConverter);
+        endTimeID.setConverter(timeConverter);
+        startTimeAssistanceID.setConverter(timeConverter);
+        transferTimeAssistanceID.setConverter(timeConverter);
+        endTimeAssistanceID.setConverter(timeConverter);
 
         JFXTextField[] nodes = {assistance_mID, assistance_hID, evacuated_hID, evacuated_mID};
         for (JFXTextField node : nodes) {

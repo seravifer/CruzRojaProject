@@ -1,14 +1,18 @@
 package utils;
 
 import com.jfoenix.controls.JFXTimePicker;
-import javafx.event.EventTarget;
 import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
-import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.util.StringConverter;
+import javafx.util.converter.LocalTimeStringConverter;
 import model.Event;
 
 import java.time.LocalTime;
+import java.time.format.FormatStyle;
+import java.util.Locale;
+
+import static utils.Utils.timeConverter;
 
 public class EditingCellHour extends TableCell<Event, String> {
 
@@ -44,7 +48,7 @@ public class EditingCellHour extends TableCell<Event, String> {
         } else {
             if (isEditing()) {
                 if (textField != null) {
-                    textField.setValue(LocalTime.parse(getString()));
+                    if (!getString().isEmpty() || getString() != null) textField.setValue(LocalTime.parse(getString()));
                 }
                 setText(null);
                 setGraphic(textField);
@@ -56,14 +60,17 @@ public class EditingCellHour extends TableCell<Event, String> {
     }
 
     private void createTextField() {
-        textField = new JFXTimePicker(LocalTime.parse(getString()));
+        textField = new JFXTimePicker();
+        if (!getString().isEmpty() && getString() != null) textField.setValue(LocalTime.parse(getString()));
         textField.setMinWidth(this.getWidth());
         textField.getEditor().setAlignment(Pos.CENTER);
+        textField.setConverter(timeConverter);
         textField.focusedProperty().addListener((ob, o, n) -> {
             if (!n) {
-                commitEdit(textField.getValue().toString());
+                if (textField.getValue() != null) commitEdit(textField.getValue().toString());
             }
         });
+
         textField.setOnKeyPressed(t -> {
             if (t.getCode() == KeyCode.ENTER) {
                 commitEdit(textField.getValue().toString());
