@@ -4,6 +4,7 @@
 }
 
 /* Table view */
+
 .table-cell {
     -fx-alignment: center;
 }
@@ -22,7 +23,7 @@
     -fx-border-width: 0 0 1 0;
     -fx-border-insets: 0;
 }
-
+/*
 .table-row-cell:odd {
     -fx-background-color: #fff;
 }
@@ -44,15 +45,19 @@
     -fx-background-insets: 0, 0 0 1 0 ;
     -fx-table-cell-border-color: derive(-fx-color, 5%);
 }
-
+*/
 .table-row-cell:empty .table-cell {
     -fx-border-width: 0px;
 }
 
 .table-row-cell:empty, .table-cell:empty:hover {
     -fx-background-color: transparent;
-}
+} 
 
+/*  Admin Table */
+.tablaAdmin .table-row-cell:selected .table-cell{ 
+    -fx-background-color: #EEEEEE;
+}
 
 /* Tab Pane */
 .jfx-tab-pane .tab-header-background {

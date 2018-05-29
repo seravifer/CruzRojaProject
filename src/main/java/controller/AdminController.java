@@ -382,19 +382,41 @@ public class AdminController {
 
             botonServicios.setOnAction((event) -> {
                 try {
-                    Service serv = new Service(nombreServicios.getText(), areaServicios.getValue());
-                    DAO.services.create(serv);
-                    tablaServicios.getItems().add(serv);
+                    if (servicio_update == null) {
+                        Service serv = new Service(nombreServicios.getText(), areaServicios.getValue());
+                        DAO.services.create(serv);
+                        tablaServicios.getItems().add(serv);
+                    } else {                     
+                        servicio_update.setName(nombreServicios.getText());
+                        servicio_update.setArea(areaServicios.getValue());
+                        DAO.services.update(servicio_update);
+                        tablaServicios.refresh();
+                        servicio_update = null;
+                        botonServicios.setText("Enviar");
+                        nombreServicios.clear();
+                        areaServicios.setValue(null);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
 
             botonAreas.setOnAction((event) -> {
-                try {
-                    Area area = new Area(nombreAreas.getText(), abreviaturaAreas.getText());
-                    DAO.area.create(area);
-                    tablaAreas.getItems().add(area);
+                try {               
+                    if (area_update == null) {
+                        Area area = new Area(nombreAreas.getText(), abreviaturaAreas.getText());
+                        DAO.area.create(area);
+                        tablaAreas.getItems().add(area);
+                    } else {                     
+                        area_update.setName(nombreAreas.getText());
+                        area_update.setShortName(abreviaturaAreas.getText());
+                        DAO.area.update(area_update);
+                        tablaAreas.refresh();
+                        area_update = null;
+                        botonAreas.setText("Enviar");
+                        nombreAreas.clear();
+                        abreviaturaAreas.clear();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -402,29 +424,61 @@ public class AdminController {
 
             botonAsambleas.setOnAction((event) -> {
                 try {
-                    Assembly asamblea = new Assembly(nombreAsambleas.getText(), codigoAsambleas.getText());
-                    DAO.assembly.create(asamblea);
-                    tablaAsambleas.getItems().add(asamblea);
+                   
+                    if (asamblea_update == null) {
+                        Assembly asamblea = new Assembly(nombreAsambleas.getText(), codigoAsambleas.getText());
+                        DAO.assembly.create(asamblea);
+                        tablaAsambleas.getItems().add(asamblea);
+                    } else {                     
+                        asamblea_update.setName(nombreAsambleas.getText());
+                        asamblea_update.setCode(codigoAsambleas.getText());
+                        DAO.assembly.update(asamblea_update);
+                        tablaAsambleas.refresh();
+                        asamblea_update = null;
+                        botonAsambleas.setText("Enviar");
+                        nombreAsambleas.clear();
+                        codigoAsambleas.clear();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
 
             botonRecursos.setOnAction((event) -> {
-                try {
+                try {                
+                    if (recurso_update == null) {
                     Resource recurso = new Resource(nombreRecursos.getText(), codigoRecursos.getText());
                     DAO.resource.create(recurso);
                     tablaRecursos.getItems().add(recurso);
+                    } else {                     
+                        recurso_update.setName(nombreRecursos.getText());
+                        recurso_update.setCode(codigoRecursos.getText());
+                        DAO.resource.update(recurso_update);
+                        tablaRecursos.refresh();
+                        recurso_update = null;         
+                        botonRecursos.setText("Enviar");
+                        nombreRecursos.clear();
+                        codigoRecursos.clear();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
 
             botonSolicitantes.setOnAction((event) -> {
-                try {
+                try {                    
+                    if (solicitante_update == null) {
                     Applicant solicitante = new Applicant(nombreSolicitantes.getText());
                     DAO.applicant.create(solicitante);
                     tablaSolicitantes.getItems().add(solicitante);
+                    } else {                     
+                        solicitante_update.setName(nombreSolicitantes.getText());
+                        DAO.applicant.update(solicitante_update);
+                        tablaSolicitantes.refresh();
+                        solicitante_update = null;
+                        botonSolicitantes.setText("Enviar");
+                        nombreSolicitantes.clear();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -433,7 +487,6 @@ public class AdminController {
                 try {
                     if (hospital_update == null) {
                         Hospital hospital = new Hospital(codigoHospital.getText(), nombreHospital.getText());
-                        System.out.print(codigoHospital.getText() + nombreHospital.getText());
                         DAO.hospital.create(hospital);
                         tablaHospitales.getItems().add(hospital);
                     } else {
@@ -441,6 +494,8 @@ public class AdminController {
                         hospital_update.setName(nombreHospital.getText());
                         DAO.hospital.update(hospital_update);
                         tablaHospitales.refresh();
+                        hospital_update = null;
+                        botonHospital.setText("Enviar");
                         codigoHospital.clear();
                         nombreHospital.clear();
                     }
@@ -454,11 +509,12 @@ public class AdminController {
 
         tablaServicios.setRowFactory(tv -> {
             TableRow<Service> row = new TableRow<>();
+            row.setCursor(Cursor.HAND);
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     nombreServicios.setText(row.getItem().getName());
                     areaServicios.setValue(row.getItem().getArea());
-                    servicio_update = row.getItem();
+                    servicio_update = row.getItem();                  
                     botonServicios.setText("Guardar");
                 }
             });
@@ -466,6 +522,7 @@ public class AdminController {
         });
         tablaAsambleas.setRowFactory(tv -> {
             TableRow<Assembly> row = new TableRow<>();
+            row.setCursor(Cursor.HAND);
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     nombreAsambleas.setText(row.getItem().getName());
@@ -478,6 +535,7 @@ public class AdminController {
         });
         tablaRecursos.setRowFactory(tv -> {
             TableRow<Resource> row = new TableRow<>();
+            row.setCursor(Cursor.HAND);
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     nombreRecursos.setText(row.getItem().getName());
@@ -490,11 +548,12 @@ public class AdminController {
         });
         tablaAreas.setRowFactory(tv -> {
             TableRow<Area> row = new TableRow<>();
+            row.setCursor(Cursor.HAND);
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     nombreAreas.setText(row.getItem().getName());
                     abreviaturaAreas.setText(row.getItem().getShortName());
-                    area_update = row.getItem();
+                    area_update = row.getItem();                                    
                     botonAreas.setText("Guardar");
                 }
             });
@@ -502,10 +561,11 @@ public class AdminController {
         });
         tablaSolicitantes.setRowFactory(tv -> {
             TableRow<Applicant> row = new TableRow<>();
+            row.setCursor(Cursor.HAND); 
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     nombreSolicitantes.setText(row.getItem().getName());
-                    solicitante_update = row.getItem();
+                    solicitante_update = row.getItem();                                   
                     botonSolicitantes.setText("Guardar");
                 }
             });
@@ -513,6 +573,7 @@ public class AdminController {
         });
         tablaHospitales.setRowFactory(tv -> {
             TableRow<Hospital> row = new TableRow<>();
+            row.setCursor(Cursor.HAND);
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     nombreHospital.setText(row.getItem().getName());
