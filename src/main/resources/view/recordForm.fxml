@@ -74,10 +74,10 @@
                   <JFXTimePicker fx:id="endTimeID" defaultColor="#e53935" layoutX="25.0" layoutY="177.0" maxWidth="1.7976931348623157E308" promptText="Hora de fin" />
                   <JFXComboBox fx:id="assemblyID" focusColor="#e53935" labelFloat="true" layoutX="249.0" layoutY="116.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="185.0" promptText="Asamblea" visibleRowCount="20" />
                   <JFXComboBox fx:id="resourceID" focusColor="#e53935" labelFloat="true" layoutX="248.0" layoutY="177.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="190.0" promptText="Recurso" visibleRowCount="20" />
-                  <JFXComboBox fx:id="areaID" focusColor="#e53935" labelFloat="true" layoutX="456.0" layoutY="116.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="293.0" promptText="Área" visibleRowCount="20" />
-                  <JFXComboBox fx:id="serviceID" focusColor="#e53935" labelFloat="true" layoutX="457.0" layoutY="177.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="291.0" promptText="Servicio" />
-                  <JFXTextField fx:id="evacuated_hID" alignment="CENTER" focusColor="#e53935" layoutX="138.0" layoutY="263.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="33.0" text="0" unFocusColor="#2711e8" />
-                  <JFXTextField fx:id="evacuated_mID" alignment="CENTER" focusColor="#e53935" layoutX="138.0" layoutY="301.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="33.0" text="0" unFocusColor="#ce20da" />
+                  <JFXComboBox fx:id="areaID" focusColor="#e53935" labelFloat="true" layoutX="462.0" layoutY="116.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="287.0" promptText="Área" visibleRowCount="20" />
+                  <JFXComboBox fx:id="serviceID" focusColor="#e53935" labelFloat="true" layoutX="462.0" layoutY="177.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="286.0" promptText="Servicio" />
+                  <JFXTextField fx:id="evacuated_hID" alignment="CENTER" editable="false" focusColor="#e53935" layoutX="138.0" layoutY="263.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="33.0" text="0" unFocusColor="#2711e8" />
+                  <JFXTextField fx:id="evacuated_mID" alignment="CENTER" editable="false" focusColor="#e53935" layoutX="138.0" layoutY="301.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="33.0" text="0" unFocusColor="#ce20da" />
                   <JFXTextField fx:id="assistance_hID" alignment="CENTER" focusColor="#e53935" layoutX="54.0" layoutY="266.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="36.0" text="0" unFocusColor="#2711e8" />
                   <JFXTextField fx:id="assistance_mID" alignment="CENTER" focusColor="#e53935" layoutX="54.0" layoutY="301.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="37.0" text="0" unFocusColor="#ce20da" />
                   <JFXTextField fx:id="addressID" focusColor="#e53935" labelFloat="true" layoutX="249.0" layoutY="244.0" maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="499.0" promptText="Lugar de intervención" />
@@ -128,6 +128,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
+                  <JFXComboBox fx:id="operativeID" layoutX="534.0" layoutY="32.0" prefHeight="23.0" prefWidth="214.0" promptText="Operativo" />
                </children>
             </AnchorPane>
          </children>

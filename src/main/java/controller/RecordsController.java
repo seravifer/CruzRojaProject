@@ -149,7 +149,7 @@ public class RecordsController extends AnchorPane {
         new Thread(task).start();
     }
 
-    public void refresh() { // TODO refactoring
+    public void refresh() { // TODO refactoring y arreglar
         final Task task = new Task<Void>() {
             @Override
             public Void call() {

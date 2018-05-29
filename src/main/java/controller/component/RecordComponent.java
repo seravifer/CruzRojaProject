@@ -114,7 +114,7 @@ public class RecordComponent extends AnchorPane {
         if (record.getRegistry().equals("")) registryID.setText("---");
         else registryID.setText(record.getRegistry());
 
-        if (record.getNotes().equals("")) notesID.setText("---");
+        if (record.getAddress().equals("")) notesID.setText("---");
         else notesID.setText(record.getNotes());
 
         if (record.getEndTime() == null) {
