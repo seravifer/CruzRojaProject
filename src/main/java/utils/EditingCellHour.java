@@ -1,16 +1,20 @@
 package utils;
 
+import com.jfoenix.controls.JFXTimePicker;
+import javafx.event.EventTarget;
 import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import model.Event;
 
-public class EditingCell extends TableCell<Event, String> {
+import java.time.LocalTime;
 
-    private TextField textField;
+public class EditingCellHour extends TableCell<Event, String> {
 
-    public EditingCell() {}
+    private JFXTimePicker textField;
+
+    public EditingCellHour() {}
 
     @Override
     public void startEdit() {
@@ -20,7 +24,7 @@ public class EditingCell extends TableCell<Event, String> {
             setText(null);
             setGraphic(textField);
             textField.requestFocus();
-            textField.deselect();
+            textField.getEditor().deselect();
         }
     }
 
@@ -40,7 +44,7 @@ public class EditingCell extends TableCell<Event, String> {
         } else {
             if (isEditing()) {
                 if (textField != null) {
-                    textField.setText(getString());
+                    textField.setValue(LocalTime.parse(getString()));
                 }
                 setText(null);
                 setGraphic(textField);
@@ -52,18 +56,17 @@ public class EditingCell extends TableCell<Event, String> {
     }
 
     private void createTextField() {
-        textField = new TextField(getString());
+        textField = new JFXTimePicker(LocalTime.parse(getString()));
         textField.setMinWidth(this.getWidth());
-        textField.setId("textfieldEvent");
-        textField.setAlignment(Pos.CENTER);
+        textField.getEditor().setAlignment(Pos.CENTER);
         textField.focusedProperty().addListener((ob, o, n) -> {
             if (!n) {
-                commitEdit(textField.getText());
+                commitEdit(textField.getValue().toString());
             }
         });
         textField.setOnKeyPressed(t -> {
             if (t.getCode() == KeyCode.ENTER) {
-                commitEdit(textField.getText());
+                commitEdit(textField.getValue().toString());
             } else if (t.getCode() == KeyCode.ESCAPE) {
                 cancelEdit();
             }

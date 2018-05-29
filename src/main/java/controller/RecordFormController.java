@@ -1,6 +1,5 @@
 package controller;
 
-import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.jfoenix.controls.*;
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
@@ -26,7 +25,8 @@ import javafx.util.converter.LocalTimeStringConverter;
 import model.*;
 import service.DAO;
 import utils.AutoComplete;
-import utils.EditingCell;
+import utils.EditingCellString;
+import utils.EditingCellHour;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -282,15 +282,12 @@ public class RecordFormController {
             }
         });
 
-        Callback<TableColumn<Event, String>, TableCell<Event, String>> cellFactoryEvent
-                = (TableColumn<Event, String> p) -> new EditingCell();
-
-        startTimeAssistanceColumID.setCellFactory(cellFactoryEvent);
-        transferTimeAssistanceColumID.setCellFactory(cellFactoryEvent);
-        endTimeAssistanceColumID.setCellFactory(cellFactoryEvent);
-        transferColumID.setCellFactory(cellFactoryEvent);
-        pathologyColumID.setCellFactory(cellFactoryEvent);
-        registryColumID.setCellFactory(cellFactoryEvent);
+        startTimeAssistanceColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellHour());
+        transferTimeAssistanceColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellHour());
+        endTimeAssistanceColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellHour());
+        transferColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellString());
+        pathologyColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellString());
+        registryColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellString());
 
         startTimeAssistanceColumID.setOnEditCommit(
                 (TableColumn.CellEditEvent<Event, String> t) ->
@@ -472,7 +469,4 @@ public class RecordFormController {
             if (node.getText().equals("")) node.setText("0");
         };
     }
-
-
-
 }
