@@ -242,8 +242,10 @@ public class ReportController {
                         count++;
                     }
                 }
-                String s = service.getName() + ": " + count;
-                lista_info.add(s);
+                if (count != 0) {
+                    String s = service.getName() + ": " + count;
+                    lista_info.add(s);
+                }
             }
             String info = "Desglose de los registros filtrados por servicio: \n";
             for (String s : lista_info) {
@@ -267,8 +269,10 @@ public class ReportController {
                         count++;
                     }
                 }
-                String s = area.getName() + ": " + count;
-                lista_info.add(s);
+                if (count != 0) {
+                    String s = area.getName() + ": " + count;
+                    lista_info.add(s);
+                }
             }
             String info = "Desglose de los registros filtrados por area: \n";
             for (String s : lista_info) {
@@ -294,8 +298,10 @@ public class ReportController {
                         count++;
                     }
                 }
-                String s = resource.getName() + ": " + count;
-                lista_info.add(s);
+                if (count != 0) {
+                    String s = resource.getName() + ": " + count;
+                    lista_info.add(s);
+                }
             }
             String info = "Desglose de los registros filtrados por recurso: \n";
             for (String s : lista_info) {
@@ -319,8 +325,10 @@ public class ReportController {
                         count++;
                     }
                 }
-                String s = applicant.getName() + ": " + count;
-                lista_info.add(s);
+                if (count != 0) {
+                    String s = applicant.getName() + ": " + count;
+                    lista_info.add(s);
+                }
             }
             String info = "Desglose de los registros filtrados por solicitante: \n";
             for (String s : lista_info) {
@@ -344,10 +352,17 @@ public class ReportController {
                     // Podrán haber Record que no hayan acabado (por error o porque aún están operativos)
                 }
             }
+            while (minutes > 60) {
+                minutes = minutes - 60;
+                hours = hours + 1;
+            }
+            while (hours > 24) {
+                hours = hours - 24;
+                days = days + 1;
+            }
             String info = "Se han trabajado en total " + days + " dias, " + hours + " horas y "
                     + minutes + " minutos.";
             tabla_info.getChildren().add(new Label(info));
         }
     }
-
 }
