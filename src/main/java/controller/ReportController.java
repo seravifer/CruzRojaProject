@@ -1,4 +1,4 @@
-package controller;
+7package controller;
 
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
@@ -8,10 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.print.PrinterJob;
 import javafx.scene.Scene;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.*;
@@ -41,7 +37,7 @@ public class ReportController {
     private JFXDatePicker endDateID;
 
     @FXML
-    private CheckComboBox<Assembly> assemblyID;
+    private JFXComboBox<Assembly> assemblyID;
 
     @FXML
     private CheckComboBox<Area> areaID;
@@ -141,21 +137,13 @@ public class ReportController {
         QueryBuilder<Record, Integer> qb = DAO.record.queryBuilder();
         Where<Record, Integer> where = qb.where();
         where.between("date", sd, ed);
+
         int total = 1;
 
-        ObservableList<Assembly> checkedAssembly = assemblyID.getCheckModel().getCheckedItems();
         ObservableList<Area> checkedArea = areaID.getCheckModel().getCheckedItems();
         ObservableList<Service> checkedService = serviceID.getCheckModel().getCheckedItems();
         ObservableList<Resource> checkedResource = resourceID.getCheckModel().getCheckedItems();
 
-        for (Assembly assembly : checkedAssembly) {
-            where.eq("assembly_id", assembly.getID());
-        }
-
-        if (!checkedAssembly.isEmpty()) {
-            where.or(checkedAssembly.size());
-            total++;
-        }
 
         for (Area area : checkedArea) {
             where.eq("area_id", area.getID());
@@ -180,12 +168,12 @@ public class ReportController {
             total++;
         }
 
-        where.and(total);
-
+        where.and(total).and().eq("assembly_id", assemblyID.getValue().getID());
+        
         List<Record> query = where.query();
         
         tabla_info.setSpacing(10);
-        tabla_info.getChildren().add(new Label("Informe de la Cruz Roja - Asamblea de " + checkedAssembly.get(0)));
+        tabla_info.getChildren().add(new Label("Informe de la Cruz Roja - Asamblea de " + assemblyID.getValue()));
 
         // Desglose por genero  
         if (cb_gender.isSelected()) {
@@ -201,14 +189,13 @@ public class ReportController {
                 ev_m += record.getEvacuated_m();
             }
             
-            int total_r = at_h + at_m + ev_h + ev_m;
-            
             String info = "Desglose de los servicios por genero: \n";
             info += "       - Hombres atendidos: " + at_h + "\n";
             info += "       - Mujeres atendidas: " + at_m + "\n";
             info += "       - Hombres evacuados: " + ev_h + "\n";
             info += "       - Mujeres evacuadas: " + ev_m + "\n";
-            info += "El total de gente tratada es de " + total_r + " en " + query.size() + " registros.";
+            info += "El total de gente tratada es de " + (at_h + at_m) + ", de los cuales " 
+                    + (ev_h + ev_m) + " han sido evacuados. Se han realizado, \n en total, " + query.size() + " registros.";
             tabla_info.getChildren().add(new Label(info));
         }
 
@@ -273,18 +260,18 @@ public class ReportController {
             List<String> lista_info = new ArrayList<String>();
             for (Record record : query) {
                 if (record.getResource() != null) {
-                    lista_resource.add(record.getResource().getName());
+                    lista_resource.add(record.getResource().getCode());
                 }
             }
             for (Resource resource : queryR) {
                 int count = 0;
                 for (String s : lista_resource) {
-                    if (resource.getName().equals(s)) {
+                    if (resource.getCode().equals(s)) {
                         count++;
                     }
                 }
                 if (count != 0) {
-                    String s = resource.getName() + ": " + count;
+                    String s = resource.getCode() + ": " + count;
                     lista_info.add(s);
                 }
             }
