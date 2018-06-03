@@ -4,6 +4,7 @@ apply plugin: 'application'
 sourceCompatibility = 1.8
 version = '1.0'
 mainClassName = 'App'
+compileJava.options.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
@@ -16,6 +17,7 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-jdbc:5.1'
     compile 'com.j256.ormlite:ormlite-core:5.1'
     compile 'org.controlsfx:controlsfx:8.40.14'
+
 }
 
 task fatJar(type: Jar) {

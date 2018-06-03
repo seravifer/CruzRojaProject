@@ -22,8 +22,11 @@ import service.DAO;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 public class AdminController {
 
@@ -89,6 +92,10 @@ public class AdminController {
 
     @FXML
     private TableColumn<Resource, String> nombreColumnRecursos;
+    @FXML
+    private TableColumn<Resource, Assembly> asambleaColumnRecursos;
+    @FXML
+    private JFXComboBox<Assembly> asambleaRecursos;
 
     @FXML
     private TableColumn<Resource, Resource> iconosColumnRecursos;
@@ -115,13 +122,6 @@ public class AdminController {
     private TableColumn<Area, Area> iconosColumnAreas;
 
     @FXML
-    private JFXTextField nombreSolicitantes;
-
-    @FXML
-    private JFXButton botonSolicitantes;
-
-
-    @FXML
     private JFXTextField codigoHospital;
 
     @FXML
@@ -142,11 +142,39 @@ public class AdminController {
     @FXML
     private TableColumn<Hospital, Hospital> iconosColumnHospital;
 
+    @FXML
+    private JFXTextField nombreUsuario;
+
+    @FXML
+    private JFXTextField userUsuario;
+
+    @FXML
+    private JFXTextField passUsuario;
+
+    @FXML
+    private JFXButton botonUsuario;
+
+    @FXML
+    private TableView<User> tablaUsuarios;
+
+    @FXML
+    private TableColumn<User, String> nombreColumnUsuario;
+
+    @FXML
+    private TableColumn<User, String> userColumnUsuario;
+
+    @FXML
+    private TableColumn<User, String> passwordColumnUsuario;
+
+    @FXML
+    private TableColumn<User, User> iconosColumnUsuarios;
+
     private Service servicio_update;
     private Assembly asamblea_update;
     private Resource recurso_update;
     private Area area_update;
     private Hospital hospital_update;
+    private User user_update;
 
     public AdminController() {
         try {
@@ -156,7 +184,7 @@ public class AdminController {
 
             Scene scene = new Scene(fxmlLoader.load(), 1200, 720);
             Stage stage = new Stage();
-            stage.setMaxWidth(600);
+            stage.setMaxWidth(800);
             stage.setMinWidth(600);
             stage.setHeight(480);
             stage.setMinHeight(480);
@@ -180,16 +208,17 @@ public class AdminController {
             List<Assembly> asambleas = DAO.assembly.queryBuilder().query();
             List<Resource> recursos = DAO.resource.queryBuilder().query();
             List<Hospital> hospitales = DAO.hospital.queryBuilder().query();
+            List<User> usuarios = DAO.users.queryBuilder().query();
 
             areaServicios.getItems().addAll(areas);
+            asambleaRecursos.getItems().addAll(asambleas);
             tablaServicios.getItems().addAll(servicios);
             tablaAreas.getItems().addAll(areas);
             tablaAsambleas.getItems().addAll(asambleas);
             tablaHospitales.getItems().addAll(hospitales);
             tablaRecursos.getItems().addAll(recursos);
+            tablaUsuarios.getItems().addAll(usuarios);
 
-            nombreColumnServicios.setCellValueFactory(new PropertyValueFactory<>("name"));
-            areaColumnServicios.setCellValueFactory(new PropertyValueFactory<>("area"));
             iconosColumnServicios.setCellValueFactory(
                     param -> new ReadOnlyObjectWrapper<>(param.getValue())
             );
@@ -205,27 +234,33 @@ public class AdminController {
             iconosColumnHospital.setCellValueFactory(
                     param -> new ReadOnlyObjectWrapper<>(param.getValue())
             );
-
+            iconosColumnUsuarios.setCellValueFactory(
+                    param -> new ReadOnlyObjectWrapper<>(param.getValue())
+            );
             iconosColumnServicios.setCellFactory(param -> new TableCell<Service, Service>() {
                 protected void updateItem(Service servicio, boolean empty) {
                     super.updateItem(servicio, empty);
-                    SVGPath iconDelete = new SVGPath();
-                    iconDelete.setContent("M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z");
-                    iconDelete.setCursor(Cursor.HAND);
-                    iconDelete.setFill(Paint.valueOf("#545454"));
+                    SVGPath iconDelete = getIconDelete();
                     if (servicio == null) {
                         setGraphic(null);
                         return;
                     }
                     setGraphic(iconDelete);
                     iconDelete.setOnMouseClicked((event) -> {
-                        getTableView().getItems().remove(servicio);
+                        Alert alert = getAlertDelete();
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.get() == alert.getButtonTypes().get(0)) {
+                            getTableView().getItems().remove(servicio);
 
-                        try {
-                            DAO.services.delete(servicio);
-                        } catch (SQLException ex) {
-                            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+                            try {
+                                DAO.services.delete(servicio);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            alert.close();
                         }
+
                     });
                 }
             });
@@ -233,44 +268,52 @@ public class AdminController {
             iconosColumnAreas.setCellFactory(param -> new TableCell<Area, Area>() {
                 protected void updateItem(Area area, boolean empty) {
                     super.updateItem(area, empty);
-                    SVGPath iconDelete = new SVGPath();
-                    iconDelete.setContent("M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z");
-                    iconDelete.setCursor(Cursor.HAND);
-                    iconDelete.setFill(Paint.valueOf("#545454"));
+                    SVGPath iconDelete = getIconDelete();
                     if (area == null) {
                         setGraphic(null);
                         return;
                     }
                     setGraphic(iconDelete);
                     iconDelete.setOnMouseClicked((event) -> {
-                        getTableView().getItems().remove(area);
-                        try {
-                            DAO.area.delete(area);
-                        } catch (SQLException ex) {
-                            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+                        Alert alert = getAlertDelete();
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.get() == alert.getButtonTypes().get(0)) {
+                            getTableView().getItems().remove(area);
+                            try {
+                                DAO.area.delete(area);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            alert.close();
                         }
+
                     });
                 }
             });
             iconosColumnAsamblea.setCellFactory(param -> new TableCell<Assembly, Assembly>() {
                 protected void updateItem(Assembly asamblea, boolean empty) {
                     super.updateItem(asamblea, empty);
-                    SVGPath iconDelete = new SVGPath();
-                    iconDelete.setContent("M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z");
-                    iconDelete.setCursor(Cursor.HAND);
-                    iconDelete.setFill(Paint.valueOf("#545454"));
+                    SVGPath iconDelete = getIconDelete();
                     if (asamblea == null) {
                         setGraphic(null);
                         return;
                     }
                     setGraphic(iconDelete);
                     iconDelete.setOnMouseClicked((event) -> {
-                        getTableView().getItems().remove(asamblea);
-                        try {
-                            DAO.assembly.delete(asamblea);
-                        } catch (SQLException ex) {
-                            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+                        Alert alert = getAlertDelete();
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.get() == alert.getButtonTypes().get(0)) {
+                            getTableView().getItems().remove(asamblea);
+                            try {
+                                DAO.assembly.delete(asamblea);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            alert.close();
                         }
+
                     });
                 }
             });
@@ -278,22 +321,28 @@ public class AdminController {
             iconosColumnRecursos.setCellFactory(param -> new TableCell<Resource, Resource>() {
                 protected void updateItem(Resource recurso, boolean empty) {
                     super.updateItem(recurso, empty);
-                    SVGPath iconDelete = new SVGPath();
-                    iconDelete.setContent("M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z");
-                    iconDelete.setCursor(Cursor.HAND);
-                    iconDelete.setFill(Paint.valueOf("#545454"));
+                    SVGPath iconDelete = getIconDelete();
                     if (recurso == null) {
                         setGraphic(null);
                         return;
                     }
                     setGraphic(iconDelete);
                     iconDelete.setOnMouseClicked((event) -> {
-                        getTableView().getItems().remove(recurso);
-                        try {
-                            DAO.resource.delete(recurso);
-                        } catch (SQLException ex) {
-                            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+
+                        Alert alert = getAlertDelete();
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.get() == alert.getButtonTypes().get(0)) {
+
+                            getTableView().getItems().remove(recurso);
+                            try {
+                                DAO.resource.delete(recurso);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            alert.close();
                         }
+
                     });
                 }
             });
@@ -301,25 +350,59 @@ public class AdminController {
             iconosColumnHospital.setCellFactory(param -> new TableCell<Hospital, Hospital>() {
                 protected void updateItem(Hospital hospital, boolean empty) {
                     super.updateItem(hospital, empty);
-                    SVGPath iconDelete = new SVGPath();
-                    iconDelete.setContent("M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z");
-                    iconDelete.setCursor(Cursor.HAND);
-                    iconDelete.setFill(Paint.valueOf("#545454"));
+                    SVGPath iconDelete = getIconDelete();
                     if (hospital == null) {
                         setGraphic(null);
                         return;
                     }
                     setGraphic(iconDelete);
                     iconDelete.setOnMouseClicked((event) -> {
-                        getTableView().getItems().remove(hospital);
-                        try {
-                            DAO.hospital.delete(hospital);
-                        } catch (SQLException ex) {
-                            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+
+                        Alert alert = getAlertDelete();
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.get() == alert.getButtonTypes().get(0)) {
+                            getTableView().getItems().remove(hospital);
+                            try {
+                                DAO.hospital.delete(hospital);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            alert.close();
                         }
+
                     });
                 }
             });
+            iconosColumnUsuarios.setCellFactory(param -> new TableCell<User, User>() {
+                protected void updateItem(User user, boolean empty) {
+                    super.updateItem(user, empty);
+                    SVGPath iconDelete = getIconDelete();
+                    if (user == null) {
+                        setGraphic(null);
+                        return;
+                    }
+                    setGraphic(iconDelete);
+                    iconDelete.setOnMouseClicked((event) -> {
+                        Alert alert = getAlertDelete();
+                        Optional<ButtonType> result = alert.showAndWait();
+                        if (result.get() == alert.getButtonTypes().get(0)) {
+                            getTableView().getItems().remove(user);
+                            try {
+                                DAO.users.delete(user);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            alert.close();
+                        }
+
+                    });
+                }
+            });
+
+            nombreColumnServicios.setCellValueFactory(new PropertyValueFactory<>("name"));
+            areaColumnServicios.setCellValueFactory(new PropertyValueFactory<>("area"));
 
             nombreColumnAreas.setCellValueFactory(new PropertyValueFactory<>("name"));
             abreviaturaColumnAreas.setCellValueFactory(new PropertyValueFactory<>("shortName"));
@@ -329,16 +412,36 @@ public class AdminController {
 
             nombreColumnRecursos.setCellValueFactory(new PropertyValueFactory<>("name"));
             codigoColumnRecursos.setCellValueFactory(new PropertyValueFactory<>("code"));
-
+            asambleaColumnRecursos.setCellValueFactory(new PropertyValueFactory<>("assembly"));
+            
             nombreColumnHospital.setCellValueFactory(new PropertyValueFactory<>("name"));
             codigoColumnHospital.setCellValueFactory(new PropertyValueFactory<>("code"));
+
+            nombreColumnUsuario.setCellValueFactory(new PropertyValueFactory<>("name_user"));
+            userColumnUsuario.setCellValueFactory(new PropertyValueFactory<>("username"));
+            passwordColumnUsuario.setCellValueFactory(new PropertyValueFactory<>("password"));
 
             areaColumnServicios.setCellFactory(cell -> new TableCell<Service, Area>() {
                 @Override
                 public void updateItem(Area item, boolean empty) {
                     super.updateItem(item, empty);
-                    if (item == null || empty) setText(null);
-                    else setText(item.getName() + "");
+                    if (item == null || empty) {
+                        setText(null);
+                    } else {
+                        setText(item.getName() + "");
+                    }
+                }
+            });
+
+            asambleaColumnRecursos.setCellFactory(cell -> new TableCell<Resource, Assembly>() {
+                @Override
+                public void updateItem(Assembly item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null || empty) {
+                        setText(null);
+                    } else {
+                        setText(item.getName() + "");
+                    }
                 }
             });
 
@@ -348,13 +451,15 @@ public class AdminController {
                         Service serv = new Service(nombreServicios.getText(), areaServicios.getValue());
                         DAO.services.create(serv);
                         tablaServicios.getItems().add(serv);
-                    } else {                     
+                        nombreServicios.clear();
+                        areaServicios.setValue(null);
+                    } else {
                         servicio_update.setName(nombreServicios.getText());
                         servicio_update.setArea(areaServicios.getValue());
                         DAO.services.update(servicio_update);
                         tablaServicios.refresh();
                         servicio_update = null;
-                        botonServicios.setText("Enviar");
+                        botonServicios.setText("Añadir");
                         nombreServicios.clear();
                         areaServicios.setValue(null);
                     }
@@ -364,18 +469,20 @@ public class AdminController {
             });
 
             botonAreas.setOnAction((event) -> {
-                try {               
+                try {
                     if (area_update == null) {
                         Area area = new Area(nombreAreas.getText(), abreviaturaAreas.getText());
                         DAO.area.create(area);
                         tablaAreas.getItems().add(area);
-                    } else {                     
+                        nombreAreas.clear();
+                        abreviaturaAreas.clear();
+                    } else {
                         area_update.setName(nombreAreas.getText());
                         area_update.setShortName(abreviaturaAreas.getText());
                         DAO.area.update(area_update);
                         tablaAreas.refresh();
                         area_update = null;
-                        botonAreas.setText("Enviar");
+                        botonAreas.setText("Añadir");
                         nombreAreas.clear();
                         abreviaturaAreas.clear();
                     }
@@ -386,18 +493,20 @@ public class AdminController {
 
             botonAsambleas.setOnAction((event) -> {
                 try {
-                   
+
                     if (asamblea_update == null) {
                         Assembly asamblea = new Assembly(nombreAsambleas.getText(), codigoAsambleas.getText());
                         DAO.assembly.create(asamblea);
                         tablaAsambleas.getItems().add(asamblea);
-                    } else {                     
+                        nombreAsambleas.clear();
+                        codigoAsambleas.clear();
+                    } else {
                         asamblea_update.setName(nombreAsambleas.getText());
                         asamblea_update.setCode(codigoAsambleas.getText());
                         DAO.assembly.update(asamblea_update);
                         tablaAsambleas.refresh();
                         asamblea_update = null;
-                        botonAsambleas.setText("Enviar");
+                        botonAsambleas.setText("Añadir");
                         nombreAsambleas.clear();
                         codigoAsambleas.clear();
                     }
@@ -407,20 +516,25 @@ public class AdminController {
             });
 
             botonRecursos.setOnAction((event) -> {
-                try {                
+                try {
                     if (recurso_update == null) {
-                    Resource recurso = new Resource(nombreRecursos.getText(), codigoRecursos.getText());
-                    DAO.resource.create(recurso);
-                    tablaRecursos.getItems().add(recurso);
-                    } else {                     
-                        recurso_update.setName(nombreRecursos.getText());
-                        recurso_update.setCode(codigoRecursos.getText());
-                        DAO.resource.update(recurso_update);
-                        tablaRecursos.refresh();
-                        recurso_update = null;         
-                        botonRecursos.setText("Enviar");
+                        Resource recurso = new Resource(nombreRecursos.getText(), codigoRecursos.getText(), asambleaRecursos.getValue());
+                        DAO.resource.create(recurso);
+                        tablaRecursos.getItems().add(recurso);
                         nombreRecursos.clear();
                         codigoRecursos.clear();
+                        asambleaRecursos.setValue(null);
+                    } else {
+                        recurso_update.setName(nombreRecursos.getText());
+                        recurso_update.setCode(codigoRecursos.getText());
+                        recurso_update.setAssembly(asambleaRecursos.getValue());
+                        DAO.resource.update(recurso_update);
+                        tablaRecursos.refresh();
+                        recurso_update = null;
+                        botonRecursos.setText("Añadir");
+                        nombreRecursos.clear();
+                        codigoRecursos.clear();
+                        asambleaRecursos.setValue(null);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -433,15 +547,42 @@ public class AdminController {
                         Hospital hospital = new Hospital(codigoHospital.getText(), nombreHospital.getText());
                         DAO.hospital.create(hospital);
                         tablaHospitales.getItems().add(hospital);
+                        codigoHospital.clear();
+                        nombreHospital.clear();
                     } else {
                         hospital_update.setCode(codigoHospital.getText());
                         hospital_update.setName(nombreHospital.getText());
                         DAO.hospital.update(hospital_update);
                         tablaHospitales.refresh();
                         hospital_update = null;
-                        botonHospital.setText("Enviar");
+                        botonHospital.setText("Añadir");
                         codigoHospital.clear();
                         nombreHospital.clear();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            botonUsuario.setOnAction((event) -> {
+                try {
+                    if (user_update == null) {
+                        User user = new User(nombreUsuario.getText(), userUsuario.getText(), passUsuario.getText());
+                        DAO.users.create(user);
+                        tablaUsuarios.getItems().add(user);
+                        nombreUsuario.clear();
+                        userUsuario.clear();
+                        passUsuario.clear();
+                    } else {
+                        user_update.setName_user(nombreUsuario.getText());
+                        user_update.setUsername(userUsuario.getText());
+                        user_update.setPassword(passUsuario.getText());
+                        DAO.users.update(user_update);
+                        tablaUsuarios.refresh();
+                        user_update = null;
+                        botonUsuario.setText("Añadir");
+                        nombreUsuario.clear();
+                        userUsuario.clear();
+                        passUsuario.clear();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -452,21 +593,21 @@ public class AdminController {
         }
 
         tablaServicios.setRowFactory(tv -> {
-            TableRow<Service> row = new TableRow<>();
-            row.setCursor(Cursor.HAND);
+            TableRow<Service> row = getRow();
+
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     nombreServicios.setText(row.getItem().getName());
                     areaServicios.setValue(row.getItem().getArea());
-                    servicio_update = row.getItem();                  
+                    servicio_update = row.getItem();
                     botonServicios.setText("Guardar");
                 }
             });
             return row;
         });
         tablaAsambleas.setRowFactory(tv -> {
-            TableRow<Assembly> row = new TableRow<>();
-            row.setCursor(Cursor.HAND);
+            TableRow<Assembly> row = getRow();
+
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     nombreAsambleas.setText(row.getItem().getName());
@@ -478,12 +619,13 @@ public class AdminController {
             return row;
         });
         tablaRecursos.setRowFactory(tv -> {
-            TableRow<Resource> row = new TableRow<>();
-            row.setCursor(Cursor.HAND);
+            TableRow<Resource> row = getRow();
+
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     nombreRecursos.setText(row.getItem().getName());
                     codigoRecursos.setText(row.getItem().getCode());
+                    asambleaRecursos.setValue(row.getItem().getAssembly());
                     recurso_update = row.getItem();
                     botonRecursos.setText("Guardar");
                 }
@@ -491,13 +633,13 @@ public class AdminController {
             return row;
         });
         tablaAreas.setRowFactory(tv -> {
-            TableRow<Area> row = new TableRow<>();
-            row.setCursor(Cursor.HAND);
+            TableRow<Area> row = getRow();
+
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     nombreAreas.setText(row.getItem().getName());
                     abreviaturaAreas.setText(row.getItem().getShortName());
-                    area_update = row.getItem();                                    
+                    area_update = row.getItem();
                     botonAreas.setText("Guardar");
                 }
             });
@@ -505,8 +647,8 @@ public class AdminController {
         });
 
         tablaHospitales.setRowFactory(tv -> {
-            TableRow<Hospital> row = new TableRow<>();
-            row.setCursor(Cursor.HAND);
+            TableRow<Hospital> row = getRow();
+
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     nombreHospital.setText(row.getItem().getName());
@@ -517,7 +659,47 @@ public class AdminController {
             });
             return row;
         });
+        tablaUsuarios.setRowFactory(tv -> {
+            TableRow<User> row = getRow();
+
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!row.isEmpty())) {
+                    nombreUsuario.setText(row.getItem().getName_user());
+                    userUsuario.setText(row.getItem().getUsername());
+                    passUsuario.setText(row.getItem().getPassword());
+                    user_update = row.getItem();
+                    botonUsuario.setText("Guardar");
+                }
+            });
+            return row;
+        });
 
     }
 
+    public SVGPath getIconDelete() {
+        SVGPath iconDelete = new SVGPath();
+        iconDelete.setContent("M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z");
+        iconDelete.setCursor(Cursor.HAND);
+        iconDelete.setFill(Paint.valueOf("#545454"));
+        return iconDelete;
+    }
+
+    public Alert getAlertDelete() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Dialogo de confirmación");
+        alert.setHeaderText(null);
+        alert.setContentText("¿Estas seguro de que quieres borrar el evento? "
+                + "No se podra revertir la acción.");
+
+        ButtonType yesButton = new ButtonType("Sí");
+        ButtonType noButton = new ButtonType("No");
+        alert.getButtonTypes().setAll(yesButton, noButton);
+        return alert;
+    }
+
+    public <T> TableRow getRow() {
+        TableRow<T> row = new TableRow<>();
+        row.setCursor(Cursor.HAND);
+        return row;
+    }
 }
