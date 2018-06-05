@@ -4,11 +4,17 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
+import model.Area;
+import model.User;
+import service.DAO;
+import static service.DAO.users;
 
 public class LoginController extends AnchorPane{
 
@@ -35,10 +41,20 @@ public class LoginController extends AnchorPane{
     }
     
     private void init(){
+      
         
     }
     @FXML
     void loginAction(ActionEvent event) {
+       String usuario = user.getText();
+       String pass = password.getText();
+       
+       try{
+       DAO.users.queryBuilder().where().eq("username", usuario).query();
+
+       }catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
     
