@@ -8,8 +8,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox alignment="CENTER" maxHeight="700.0" maxWidth="1200.0" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<VBox alignment="CENTER" maxHeight="700.0" maxWidth="1200.0" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox alignment="CENTER" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" style="-fx-background-color: #FFF;">
          <children>
@@ -21,17 +20,17 @@
                   <Insets top="20.0" />
                </VBox.margin>
             </ImageView>
-            <JFXTextField alignment="CENTER" focusColor="#f44336" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Usuario">
+            <JFXTextField fx:id="user" alignment="CENTER" focusColor="#f44336" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Usuario">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </JFXTextField>
-            <JFXPasswordField alignment="CENTER" focusColor="#f44336" labelFloat="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Contraseña" VBox.vgrow="ALWAYS">
+            <JFXPasswordField fx:id="password" alignment="CENTER" focusColor="#f44336" labelFloat="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Contraseña" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets top="20.0" />
                </VBox.margin>
             </JFXPasswordField>
-            <JFXButton maxWidth="1.7976931348623157E308" style="-fx-background-color: #f44336 #f44336;" text="Entrar" textFill="WHITE">
+            <JFXButton fx:id="login" maxWidth="1.7976931348623157E308" onAction="#loginAction" style="-fx-background-color: #f44336 #f44336;" text="Entrar" textFill="WHITE">
                <VBox.margin>
                   <Insets bottom="20.0" top="20.0" />
                </VBox.margin>

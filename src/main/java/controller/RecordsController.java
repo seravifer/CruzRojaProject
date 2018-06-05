@@ -72,7 +72,7 @@ public class RecordsController extends AnchorPane {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
             fxmlLoader.setController(this);
             Parent parent = fxmlLoader.load();
-            SuperController.getInstance().setHome(parent, this);
+           // SuperController.getInstance().setHome(parent, this);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -42,11 +42,12 @@ public class SuperController {
         stage.setMinWidth(1040);
         stage.setMinHeight(640);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/icon.png")));
-        stage.setTitle("Registro Cruz Roja");
         stage.show();
     }
 
-    public void setPage(Parent page) {
+    public void setPage(Parent page,String title) {
+        stage.setTitle(title);
+
         stage.getScene().setRoot(page);
     }
 
@@ -58,7 +59,7 @@ public class SuperController {
 
     public void goBack() {
         stage.getScene().setRoot(home);
-        controller.refresh();
+        //controller.refresh();
     }
 
     public static SuperController getInstance() {

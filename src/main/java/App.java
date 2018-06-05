@@ -1,6 +1,8 @@
+import controller.LoginController;
 import controller.RecordsController;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javax.security.auth.login.LoginContext;
 
 public class App extends Application {
 
@@ -10,7 +12,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        new RecordsController();
+        new LoginController();
     }
 
 }

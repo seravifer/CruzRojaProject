@@ -151,7 +151,7 @@ public class RecordFormController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/recordForm.fxml"));
             fxmlLoader.setController(this);
             Parent parent = fxmlLoader.load();
-            SuperController.getInstance().setPage(parent);
+            SuperController.getInstance().setPage(parent,"Gestor de incidencias");
         } catch (IOException e) {
             e.printStackTrace();
         }
