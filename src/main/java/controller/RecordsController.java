@@ -28,9 +28,13 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import model.User;
 
 public class RecordsController extends AnchorPane {
-
+   @FXML
+    private Label userID;
     @FXML
     private JFXButton addID;
 
@@ -66,21 +70,25 @@ public class RecordsController extends AnchorPane {
 
     @FXML
     private SVGPath refreshID;
+    
+    private User usuario;
 
-    public RecordsController() {
+    public RecordsController(User u) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
             fxmlLoader.setController(this);
             Parent parent = fxmlLoader.load();
-           // SuperController.getInstance().setHome(parent, this);
+            SuperController.getInstance().setHome(parent, this);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        usuario = u;
 
         init();
     }
 
     private void init() {
+        userID.setText(usuario.getName_user());
         addID.setOnAction((e) -> new RecordFormController());
         settingsID.setOnMouseClicked(e -> new AdminController());
         reportID.setOnMouseClicked(e -> new ReportController());
@@ -185,6 +193,12 @@ public class RecordsController extends AnchorPane {
                 setDisable(empty || date.isBefore(fromID.getValue()));
             }
         });
+    }
+    
+    
+    @FXML
+    void logOut(MouseEvent event) {
+        new LoginController();
     }
 
 }
