@@ -15,7 +15,11 @@ public class User {
     @DatabaseField
     private String password;
 
-    public User() {}
+    public User() {
+        this.name_user = "";
+        this.username = "";
+        this.password = "";
+    }
 
     public User(String name_user, String username, String password) {
         this.name_user = name_user;

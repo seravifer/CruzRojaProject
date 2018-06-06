@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+import model.User;
 
 public class RecordsController extends BorderPane {
 
@@ -68,19 +69,24 @@ public class RecordsController extends BorderPane {
 
     @FXML
     private StackPane rootID;
+    
+    private User usuario;
 
-    public RecordsController() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
-            fxmlLoader.setController(this);
-            Parent parent = fxmlLoader.load();
+    public RecordsController() {}
+    
+    public RecordsController(User u) {
+         try {
+             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
+             fxmlLoader.setController(this);
+             Parent parent = fxmlLoader.load();
             SuperController.getInstance().setHome(parent, this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        init();
-    }
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
+        usuario = u;
+ 
+         init();
+     }
 
     private void init() {
         addID.setOnAction((e) -> new RecordFormController());
