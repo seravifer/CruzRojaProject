@@ -12,12 +12,15 @@ public class Hospital {
     private String code;
     @DatabaseField(unique = true, canBeNull = false)
     private String name;
+    @DatabaseField
+    private String assembly;
 
     public Hospital() {}
 
-    public Hospital(String code, String name) {
+    public Hospital(String code, String name, String assembly) {
         this.code = code;
         this.name = name;
+        this.assembly = assembly;
     }
 
     public int getID() {
@@ -32,12 +35,20 @@ public class Hospital {
         return name;
     }
 
+    public String getAssembly() {
+        return assembly;
+    }
+
     public void setCode(String code) {
         this.code = code;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setAssembly(String assembly) {
+        this.assembly = assembly;
     }
 
 }

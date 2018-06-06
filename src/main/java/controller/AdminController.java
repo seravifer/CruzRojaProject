@@ -590,7 +590,7 @@ public class AdminController {
             botonHospital.setOnAction((event) -> {
                 try {
                     if (hospital_update == null) {
-                        Hospital hospital = new Hospital(codigoHospital.getText(), nombreHospital.getText());
+                        Hospital hospital = new Hospital(codigoHospital.getText(), nombreHospital.getText(), "");
                         DAO.hospital.create(hospital);
                         tablaHospitales.getItems().add(hospital);
                         codigoHospital.clear();

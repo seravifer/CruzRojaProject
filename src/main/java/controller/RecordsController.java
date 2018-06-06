@@ -2,10 +2,8 @@ package controller;
 
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXProgressBar;
+import com.jfoenix.controls.*;
+import controller.component.OperativeModal;
 import controller.component.RecordComponent;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
@@ -17,9 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.shape.SVGPath;
 import model.Record;
 import service.DAO;
@@ -28,13 +24,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import model.User;
 
-public class RecordsController extends AnchorPane {
-   @FXML
-    private Label userID;
+public class RecordsController extends BorderPane {
+
     @FXML
     private JFXButton addID;
 
@@ -70,10 +62,14 @@ public class RecordsController extends AnchorPane {
 
     @FXML
     private SVGPath refreshID;
-    
-    private User usuario;
 
-    public RecordsController(User u) {
+    @FXML
+    private JFXButton operativeID;
+
+    @FXML
+    private StackPane rootID;
+
+    public RecordsController() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
             fxmlLoader.setController(this);
@@ -82,13 +78,11 @@ public class RecordsController extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        usuario = u;
 
         init();
     }
 
     private void init() {
-        userID.setText(usuario.getName_user());
         addID.setOnAction((e) -> new RecordFormController());
         settingsID.setOnMouseClicked(e -> new AdminController());
         reportID.setOnMouseClicked(e -> new ReportController());
@@ -116,6 +110,11 @@ public class RecordsController extends AnchorPane {
         });
 
         pendingID.selectedProperty().addListener((ob, o, n) -> filter());
+
+        JFXDialog dialog = new JFXDialog();
+        dialog.setContent(new OperativeModal());
+        dialog.setDialogContainer(rootID);
+        operativeID.setOnAction(e -> dialog.show());
 
         limitDays();
         filter();
@@ -193,12 +192,6 @@ public class RecordsController extends AnchorPane {
                 setDisable(empty || date.isBefore(fromID.getValue()));
             }
         });
-    }
-    
-    
-    @FXML
-    void logOut(MouseEvent event) {
-        new LoginController();
     }
 
 }
