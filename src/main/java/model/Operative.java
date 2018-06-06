@@ -3,11 +3,14 @@ package model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Objects;
+import java.util.StringJoiner;
+
 @DatabaseTable(tableName = "Operative")
 public class Operative {
 
     @DatabaseField(generatedId = true)
-    private String ID_operative;
+    private Integer ID_operative;
     @DatabaseField
     private String name;
     @DatabaseField
@@ -20,7 +23,7 @@ public class Operative {
         this.date = date;
     }
 
-    public String getID_operative() {
+    public Integer getID() {
         return ID_operative;
     }
 
@@ -38,5 +41,23 @@ public class Operative {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Operative operative = (Operative) o;
+        return ID_operative == operative.ID_operative;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ID_operative);
+    }
+
+    @Override
+    public String toString() {
+        return name + " - " + date;
     }
 }

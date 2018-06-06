@@ -45,9 +45,8 @@ public class SuperController {
         stage.show();
     }
 
-    public void setPage(Parent page,String title) {
+    public void setPage(Parent page, String title) {
         stage.setTitle(title);
-
         stage.getScene().setRoot(page);
     }
 
@@ -59,7 +58,7 @@ public class SuperController {
 
     public void goBack() {
         stage.getScene().setRoot(home);
-        //controller.refresh();
+        controller.refresh();
     }
 
     public static SuperController getInstance() {

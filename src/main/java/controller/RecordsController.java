@@ -9,11 +9,14 @@ import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.DateCell;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.shape.SVGPath;
@@ -69,12 +72,15 @@ public class RecordsController extends BorderPane {
 
     @FXML
     private StackPane rootID;
+
+    @FXML
+    private Label userID;
     
-    private User usuario;
+    private User user;
 
     public RecordsController() {}
     
-    public RecordsController(User u) {
+    public RecordsController(User user) {
          try {
              FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
              fxmlLoader.setController(this);
@@ -83,12 +89,13 @@ public class RecordsController extends BorderPane {
          } catch (IOException e) {
              e.printStackTrace();
          }
-        usuario = u;
- 
+
+         this.user = user;
          init();
      }
 
     private void init() {
+        //userID.setText(user.getName());
         addID.setOnAction((e) -> new RecordFormController());
         settingsID.setOnMouseClicked(e -> new AdminController());
         reportID.setOnMouseClicked(e -> new ReportController());
@@ -118,7 +125,9 @@ public class RecordsController extends BorderPane {
         pendingID.selectedProperty().addListener((ob, o, n) -> filter());
 
         JFXDialog dialog = new JFXDialog();
-        dialog.setContent(new OperativeModal());
+        OperativeModal modal = new OperativeModal();
+        modal.setActionOnClose(e -> dialog.close());
+        dialog.setContent(modal);
         dialog.setDialogContainer(rootID);
         operativeID.setOnAction(e -> dialog.show());
 

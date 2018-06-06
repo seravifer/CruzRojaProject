@@ -15,11 +15,7 @@ public class User {
     @DatabaseField
     private String password;
 
-    public User() {
-        this.name_user = "";
-        this.username = "";
-        this.password = "";
-    }
+    public User() {}
 
     public User(String name_user, String username, String password) {
         this.name_user = name_user;
@@ -27,11 +23,11 @@ public class User {
         this.password = password;
     }
 
-    public int getID_user() {
+    public int getID() {
         return ID_user;
     }
 
-    public String getName_user() {
+    public String getName() {
         return name_user;
     }
 
@@ -43,11 +39,7 @@ public class User {
         return password;
     }
 
-    public void setID_user(int ID_user) {
-        this.ID_user = ID_user;
-    }
-
-    public void setName_user(String name_user) {
+    public void setName(String name_user) {
         this.name_user = name_user;
     }
 

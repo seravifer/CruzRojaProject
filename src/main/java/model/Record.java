@@ -41,11 +41,14 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
     private String registry;
     @DatabaseField
     private String notes;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private Operative operative;
+
     public Record() {}
 
     public Record(String date, int code, Resource resource, Assembly assembly, LocalTime startTime, LocalTime endTime,
-                  Area area, Service service, String address, String assistance_h,
-                  String assistance_m, String evacuated_h, String evacuated_m, String registry, String notes) {
+                  Area area, Service service, String address, String assistance_h, String assistance_m,
+                  String evacuated_h, String evacuated_m, String registry, String notes, Operative operative) {
         this.date = date;
         this.code = code;
         this.resource = resource;
@@ -62,6 +65,7 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
         this.evacuated_m = Integer.parseInt(evacuated_m);
         this.registry = registry;
         this.notes = notes;
+        this.operative = operative;
     }
 
     public int getID_record() {
@@ -126,6 +130,10 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
 
     public String getNotes() {
         return notes;
+    }
+
+    public Operative getOperative() {
+        return operative;
     }
 
     public void setID(int ID_record) {
@@ -193,6 +201,10 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
         this.notes = notes;
     }
 
+    public void setOperative(Operative operative) {
+        this.operative = operative;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -207,4 +219,5 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
     public int hashCode() {
         return ID_record;
     }
+
 }

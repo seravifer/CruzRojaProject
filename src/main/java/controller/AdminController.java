@@ -25,10 +25,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.event.EventHandler;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.input.MouseEvent;
 import utils.Utils;
 
 public class AdminController {
@@ -620,7 +619,7 @@ public class AdminController {
                         userUsuario.clear();
                         passUsuario.clear();
                     } else {
-                        user_update.setName_user(nombreUsuario.getText());
+                        user_update.setName(nombreUsuario.getText());
                         user_update.setUsername(userUsuario.getText());
                         String pass = Utils.encrypt(passUsuario.getText());
                         user_update.setPassword(pass);
@@ -712,7 +711,7 @@ public class AdminController {
             row.setOnMouseClicked(event -> {
 
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
-                    nombreUsuario.setText(row.getItem().getName_user());
+                    nombreUsuario.setText(row.getItem().getName());
                     userUsuario.setText(row.getItem().getUsername());
                     try {
                         if (muestraEncriptado) {

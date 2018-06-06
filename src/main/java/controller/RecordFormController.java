@@ -68,6 +68,9 @@ public class RecordFormController {
     private JFXComboBox<Service> serviceID;
 
     @FXML
+    private JFXComboBox<Operative> operativeID;
+
+    @FXML
     private JFXTextField evacuated_mID;
 
     @FXML
@@ -187,6 +190,7 @@ public class RecordFormController {
         assistance_mID.setText(record.getAssistance_m() + "");
         registryID.setText(record.getRegistry());
         notesID.setText(record.getNotes());
+        operativeID.setValue(record.getOperative());
 
         try {
             QueryBuilder<Event, Integer> queryBuilder = DAO.event.queryBuilder();
@@ -202,10 +206,12 @@ public class RecordFormController {
             List<Assembly> assemblies = DAO.assembly.queryBuilder().query();
             List<Resource> resources = DAO.resource.queryBuilder().query();
             List<Area> areas = DAO.area.queryBuilder().query();
+            List<Operative> operatives = DAO.operatives.queryBuilder().query();
 
             assemblyID.getItems().addAll(assemblies);
             resourceID.getItems().addAll(resources);
             areaID.getItems().addAll(areas);
+            operativeID.getItems().addAll(operatives);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -240,6 +246,9 @@ public class RecordFormController {
                 (typedText, itemToCompare) -> itemToCompare.getCode().toLowerCase().contains(typedText.toLowerCase()));
 
         AutoComplete.set(assemblyID,
+                (typedText, itemToCompare) -> itemToCompare.getName().toLowerCase().contains(typedText.toLowerCase()));
+
+        AutoComplete.set(operativeID,
                 (typedText, itemToCompare) -> itemToCompare.getName().toLowerCase().contains(typedText.toLowerCase()));
 
         endTimeID.getEditor().setOnMouseClicked(event -> {
@@ -397,7 +406,8 @@ public class RecordFormController {
             record = new Record(dateID.getValue().toString(), 0, AutoComplete.getValue(resourceID),
                     AutoComplete.getValue(assemblyID), startTimeID.getValue(), endTimeID.getValue(), areaID.getValue(),
                     serviceID.getValue(), "", assistance_hID.getText(), assistance_hID.getText(),
-                    evacuated_hID.getText(), evacuated_mID.getText(), registryID.getText(), notesID.getText());
+                    evacuated_hID.getText(), evacuated_mID.getText(), registryID.getText(), notesID.getText(),
+                    AutoComplete.getValue(operativeID));
             try {
                 DAO.record.create(record);
                 record.refresh();
@@ -427,6 +437,7 @@ public class RecordFormController {
             record.setAddress(addressID.getText());
             record.setRegistry(registryID.getText());
             record.setNotes(notesID.getText());
+            record.setOperative(AutoComplete.getValue(operativeID));
 
             try {
                 record.update();

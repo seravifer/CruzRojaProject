@@ -16,6 +16,7 @@ public class DAO {
     public static Dao<Event, Integer> event;
     public static Dao<Hospital, Integer> hospital;
     public static Dao<User, Integer> users;
+    public static Dao<Operative, Integer> operatives;
 
     static {
         try {
@@ -27,6 +28,7 @@ public class DAO {
             event = DaoManager.createDao(DB.get(), Event.class);
             hospital = DaoManager.createDao(DB.get(), Hospital.class);
             users = DaoManager.createDao(DB.get(), User.class);
+            operatives = DaoManager.createDao(DB.get(), Operative.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
