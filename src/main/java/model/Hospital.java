@@ -3,6 +3,9 @@ package model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.Objects;
+import java.util.StringJoiner;
+
 @DatabaseTable(tableName = "Hospital")
 public class Hospital {
 
@@ -51,4 +54,21 @@ public class Hospital {
         this.assembly = assembly;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hospital hospital = (Hospital) o;
+        return ID_hospital == hospital.ID_hospital;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ID_hospital);
+    }
+
+    @Override
+    public String toString() {
+        return code + " - " + name;
+    }
 }

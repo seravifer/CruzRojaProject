@@ -20,8 +20,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
 import model.*;
+import org.omg.CORBA.INTERNAL;
 import service.DAO;
 import utils.AutoComplete;
+import utils.EditingCellList;
 import utils.EditingCellString;
 import utils.EditingCellHour;
 
@@ -95,7 +97,7 @@ public class RecordFormController {
     private JFXTextField notesID;
 
     @FXML
-    private JFXTextField transferID;
+    private JFXComboBox<Hospital> hospitalID;
 
     @FXML
     private JFXTimePicker startTimeAssistanceID;
@@ -119,10 +121,10 @@ public class RecordFormController {
     private TableView<Event> eventsTableID;
 
     @FXML
-    private TableColumn<Event, String> subCodeColumID;
+    private TableColumn<Event, Integer> subCodeColumID;
 
     @FXML
-    private TableColumn<Event, String> transferColumID;
+    private TableColumn<Event, Hospital> transferColumID;
 
     @FXML
     private TableColumn<Event, String> startTimeAssistanceColumID;
@@ -207,11 +209,15 @@ public class RecordFormController {
             List<Resource> resources = DAO.resource.queryBuilder().query();
             List<Area> areas = DAO.area.queryBuilder().query();
             List<Operative> operatives = DAO.operatives.queryBuilder().query();
+            List<Hospital> hospitals = DAO.hospital.queryBuilder().query();
 
             assemblyID.getItems().addAll(assemblies);
             resourceID.getItems().addAll(resources);
             areaID.getItems().addAll(areas);
             operativeID.getItems().addAll(operatives);
+            hospitalID.getItems().addAll(hospitals);
+
+            transferColumID.setCellFactory((TableColumn<Event, Hospital> p) -> new EditingCellList(hospitals));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -251,6 +257,9 @@ public class RecordFormController {
         AutoComplete.set(operativeID,
                 (typedText, itemToCompare) -> itemToCompare.getName().toLowerCase().contains(typedText.toLowerCase()));
 
+        AutoComplete.set(hospitalID,
+                (typedText, itemToCompare) -> itemToCompare.getName().toLowerCase().contains(typedText.toLowerCase()));
+
         endTimeID.getEditor().setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                 if (endTimeID.getValue() == null)
@@ -273,24 +282,32 @@ public class RecordFormController {
         startTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("startTimeAssistance"));
         transferTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("transferTimeAssistance"));
         endTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("endTimeAssistance"));
-        transferColumID.setCellValueFactory(new PropertyValueFactory<>("placeTransfer"));
+        transferColumID.setCellValueFactory(new PropertyValueFactory<>("hospital"));
         pathologyColumID.setCellValueFactory(new PropertyValueFactory<>("pathology"));
         registryColumID.setCellValueFactory(new PropertyValueFactory<>("registry"));
         iconColumnID.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 
-        subCodeColumID.setCellFactory(cell -> new TableCell<Event, String>() {
+        subCodeColumID.setCellFactory(cell -> new TableCell<Event, Integer>() {
             @Override
-            public void updateItem(String item, boolean empty) {
+            public void updateItem(Integer item, boolean empty) {
                 super.updateItem(item, empty);
                 if (item == null || empty) setText(null);
                 else setText(codeID.getText() + "/" + item);
             }
         });
 
+        /*transferColumID.setCellFactory(cell -> new TableCell<Event, Hospital>() {
+            @Override
+            public void updateItem(Hospital item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) setText(null);
+                else setText(item.getName());
+            }
+        });*/
+
         startTimeAssistanceColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellHour());
         transferTimeAssistanceColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellHour());
         endTimeAssistanceColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellHour());
-        transferColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellString());
         pathologyColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellString());
         registryColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellString());
 
@@ -307,9 +324,9 @@ public class RecordFormController {
                         t.getTableView().getItems().get(t.getTablePosition().getRow())
                                 .setEndTimeAssistance(t.getNewValue()));
         transferColumID.setOnEditCommit(
-                (TableColumn.CellEditEvent<Event, String> t) ->
+                (TableColumn.CellEditEvent<Event, Hospital> t) ->
                         t.getTableView().getItems().get(t.getTablePosition().getRow())
-                                .setPlaceTransfer(t.getNewValue()));
+                                .setHospital(t.getNewValue()));
 
         pathologyColumID.setOnEditCommit(
                 (TableColumn.CellEditEvent<Event, String> t) ->
@@ -322,9 +339,10 @@ public class RecordFormController {
                                 .setRegistry(t.getNewValue()));
 
         addEventID.setOnAction(e -> {
-            Event event = new Event(record, eventsTableID.getItems().size() + 1, startTimeAssistanceID.getValue(),
-                    transferTimeAssistanceID.getValue(), transferID.getText(), endTimeAssistanceID.getValue(),
-                    patientID.getText(), patientID.getText());
+            Event event = new Event(record, eventsTableID.getItems().size() + 1, 0,
+                    startTimeAssistanceID.getValue(), transferTimeAssistanceID.getValue(),
+                    endTimeAssistanceID.getValue(), AutoComplete.getValue(hospitalID), pathologyID.getText(),
+                    patientID.getText(), 0, 0);
 
             eventsTableID.getItems().add(event);
 
@@ -335,7 +353,7 @@ public class RecordFormController {
                 endTimeAssistanceID.setValue(null);
                 transferTimeAssistanceID.setValue(null);
                 patientID.clear();
-                transferID.clear();
+                hospitalID.setValue(null);
                 pathologyID.clear();
             } catch (SQLException ex) {
                 ex.printStackTrace();

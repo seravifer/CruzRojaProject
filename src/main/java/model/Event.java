@@ -3,12 +3,10 @@ package model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
-import javafx.beans.property.SimpleStringProperty;
-import utils.StringPropertyType;
+import utils.Utils;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
-
-import static utils.Utils.nullToString;
 
 @DatabaseTable(tableName = "Event")
 public class Event extends BaseDaoEnabled<Event, Integer> {
@@ -19,34 +17,44 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
     private Record record;
     @DatabaseField
     private int subcode;
-    @DatabaseField(persisterClass = StringPropertyType.class)
-    private SimpleStringProperty startTimeAssistance;
-    @DatabaseField(persisterClass = StringPropertyType.class,  defaultValue = "")
-    private SimpleStringProperty transferTimeAssistance;
-    @DatabaseField(persisterClass = StringPropertyType.class)
-    private SimpleStringProperty endTimeAssistance;
-    @DatabaseField(persisterClass = StringPropertyType.class)
-    private SimpleStringProperty placeTransfer;
-    @DatabaseField(persisterClass = StringPropertyType.class)
-    private SimpleStringProperty pathology;
-    @DatabaseField(persisterClass = StringPropertyType.class)
-    private SimpleStringProperty registry;
+    @DatabaseField
+    private int key;
+    @DatabaseField
+    private String startTimeAssistance;
+    @DatabaseField
+    private String transferTimeAssistance;
+    @DatabaseField
+    private String endTimeAssistance;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
+    private Hospital hospital;
+    @DatabaseField
+    private String pathology;
+    @DatabaseField
+    private String registry;
+    @DatabaseField
+    private Integer male;
+    @DatabaseField
+    private Integer female;
 
     public Event() {}
 
-    public Event(Record record, int subcode, LocalTime startTimeAssistance, LocalTime transferTimeAssistance, String placeTransfer,
-                 LocalTime endTimeAssistance, String pathology, String registry) {
+    public Event(Record record, int subcode, int key, LocalTime startTimeAssistance, LocalTime transferTimeAssistance,
+                 LocalTime endTimeAssistance, Hospital hospital, String pathology, String registry, Integer male,
+                 Integer female) {
         this.record = record;
         this.subcode = subcode;
-        this.startTimeAssistance = new SimpleStringProperty(nullToString(startTimeAssistance));
-        this.transferTimeAssistance = new SimpleStringProperty(nullToString(transferTimeAssistance));
-        this.placeTransfer = new SimpleStringProperty(nullToString(placeTransfer));
-        this.endTimeAssistance = new SimpleStringProperty(nullToString(endTimeAssistance));
-        this.pathology = new SimpleStringProperty(pathology);
-        this.registry = new SimpleStringProperty(registry);
+        this.key = key;
+        this.startTimeAssistance = Utils.clearString(startTimeAssistance);
+        this.transferTimeAssistance = Utils.clearString(transferTimeAssistance);
+        this.endTimeAssistance = Utils.clearString(endTimeAssistance);
+        this.hospital = hospital;
+        this.pathology = pathology;
+        this.registry = registry;
+        this.male = male;
+        this.female = female;
     }
 
-    public int getID() {
+    public int getID_Event() {
         return ID_Event;
     }
 
@@ -54,60 +62,44 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         return record;
     }
 
-    public String getSubcode() {
-        return Integer.toString(subcode);
+    public int getSubcode() {
+        return subcode;
+    }
+
+    public int getKey() {
+        return key;
     }
 
     public String getStartTimeAssistance() {
-        return startTimeAssistance.get();
-    }
-
-    public SimpleStringProperty startTimeAssistanceProperty() {
         return startTimeAssistance;
     }
 
     public String getTransferTimeAssistance() {
-        return transferTimeAssistance.get();
-    }
-
-    public SimpleStringProperty transferTimeAssistanceProperty() {
         return transferTimeAssistance;
     }
 
     public String getEndTimeAssistance() {
-        return endTimeAssistance.get();
-    }
-
-    public SimpleStringProperty endTimeAssistanceProperty() {
         return endTimeAssistance;
     }
 
-    public String getPlaceTransfer() {
-        return placeTransfer.get();
-    }
-
-    public SimpleStringProperty placeTransferProperty() {
-        return placeTransfer;
+    public Hospital getHospital() {
+        return hospital;
     }
 
     public String getPathology() {
-        return pathology.get();
-    }
-
-    public SimpleStringProperty pathologyProperty() {
         return pathology;
     }
 
     public String getRegistry() {
-        return registry.get();
-    }
-
-    public SimpleStringProperty registryProperty() {
         return registry;
     }
 
-    public void setID(int ID_Event) {
-        this.ID_Event = ID_Event;
+    public Integer getMale() {
+        return male;
+    }
+
+    public Integer getFemale() {
+        return female;
     }
 
     public void setRecord(Record record) {
@@ -118,28 +110,39 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         this.subcode = subcode;
     }
 
+    public void setKey(int key) {
+        this.key = key;
+    }
+
     public void setStartTimeAssistance(String startTimeAssistance) {
-        this.startTimeAssistance.set(startTimeAssistance);
+        this.startTimeAssistance = startTimeAssistance;
     }
 
     public void setTransferTimeAssistance(String transferTimeAssistance) {
-        this.transferTimeAssistance.set(transferTimeAssistance);
+        this.transferTimeAssistance = transferTimeAssistance;
     }
 
     public void setEndTimeAssistance(String endTimeAssistance) {
-        this.endTimeAssistance.set(endTimeAssistance);
+        this.endTimeAssistance = endTimeAssistance;
     }
 
-    public void setPlaceTransfer(String placeTransfer) {
-        this.placeTransfer.set(placeTransfer);
+    public void setHospital(Hospital hospital) {
+        this.hospital = hospital;
     }
 
     public void setPathology(String pathology) {
-        this.pathology.set(pathology);
+        this.pathology = pathology;
     }
 
     public void setRegistry(String registry) {
-        this.registry.set(registry);
+        this.registry = registry;
     }
 
+    public void setMale(Integer male) {
+        this.male = male;
+    }
+
+    public void setFemale(Integer female) {
+        this.female = female;
+    }
 }

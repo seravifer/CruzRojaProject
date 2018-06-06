@@ -3,6 +3,7 @@ package model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
+import utils.Utils;
 
 import java.time.LocalTime;
 
@@ -54,8 +55,7 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
         this.resource = resource;
         this.assembly = assembly;
         this.startTime = startTime.toString();
-        if (endTime == null) this.endTime = null;
-        else this.endTime = endTime.toString();
+        this.endTime = Utils.clearString(endTime);
         this.area = area;
         this.service = service;
         this.address = address;
