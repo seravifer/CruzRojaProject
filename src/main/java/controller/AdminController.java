@@ -3,6 +3,8 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
+import com.sun.javafx.scene.control.skin.TableHeaderRow;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,9 +27,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.paint.Color;
+import javafx.util.Callback;
 import utils.Utils;
 
 public class AdminController {
@@ -170,9 +179,9 @@ public class AdminController {
 
     @FXML
     private TableColumn<User, User> iconosColumnUsuarios;
-    @FXML
-    private TableColumn<User, User> eyesColumnUsuarios;
 
+    @FXML
+    private JFXToggleButton togglePass;
     private Service servicio_update;
     private Assembly asamblea_update;
     private Resource recurso_update;
@@ -182,6 +191,8 @@ public class AdminController {
     private String ojoTachado = "M11.83,9L15,12.16C15,12.11 15,12.05 15,12A3,3 0 0,0 12,9C11.94,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12A3,3 0 0,0 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17A5,5 0 0,1 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.08L19.73,22L21,20.73L3.27,3M12,7A5,5 0 0,1 17,12C17,12.64 16.87,13.26 16.64,13.82L19.57,16.75C21.07,15.5 22.27,13.86 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.74,7.13 11.35,7 12,7Z";
     private String ojoNormal = "M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z";
     private Boolean muestraEncriptado = true;
+    private String pass, pass_encrypt;
+    private List<User> usuarios;
 
     public AdminController() {
         try {
@@ -215,7 +226,7 @@ public class AdminController {
             List<Assembly> asambleas = DAO.assembly.queryBuilder().query();
             List<Resource> recursos = DAO.resource.queryBuilder().query();
             List<Hospital> hospitales = DAO.hospital.queryBuilder().query();
-            List<User> usuarios = DAO.users.queryBuilder().query();
+            usuarios = DAO.users.queryBuilder().query();
 
             areaServicios.getItems().addAll(areas);
             asambleaRecursos.getItems().addAll(asambleas);
@@ -225,6 +236,14 @@ public class AdminController {
             tablaHospitales.getItems().addAll(hospitales);
             tablaRecursos.getItems().addAll(recursos);
             tablaUsuarios.getItems().addAll(usuarios);
+            
+            NoEditable(tablaAreas);
+            NoEditable(tablaServicios);
+            NoEditable(tablaAsambleas);
+            NoEditable(tablaHospitales);
+            NoEditable(tablaRecursos);
+            NoEditable(tablaUsuarios);
+        
 
             iconosColumnServicios.setCellValueFactory(
                     param -> new ReadOnlyObjectWrapper<>(param.getValue())
@@ -244,9 +263,7 @@ public class AdminController {
             iconosColumnUsuarios.setCellValueFactory(
                     param -> new ReadOnlyObjectWrapper<>(param.getValue())
             );
-            eyesColumnUsuarios.setCellValueFactory(
-                    param -> new ReadOnlyObjectWrapper<>(param.getValue())
-            );
+
             iconosColumnServicios.setCellFactory(param -> new TableCell<Service, Service>() {
                 protected void updateItem(Service servicio, boolean empty) {
                     super.updateItem(servicio, empty);
@@ -410,42 +427,25 @@ public class AdminController {
                     });
                 }
             });
-            eyesColumnUsuarios.setCellFactory(param -> new TableCell<User, User>() {
-                    protected void updateItem(User user, boolean empty) {
-                        super.updateItem(user, empty);
-                        SVGPath iconEye = getIconDelete();
-                        if (user == null) {
-                            setGraphic(null);
-                            return;
-                        }
+            getPasswords();
+            togglePass.setOnAction((event) -> {
 
-                        setGraphic(iconEye);
-                        iconEye.setOnMouseClicked((event) -> {
-                            try {
-                                String pass = Utils.decrypt(user.getPassword());
-                                if (muestraEncriptado) {
-                                    System.out.println("true");
-                                    
-                                    user.setPassword(pass);
-                                    iconEye.setContent(ojoTachado);
-                                    muestraEncriptado = false;
-                                } else {
-                                    System.out.println("false");
-                                    
-                                    String pass_encrypt = Utils.encrypt(pass);
-                                    user.setPassword(pass_encrypt);
-                                    iconEye.setContent(ojoNormal);
-                                    muestraEncriptado = true;
-                                }
-                                tablaUsuarios.refresh();
-                                setGraphic(iconEye);
-                            } catch (Exception e) {
-                                
-                            }
-                        });
+                try {
+
+                    if (muestraEncriptado) {
+
+                        passwordColumnUsuario.setCellValueFactory(new PropertyValueFactory<>("password"));
+                        muestraEncriptado = false;
+                    } else {
+                        passwordColumnUsuario.setCellValueFactory(new PropertyValueFactory<>("Hide"));
+                        muestraEncriptado = true;
                     }
-                });
+                } catch (Exception ex) {
+                    Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                tablaUsuarios.refresh();
 
+            });
             nombreColumnServicios.setCellValueFactory(new PropertyValueFactory<>("name"));
             areaColumnServicios.setCellValueFactory(new PropertyValueFactory<>("area"));
 
@@ -462,9 +462,9 @@ public class AdminController {
             nombreColumnHospital.setCellValueFactory(new PropertyValueFactory<>("name"));
             codigoColumnHospital.setCellValueFactory(new PropertyValueFactory<>("code"));
 
-            nombreColumnUsuario.setCellValueFactory(new PropertyValueFactory<>("name_user"));
+            nombreColumnUsuario.setCellValueFactory(new PropertyValueFactory<>("Name"));
             userColumnUsuario.setCellValueFactory(new PropertyValueFactory<>("username"));
-            passwordColumnUsuario.setCellValueFactory(new PropertyValueFactory<>("password"));
+            passwordColumnUsuario.setCellValueFactory(new PropertyValueFactory<>("Hide"));
 
             areaColumnServicios.setCellFactory(cell -> new TableCell<Service, Area>() {
                 @Override
@@ -585,7 +585,6 @@ public class AdminController {
                     e.printStackTrace();
                 }
             });
-
             botonHospital.setOnAction((event) -> {
                 try {
                     if (hospital_update == null) {
@@ -614,6 +613,7 @@ public class AdminController {
                         String pass = Utils.encrypt(passUsuario.getText());
                         User user = new User(nombreUsuario.getText(), userUsuario.getText(), pass);
                         DAO.users.create(user);
+                        user.setPassword(passUsuario.getText());
                         tablaUsuarios.getItems().add(user);
                         nombreUsuario.clear();
                         userUsuario.clear();
@@ -624,6 +624,7 @@ public class AdminController {
                         String pass = Utils.encrypt(passUsuario.getText());
                         user_update.setPassword(pass);
                         DAO.users.update(user_update);
+                        user_update.setPassword(passUsuario.getText());
                         tablaUsuarios.refresh();
                         user_update = null;
                         botonUsuario.setText("Añadir");
@@ -641,7 +642,6 @@ public class AdminController {
 
         tablaServicios.setRowFactory(tv -> {
             TableRow<Service> row = getRow();
-
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     nombreServicios.setText(row.getItem().getName());
@@ -709,16 +709,11 @@ public class AdminController {
         tablaUsuarios.setRowFactory(tv -> {
             TableRow<User> row = getRow();
             row.setOnMouseClicked(event -> {
-
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     nombreUsuario.setText(row.getItem().getName());
                     userUsuario.setText(row.getItem().getUsername());
                     try {
-                        if (muestraEncriptado) {
-                            passUsuario.setText(Utils.decrypt(row.getItem().getPassword()));
-                        } else {
-                            passUsuario.setText(row.getItem().getPassword());
-                        }
+                        passUsuario.setText(row.getItem().getPassword());
                     } catch (Exception ex) {
                         Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -728,7 +723,6 @@ public class AdminController {
             });
             return row;
         });
-
     }
 
     public SVGPath getIconDelete() {
@@ -765,5 +759,24 @@ public class AdminController {
         TableRow<T> row = new TableRow<>();
         row.setCursor(Cursor.HAND);
         return row;
+    }
+
+    public void getPasswords() {
+        
+        for (User usuario : tablaUsuarios.getItems()) {
+            try {
+                usuario.setPassword(Utils.decrypt(usuario.getPassword()));
+            } catch (Exception ex) {
+                Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }
+    
+    public void NoEditable(TableView tb){
+        tb.widthProperty().addListener((ob, o, n) -> {
+            TableHeaderRow header = (TableHeaderRow) tb.lookup("TableHeaderRow");
+            header.reorderingProperty().addListener((ob2, o2, n2) -> header.setReordering(false));
+        });
     }
 }

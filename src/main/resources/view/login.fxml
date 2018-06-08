@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" maxHeight="700.0" maxWidth="1200.0" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="principalPane" alignment="CENTER" maxHeight="700.0" maxWidth="1200.0" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox alignment="CENTER" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" style="-fx-background-color: #FFF;">
          <children>

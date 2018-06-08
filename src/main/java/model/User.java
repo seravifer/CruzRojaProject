@@ -38,6 +38,9 @@ public class User {
     public String getPassword() {
         return password;
     }
+    public String getHide(){
+        return "*****";
+    }
 
     public void setName(String name_user) {
         this.name_user = name_user;

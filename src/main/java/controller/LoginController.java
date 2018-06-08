@@ -10,11 +10,15 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -37,6 +41,8 @@ public class LoginController extends AnchorPane {
 
     @FXML
     private Text textAlert;
+    @FXML
+    private VBox principalPane;
 
     public LoginController() {
         try {
@@ -52,11 +58,23 @@ public class LoginController extends AnchorPane {
     }
 
     private void init() {
-
+        principalPane.setOnKeyPressed((event) -> {
+            if (KeyCode.ENTER == event.getCode()) {
+                try {
+                    login();
+                } catch (Exception ex) {
+                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
 
     @FXML
     void loginAction(ActionEvent event) throws NoSuchAlgorithmException, InvalidKeySpecException, Exception {
+        login();
+    }
+
+    public void login() throws Exception {
         String usuario = user.getText();
         String pass = Utils.encrypt(password.getText());
         try {
@@ -71,7 +89,7 @@ public class LoginController extends AnchorPane {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }  
+        }
     }
 
 }

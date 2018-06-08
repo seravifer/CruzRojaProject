@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Tab?>
@@ -11,9 +12,10 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="680.0" style="-fx-background-color: #F4F4F4;" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
+<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="680.0" style="-fx-background-color: #F4F4F4;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <tabs>
       <Tab text="Asambleas">
          <content>
@@ -247,51 +249,62 @@
          <content>
             <AnchorPane>
                <children>
-                  <HBox maxWidth="1.7976931348623157E308" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                  <VBox layoutX="20.0" layoutY="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                      <children>
-                        <JFXTextField fx:id="nombreUsuario" focusColor="#e53935" labelFloat="true" promptText="Nombre" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets bottom="20.0" left="20.0" />
-                           </HBox.margin>
-                        </JFXTextField>
-                        <JFXTextField fx:id="userUsuario" focusColor="#e53935" labelFloat="true" layoutX="40.0" layoutY="25.0" promptText="Usuario" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets bottom="20.0" left="20.0" />
-                           </HBox.margin>
-                        </JFXTextField>
-                        <JFXTextField fx:id="passUsuario" focusColor="#e53935" labelFloat="true" layoutX="40.0" layoutY="25.0" promptText="Contraseña" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets bottom="20.0" left="20.0" />
-                           </HBox.margin>
-                        </JFXTextField>
-                        <JFXButton fx:id="botonUsuario" alignment="CENTER_RIGHT" contentDisplay="RIGHT" ripplerFill="#ff6d6d" style="-fx-background-color: #eb2323;" text="Añadir" textFill="WHITE" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                           <HBox.margin>
-                              <Insets bottom="20.0" left="20.0" right="20.0" />
-                           </HBox.margin>
-                        </JFXButton>
+                        <HBox maxWidth="1.7976931348623157E308" style="-fx-background-color: #FFFFFF;" VBox.vgrow="ALWAYS">
+                           <children>
+                              <JFXTextField fx:id="nombreUsuario" focusColor="#e53935" labelFloat="true" promptText="Nombre" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets bottom="20.0" left="20.0" />
+                                 </HBox.margin>
+                              </JFXTextField>
+                              <JFXTextField fx:id="userUsuario" focusColor="#e53935" labelFloat="true" layoutX="40.0" layoutY="25.0" promptText="Usuario" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets bottom="20.0" left="20.0" />
+                                 </HBox.margin>
+                              </JFXTextField>
+                              <JFXTextField fx:id="passUsuario" focusColor="#e53935" labelFloat="true" layoutX="40.0" layoutY="25.0" promptText="Contraseña" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets bottom="20.0" left="20.0" />
+                                 </HBox.margin>
+                              </JFXTextField>
+                              <JFXButton fx:id="botonUsuario" alignment="CENTER_RIGHT" contentDisplay="RIGHT" ripplerFill="#ff6d6d" style="-fx-background-color: #eb2323;" text="Añadir" textFill="WHITE" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                                 <HBox.margin>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" />
+                                 </HBox.margin>
+                              </JFXButton>
+                           </children>
+                           <padding>
+                              <Insets left="10.0" right="10.0" top="15.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT" VBox.vgrow="ALWAYS">
+                           <children>
+                              <JFXToggleButton fx:id="togglePass" alignment="CENTER_LEFT" text="Mostrar Contraseñas" toggleColor="#c42126" toggleLineColor="#fe5a4f" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                        <TableView fx:id="tablaUsuarios" editable="true" focusTraversable="false" prefHeight="299.0" prefWidth="600.0" styleClass="tablaAdmin">
+                           <columns>
+                              <TableColumn fx:id="nombreColumnUsuario" minWidth="120.0" prefWidth="120.0" sortable="false" text="Nombre" />
+                              <TableColumn fx:id="userColumnUsuario" minWidth="120.0" prefWidth="120.0" sortable="false" text="Usuario" />
+                              <TableColumn fx:id="passwordColumnUsuario" minWidth="120.0" prefWidth="120.0" sortable="false" text="Contraseña" />
+                              <TableColumn fx:id="iconosColumnUsuarios" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" sortable="false" />
+                           </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
                      </children>
-                     <padding>
-                        <Insets left="10.0" right="10.0" top="15.0" />
-                     </padding>
-                  </HBox>
-                  <TableView fx:id="tablaUsuarios" editable="true" focusTraversable="false" layoutX="14.0" layoutY="49.0" prefHeight="299.0" prefWidth="600.0" styleClass="tablaAdmin" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="103.0">
-                     <columns>
-                        <TableColumn fx:id="nombreColumnUsuario" minWidth="120.0" prefWidth="120.0" sortable="false" text="Nombre" />
-                        <TableColumn fx:id="userColumnUsuario" minWidth="120.0" prefWidth="120.0" sortable="false" text="Usuario" />
-                        <TableColumn fx:id="passwordColumnUsuario" minWidth="120.0" prefWidth="120.0" sortable="false" text="Contraseña" />
-                        <TableColumn fx:id="iconosColumnUsuarios" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" sortable="false" />
-                        <TableColumn fx:id="eyesColumnUsuarios" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" sortable="false" />
-                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
+                  </VBox>
                </children>
             </AnchorPane>
          </content>
