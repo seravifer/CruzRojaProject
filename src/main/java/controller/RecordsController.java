@@ -180,6 +180,7 @@ public class RecordsController extends BorderPane {
                 for (Node node : records) {
                     RecordComponent recordComponent = (RecordComponent) node;
                     Platform.runLater(recordComponent::refresh);
+
                 }
 
                 return null;

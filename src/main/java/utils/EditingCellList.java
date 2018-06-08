@@ -7,6 +7,7 @@ import javafx.scene.input.KeyCode;
 import model.Event;
 import model.Hospital;
 
+import java.time.LocalTime;
 import java.util.List;
 
 public class EditingCellList extends TableCell<Event, Hospital> {
@@ -56,6 +57,7 @@ public class EditingCellList extends TableCell<Event, Hospital> {
     private void createComboBox() {
         comboBoxID = new JFXComboBox<>();
         comboBoxID.getItems().setAll(hospitals);
+        if (getItem() != null) comboBoxID.setValue(getItem());
         comboBoxID.setMinWidth(this.getWidth());
         comboBoxID.getEditor().setAlignment(Pos.CENTER);
         comboBoxID.focusedProperty().addListener((ob, o, focused) -> {

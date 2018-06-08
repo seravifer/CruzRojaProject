@@ -40,7 +40,7 @@ public class EditingCellString extends TableCell<Event, String> {
         } else {
             if (isEditing()) {
                 if (textField != null) {
-                    //textField.setText(getString());
+                    textField.setText(getString());
                 }
                 setText(null);
                 setGraphic(textField);

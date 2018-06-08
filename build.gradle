@@ -17,8 +17,7 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-jdbc:5.1'
     compile 'com.j256.ormlite:ormlite-core:5.1'
     compile 'org.controlsfx:controlsfx:8.40.14'
-    compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13'
-
+    compile 'com.itextpdf:itextpdf:5.5.13'
 }
 
 task fatJar(type: Jar) {

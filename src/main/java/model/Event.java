@@ -5,7 +5,6 @@ import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
 import utils.Utils;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 @DatabaseTable(tableName = "Event")
@@ -32,15 +31,12 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
     @DatabaseField
     private String registry;
     @DatabaseField
-    private Integer male;
-    @DatabaseField
-    private Integer female;
+    private Integer gender;
 
     public Event() {}
 
     public Event(Record record, int subcode, int key, LocalTime startTimeAssistance, LocalTime transferTimeAssistance,
-                 LocalTime endTimeAssistance, Hospital hospital, String pathology, String registry, Integer male,
-                 Integer female) {
+                 LocalTime endTimeAssistance, Hospital hospital, String pathology, String registry, Integer gender) {
         this.record = record;
         this.subcode = subcode;
         this.key = key;
@@ -50,8 +46,7 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         this.hospital = hospital;
         this.pathology = pathology;
         this.registry = registry;
-        this.male = male;
-        this.female = female;
+        this.gender = gender;
     }
 
     public int getID_Event() {
@@ -94,12 +89,8 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         return registry;
     }
 
-    public Integer getMale() {
-        return male;
-    }
-
-    public Integer getFemale() {
-        return female;
+    public Integer getGender() {
+        return gender;
     }
 
     public void setRecord(Record record) {
@@ -138,11 +129,8 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         this.registry = registry;
     }
 
-    public void setMale(Integer male) {
-        this.male = male;
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 
-    public void setFemale(Integer female) {
-        this.female = female;
-    }
 }

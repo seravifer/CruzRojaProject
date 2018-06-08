@@ -16,6 +16,7 @@
     <orderEntry type="library" name="Gradle: com.j256.ormlite:ormlite-jdbc:5.1" level="project" />
     <orderEntry type="library" name="Gradle: com.j256.ormlite:ormlite-core:5.1" level="project" />
     <orderEntry type="library" name="Gradle: org.controlsfx:controlsfx:8.40.14" level="project" />
+    <orderEntry type="library" name="Gradle: com.itextpdf:itextpdf:5.5.13" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="CruzRojaProject_main" />
 </module>

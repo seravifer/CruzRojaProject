@@ -35,6 +35,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
+import static utils.Utils.nullToString;
 import static utils.Utils.timeConverter;
 
 public class RecordFormController {
@@ -112,6 +113,18 @@ public class RecordFormController {
     private JFXTextField pathologyID;
 
     @FXML
+    private JFXComboBox<String> keyID;
+
+    @FXML
+    private JFXRadioButton maleID;
+
+    @FXML
+    private ToggleGroup gender;
+
+    @FXML
+    private JFXRadioButton femaleID;
+
+    @FXML
     private JFXButton addEventID;
 
     @FXML
@@ -136,7 +149,13 @@ public class RecordFormController {
     private TableColumn<Event, String> endTimeAssistanceColumID;
 
     @FXML
+    private TableColumn<Event, Integer> keyColumID;
+
+    @FXML
     private TableColumn<Event, String> pathologyColumID;
+
+    @FXML
+    private TableColumn<Event, Integer> genderColumID;
 
     @FXML
     private TableColumn<Event, String> registryColumID;
@@ -279,13 +298,21 @@ public class RecordFormController {
         });
 
         subCodeColumID.setCellValueFactory(new PropertyValueFactory<>("subcode"));
+        keyColumID.setCellValueFactory(new PropertyValueFactory<>("key"));
         startTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("startTimeAssistance"));
         transferTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("transferTimeAssistance"));
         endTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("endTimeAssistance"));
         transferColumID.setCellValueFactory(new PropertyValueFactory<>("hospital"));
         pathologyColumID.setCellValueFactory(new PropertyValueFactory<>("pathology"));
         registryColumID.setCellValueFactory(new PropertyValueFactory<>("registry"));
+        genderColumID.setCellValueFactory(new PropertyValueFactory<>("gender"));
         iconColumnID.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+
+        startTimeAssistanceColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellHour());
+        transferTimeAssistanceColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellHour());
+        endTimeAssistanceColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellHour());
+        pathologyColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellString());
+        registryColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellString());
 
         subCodeColumID.setCellFactory(cell -> new TableCell<Event, Integer>() {
             @Override
@@ -294,80 +321,6 @@ public class RecordFormController {
                 if (item == null || empty) setText(null);
                 else setText(codeID.getText() + "/" + item);
             }
-        });
-
-        /*transferColumID.setCellFactory(cell -> new TableCell<Event, Hospital>() {
-            @Override
-            public void updateItem(Hospital item, boolean empty) {
-                super.updateItem(item, empty);
-                if (item == null || empty) setText(null);
-                else setText(item.getName());
-            }
-        });*/
-
-        startTimeAssistanceColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellHour());
-        transferTimeAssistanceColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellHour());
-        endTimeAssistanceColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellHour());
-        pathologyColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellString());
-        registryColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellString());
-
-        startTimeAssistanceColumID.setOnEditCommit(
-                (TableColumn.CellEditEvent<Event, String> t) ->
-                        t.getTableView().getItems().get(t.getTablePosition().getRow())
-                                .setStartTimeAssistance(t.getNewValue()));
-        transferTimeAssistanceColumID.setOnEditCommit(
-                (TableColumn.CellEditEvent<Event, String> t) ->
-                        t.getTableView().getItems().get(t.getTablePosition().getRow())
-                                .setTransferTimeAssistance(t.getNewValue()));
-        endTimeAssistanceColumID.setOnEditCommit(
-                (TableColumn.CellEditEvent<Event, String> t) ->
-                        t.getTableView().getItems().get(t.getTablePosition().getRow())
-                                .setEndTimeAssistance(t.getNewValue()));
-        transferColumID.setOnEditCommit(
-                (TableColumn.CellEditEvent<Event, Hospital> t) ->
-                        t.getTableView().getItems().get(t.getTablePosition().getRow())
-                                .setHospital(t.getNewValue()));
-
-        pathologyColumID.setOnEditCommit(
-                (TableColumn.CellEditEvent<Event, String> t) ->
-                        t.getTableView().getItems().get(t.getTablePosition().getRow())
-                                .setPathology(t.getNewValue()));
-
-        registryColumID.setOnEditCommit(
-                (TableColumn.CellEditEvent<Event, String> t) ->
-                        t.getTableView().getItems().get(t.getTablePosition().getRow())
-                                .setRegistry(t.getNewValue()));
-
-        addEventID.setOnAction(e -> {
-            Event event = new Event(record, eventsTableID.getItems().size() + 1, 0,
-                    startTimeAssistanceID.getValue(), transferTimeAssistanceID.getValue(),
-                    endTimeAssistanceID.getValue(), AutoComplete.getValue(hospitalID), pathologyID.getText(),
-                    patientID.getText(), 0, 0);
-
-            eventsTableID.getItems().add(event);
-
-            try {
-                DAO.event.create(event);
-
-                startTimeAssistanceID.setValue(null);
-                endTimeAssistanceID.setValue(null);
-                transferTimeAssistanceID.setValue(null);
-                patientID.clear();
-                hospitalID.setValue(null);
-                pathologyID.clear();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
-
-        eventsTableID.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
-            if (event.isControlDown()) return;
-            eventsTableID.getSelectionModel().clearSelection();
-        });
-
-        eventsTableID.widthProperty().addListener((ob, o, n) -> {
-            TableHeaderRow header = (TableHeaderRow) eventsTableID.lookup("TableHeaderRow");
-            header.reorderingProperty().addListener((ob2, o2, n2) -> header.setReordering(false));
         });
 
         iconColumnID.setCellFactory(param -> new TableCell<Event, Event>() {
@@ -406,6 +359,96 @@ public class RecordFormController {
                     });
                 }
             }
+        });
+
+        genderColumID.setCellFactory(cell -> new TableCell<Event, Integer>() {
+            @Override
+            public void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+
+                SVGPath icon = new SVGPath();
+                if (item == null || empty) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    setText(null);
+                    switch (item) {
+                        case 0:
+                            setGraphic(null);
+                            break;
+                        case 1:
+                            icon.setContent("M9,9C10.29,9 11.5,9.41 12.47,10.11L17.58,5H13V3H21V11H19V6.41L13.89,11.5C14.59,12.5 15,13.7 15,15A6,6 0 0,1 9,21A6,6 0 0,1 3,15A6,6 0 0,1 9,9M9,11A4,4 0 0,0 5,15A4,4 0 0,0 9,19A4,4 0 0,0 13,15A4,4 0 0,0 9,11Z");
+                            icon.setFill(Paint.valueOf("#2711e8"));
+                            break;
+                        case 2:
+                            icon.setContent("M12,4A6,6 0 0,1 18,10C18,12.97 15.84,15.44 13,15.92V18H15V20H13V22H11V20H9V18H11V15.92C8.16,15.44 6,12.97 6,10A6,6 0 0,1 12,4M12,6A4,4 0 0,0 8,10A4,4 0 0,0 12,14A4,4 0 0,0 16,10A4,4 0 0,0 12,6Z");
+                            icon.setFill(Paint.valueOf("#ce20da"));
+                            break;
+                    }
+                    setGraphic(icon);
+                }
+            }
+        });
+
+        startTimeAssistanceColumID.setOnEditCommit(
+                (TableColumn.CellEditEvent<Event, String> t) ->
+                        t.getTableView().getItems().get(t.getTablePosition().getRow())
+                                .setStartTimeAssistance(t.getNewValue()));
+
+        transferTimeAssistanceColumID.setOnEditCommit(
+                (TableColumn.CellEditEvent<Event, String> t) ->
+                        t.getTableView().getItems().get(t.getTablePosition().getRow())
+                                .setTransferTimeAssistance(t.getNewValue()));
+
+        endTimeAssistanceColumID.setOnEditCommit(
+                (TableColumn.CellEditEvent<Event, String> t) ->
+                        t.getTableView().getItems().get(t.getTablePosition().getRow())
+                                .setEndTimeAssistance(t.getNewValue()));
+        transferColumID.setOnEditCommit(
+                (TableColumn.CellEditEvent<Event, Hospital> t) ->
+                        t.getTableView().getItems().get(t.getTablePosition().getRow())
+                                .setHospital(t.getNewValue()));
+
+        pathologyColumID.setOnEditCommit(
+                (TableColumn.CellEditEvent<Event, String> t) ->
+                        t.getTableView().getItems().get(t.getTablePosition().getRow())
+                                .setPathology(t.getNewValue()));
+
+        registryColumID.setOnEditCommit(
+                (TableColumn.CellEditEvent<Event, String> t) ->
+                        t.getTableView().getItems().get(t.getTablePosition().getRow())
+                                .setRegistry(t.getNewValue()));
+
+        addEventID.setOnAction(e -> {
+            Event event = new Event(record, eventsTableID.getItems().size() + 1, 0,
+                    startTimeAssistanceID.getValue(), transferTimeAssistanceID.getValue(),
+                    endTimeAssistanceID.getValue(), AutoComplete.getValue(hospitalID), pathologyID.getText(),
+                    patientID.getText(), getGender());
+
+            eventsTableID.getItems().add(event);
+
+            try {
+                DAO.event.create(event);
+
+                startTimeAssistanceID.setValue(null);
+                endTimeAssistanceID.setValue(null);
+                transferTimeAssistanceID.setValue(null);
+                patientID.clear();
+                hospitalID.setValue(null);
+                pathologyID.clear();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        eventsTableID.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+            if (event.isControlDown()) return;
+            eventsTableID.getSelectionModel().clearSelection();
+        });
+
+        eventsTableID.widthProperty().addListener((ob, o, n) -> {
+            TableHeaderRow header = (TableHeaderRow) eventsTableID.lookup("TableHeaderRow");
+            header.reorderingProperty().addListener((ob2, o2, n2) -> header.setReordering(false));
         });
     }
 
@@ -474,6 +517,12 @@ public class RecordFormController {
     private boolean validate() {
         return AutoComplete.getValue(assemblyID) == null || areaID.getValue() == null || serviceID.getValue() == null
                 || dateID.getValue() == null || startTimeID.getValue() == null;
+    }
+
+    private int getGender() {
+        if (maleID.isSelected()) return 1;
+        else if (femaleID.isSelected()) return 2;
+        else return 0;
     }
 
     private ChangeListener<String> onlyNumbers(TextField node) {

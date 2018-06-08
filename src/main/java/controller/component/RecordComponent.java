@@ -172,6 +172,9 @@ public class RecordComponent extends AnchorPane {
         try {
             record.refresh();
             init();
+            if (record.getEndTime() != null) {
+                ((VBox)this.getParent()).getChildren().remove(this);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
