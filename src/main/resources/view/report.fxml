@@ -69,8 +69,8 @@
                   <JFXCheckBox fx:id="cb_service" checkedColor="#c42126" text="Desglosar por servicio" />
                   <JFXCheckBox fx:id="cb_areas" checkedColor="#c42126" text="Desglosar por áreas" />
                   <JFXCheckBox fx:id="cb_resource" checkedColor="#c42126" text="Desglosar por recurso" />
-                  <JFXCheckBox fx:id="cb_applicant" checkedColor="#c42126" text="Desglosar por solicitante" />
                   <JFXCheckBox fx:id="cb_hours" checkedColor="#c42126" text="Mostrar horas de servicio" />
+                  <JFXCheckBox fx:id="cb_graphs" checkedColor="#c42126" text="Mostrar gráficos" />
                </children>
             </VBox>
          </children>
