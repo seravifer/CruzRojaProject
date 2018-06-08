@@ -95,7 +95,7 @@ public class RecordsController extends BorderPane {
      }
 
     private void init() {
-        userID.setText(user.getName());
+      //  userID.setText(user.getName());
         addID.setOnAction((e) -> new RecordFormController());
         settingsID.setOnMouseClicked(e -> new AdminController());
         reportID.setOnMouseClicked(e -> new ReportController());
