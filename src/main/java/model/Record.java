@@ -55,7 +55,7 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
         this.resource = resource;
         this.assembly = assembly;
         this.startTime = startTime.toString();
-        this.endTime = Utils.clearString(endTime);
+        this.endTime = Utils.nullFromString(endTime);
         this.area = area;
         this.service = service;
         this.address = address;

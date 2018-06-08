@@ -23,6 +23,9 @@ import java.util.Optional;
 public class RecordComponent extends AnchorPane {
 
     @FXML
+    private AnchorPane rootID;
+
+    @FXML
     private Label codeID;
 
     @FXML
@@ -102,13 +105,13 @@ public class RecordComponent extends AnchorPane {
         areaID.setText(record.getArea().getName());
         serviceID.setText(record.getService().getName());
         assistance_hID.setText(record.getAssistance_h() + "");
-        evacuated_hID.setText(record.getEvacuated_h() + "");
         assistance_mID.setText(record.getAssistance_m() + "");
+        evacuated_hID.setText(record.getEvacuated_h() + "");
         evacuated_mID.setText(record.getEvacuated_m() + "");
 
         if (record.getResource() == null) {
             //((VBox)resourceID.getParent()).getChildren().remove(resourceID);
-            resourceID.setText(""); // TODO eleminar si no existe
+            resourceID.setText(""); // TODO eleminar si no existe pero añadir si existe
         } else resourceID.setText(record.getResource().getCode());
 
         if (record.getRegistry().equals("")) registryID.setText("---");
@@ -142,6 +145,7 @@ public class RecordComponent extends AnchorPane {
             endTimeID.setText(record.getEndTime());
         }
 
+        rootID.setOnMouseClicked(e -> Platform.runLater(() -> new RecordFormController(record)));
         editID.setOnMouseClicked(e -> Platform.runLater(() -> new RecordFormController(record)));
         deleteID.setOnMouseClicked(e -> Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.WARNING);

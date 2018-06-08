@@ -17,7 +17,7 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
     @DatabaseField
     private int subcode;
     @DatabaseField
-    private int key;
+    private String key;
     @DatabaseField
     private String startTimeAssistance;
     @DatabaseField
@@ -35,14 +35,14 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
 
     public Event() {}
 
-    public Event(Record record, int subcode, int key, LocalTime startTimeAssistance, LocalTime transferTimeAssistance,
+    public Event(Record record, int subcode, String key, LocalTime startTimeAssistance, LocalTime transferTimeAssistance,
                  LocalTime endTimeAssistance, Hospital hospital, String pathology, String registry, Integer gender) {
         this.record = record;
         this.subcode = subcode;
         this.key = key;
-        this.startTimeAssistance = Utils.clearString(startTimeAssistance);
-        this.transferTimeAssistance = Utils.clearString(transferTimeAssistance);
-        this.endTimeAssistance = Utils.clearString(endTimeAssistance);
+        this.startTimeAssistance = Utils.nullFromString(startTimeAssistance);
+        this.transferTimeAssistance = Utils.nullFromString(transferTimeAssistance);
+        this.endTimeAssistance = Utils.nullFromString(endTimeAssistance);
         this.hospital = hospital;
         this.pathology = pathology;
         this.registry = registry;
@@ -61,7 +61,7 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         return subcode;
     }
 
-    public int getKey() {
+    public String getKey() {
         return key;
     }
 
@@ -101,7 +101,7 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         this.subcode = subcode;
     }
 
-    public void setKey(int key) {
+    public void setKey(String key) {
         this.key = key;
     }
 

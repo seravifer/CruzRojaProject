@@ -37,6 +37,7 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
+import utils.Security;
 import utils.Utils;
 
 public class AdminController {
@@ -610,7 +611,7 @@ public class AdminController {
             botonUsuario.setOnAction((event) -> {
                 try {
                     if (user_update == null) {
-                        String pass = Utils.encrypt(passUsuario.getText());
+                        String pass = Security.encrypt(passUsuario.getText());
                         User user = new User(nombreUsuario.getText(), userUsuario.getText(), pass);
                         DAO.users.create(user);
                         user.setPassword(passUsuario.getText());
@@ -621,7 +622,7 @@ public class AdminController {
                     } else {
                         user_update.setName(nombreUsuario.getText());
                         user_update.setUsername(userUsuario.getText());
-                        String pass = Utils.encrypt(passUsuario.getText());
+                        String pass = Security.encrypt(passUsuario.getText());
                         user_update.setPassword(pass);
                         DAO.users.update(user_update);
                         user_update.setPassword(passUsuario.getText());
@@ -765,7 +766,7 @@ public class AdminController {
         
         for (User usuario : tablaUsuarios.getItems()) {
             try {
-                usuario.setPassword(Utils.decrypt(usuario.getPassword()));
+                usuario.setPassword(Security.decrypt(usuario.getPassword()));
             } catch (Exception ex) {
                 Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -94,9 +94,9 @@
                   <AnchorPane fx:id="eventFormID" layoutX="14.0" layoutY="372.0" prefHeight="101.0" prefWidth="1170.0" style="-fx-background-color: #e9e9e9;" AnchorPane.leftAnchor="20.0">
                      <children>
                         <JFXTimePicker fx:id="startTimeAssistanceID" defaultColor="#e53935" layoutX="132.0" layoutY="56.0" prefHeight="25.0" prefWidth="165.0" promptText="Inicio asistencia" />
-                        <JFXTimePicker fx:id="transferTimeAssistanceID" defaultColor="#e53935" layoutX="334.0" layoutY="55.0" prefHeight="25.0" prefWidth="165.0" promptText="Hora translado" />
-                        <JFXTimePicker fx:id="endTimeAssistanceID" defaultColor="#e53935" layoutX="334.0" layoutY="12.0" prefHeight="25.0" prefWidth="165.0" promptText="Fin" />
-                        <JFXTextField fx:id="pathologyID" focusColor="#e53935" labelFloat="true" layoutX="529.0" layoutY="57.0" prefHeight="23.0" prefWidth="339.0" promptText="Patología" />
+                        <JFXTimePicker fx:id="transferTimeAssistanceID" defaultColor="#e53935" layoutX="329.0" layoutY="55.0" prefHeight="25.0" prefWidth="165.0" promptText="Hora translado" />
+                        <JFXTimePicker fx:id="endTimeAssistanceID" defaultColor="#e53935" layoutX="329.0" layoutY="12.0" prefHeight="25.0" prefWidth="165.0" promptText="Fin" />
+                        <JFXTextField fx:id="pathologyID" focusColor="#e53935" labelFloat="true" layoutX="529.0" layoutY="57.0" prefHeight="23.0" prefWidth="398.0" promptText="Patología" />
                         <JFXTextField fx:id="patientID" focusColor="#e53935" labelFloat="true" layoutX="962.0" layoutY="55.0" prefHeight="23.0" prefWidth="174.0" promptText="Registro" />
                         <JFXButton fx:id="addEventID" layoutX="29.0" layoutY="35.0" prefHeight="31.0" prefWidth="70.0" ripplerFill="#ff6d6d" style="-fx-background-color: #eb2323;" text="Añadir" textFill="WHITE" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="35.0">
                            <font>
@@ -108,7 +108,7 @@
                         </JFXButton>
                         <JFXTimePicker defaultColor="#e53935" layoutX="132.0" layoutY="12.0" prefHeight="25.0" prefWidth="165.0" promptText="Inicio" />
                         <JFXComboBox fx:id="hospitalID" focusColor="#e53935" layoutX="529.0" layoutY="14.0" prefHeight="23.0" prefWidth="234.0" promptText="Hospital" />
-                        <JFXComboBox fx:id="keyID" layoutX="792.0" layoutY="14.0" prefHeight="23.0" prefWidth="127.0" promptText="Clave" />
+                        <JFXComboBox fx:id="keyID" focusColor="#e53935" layoutX="798.0" layoutY="14.0" prefHeight="23.0" prefWidth="127.0" promptText="Clave" />
                         <JFXRadioButton fx:id="maleID" layoutX="962.0" layoutY="17.0" selected="true" text="Hombre">
                            <toggleGroup>
                               <ToggleGroup fx:id="gender" />
@@ -139,7 +139,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <JFXComboBox fx:id="operativeID" layoutX="534.0" layoutY="32.0" prefHeight="23.0" prefWidth="214.0" promptText="Operativo" />
+                  <JFXComboBox fx:id="operativeID" focusColor="#e53935" layoutX="534.0" layoutY="32.0" prefHeight="23.0" prefWidth="214.0" promptText="Operativo" />
                </children>
             </AnchorPane>
          </children>

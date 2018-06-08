@@ -26,6 +26,8 @@ import model.Area;
 import model.User;
 import service.DAO;
 import static service.DAO.users;
+
+import utils.Security;
 import utils.Utils;
 
 public class LoginController extends AnchorPane {
@@ -76,7 +78,7 @@ public class LoginController extends AnchorPane {
 
     public void login() throws Exception {
         String usuario = user.getText();
-        String pass = Utils.encrypt(password.getText());
+        String pass = Security.encrypt(password.getText());
         try {
             User u = DAO.users.queryBuilder().where().eq("username", usuario).queryForFirst();
             if (u == null) {

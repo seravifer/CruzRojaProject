@@ -6,11 +6,10 @@ import com.jfoenix.controls.*;
 import controller.component.OperativeModal;
 import controller.component.RecordComponent;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -27,6 +26,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
+
 import model.User;
 
 public class RecordsController extends BorderPane {
@@ -36,6 +36,9 @@ public class RecordsController extends BorderPane {
 
     @FXML
     private SVGPath settingsID;
+
+    @FXML
+    private SVGPath logoutID;
 
     @FXML
     private SVGPath reportID;
@@ -77,6 +80,7 @@ public class RecordsController extends BorderPane {
     private Label userID;
     
     private User user;
+    private Task task;
 
     public RecordsController() {}
     
@@ -95,11 +99,12 @@ public class RecordsController extends BorderPane {
      }
 
     private void init() {
-      //  userID.setText(user.getName());
+        //userID.setText(user.getName());
+        //logoutID.setOnMouseClicked(e -> SuperController.getInstance().setPage());
         addID.setOnAction((e) -> new RecordFormController());
         settingsID.setOnMouseClicked(e -> new AdminController());
         reportID.setOnMouseClicked(e -> new ReportController());
-        refreshID.setOnMouseClicked(e -> refresh());
+        refreshID.setOnMouseClicked(e -> filter());
 
         //fromID.setValue(LocalDate.now());
         fromID.setValue(LocalDate.of(2018, 1, 1));
@@ -135,8 +140,9 @@ public class RecordsController extends BorderPane {
         filter();
     }
 
+    // TODO refactoring y arreglar
     private void filter() {
-        final Task task = new Task<Void>() {
+        task = new Task<Void>() {
             @Override
             public Void call() throws SQLException {
                 QueryBuilder<Record, Integer> queryBuilder = DAO.record.queryBuilder();
@@ -158,21 +164,12 @@ public class RecordsController extends BorderPane {
             }
         };
 
-        task.stateProperty().addListener((ob, o, status) -> {
-            if(status == Worker.State.RUNNING) {
-                optionsID.setDisable(true);
-                loadID.setVisible(true);
-            } else if (status == Worker.State.SUCCEEDED) {
-                optionsID.setDisable(false);
-                loadID.setVisible(false);
-            }
-        });
-
+        task.stateProperty().addListener(onUpdating());
         new Thread(task).start();
     }
 
-    public void refresh() { // TODO refactoring y arreglar
-        final Task task = new Task<Void>() {
+    public void refresh() {
+        task = new Task<Void>() {
             @Override
             public Void call() {
                 List<Node> records = recordsID.getChildren();
@@ -187,18 +184,10 @@ public class RecordsController extends BorderPane {
             }
         };
 
-        task.stateProperty().addListener((ob, o, status) -> {
-            if(status == Worker.State.RUNNING) {
-                optionsID.setDisable(true);
-                loadID.setVisible(true);
-            } else if (status == Worker.State.SUCCEEDED) {
-                optionsID.setDisable(false);
-                loadID.setVisible(false);
-            }
-        });
-
+        task.stateProperty().addListener(onUpdating());
         new Thread(task).start();
     }
+    // END TODO
 
     private void limitDays() {
         toID.setDayCellFactory(picker -> new DateCell() {
@@ -208,6 +197,18 @@ public class RecordsController extends BorderPane {
                 setDisable(empty || date.isBefore(fromID.getValue()));
             }
         });
+    }
+
+    private ChangeListener onUpdating() {
+        return (ob, o, status) -> {
+            if(status == Worker.State.RUNNING) {
+                optionsID.setDisable(true);
+                loadID.setVisible(true);
+            } else if (status == Worker.State.SUCCEEDED) {
+                optionsID.setDisable(false);
+                loadID.setVisible(false);
+            }
+        };
     }
 
 }

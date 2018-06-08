@@ -20,22 +20,21 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
 import model.*;
-import org.omg.CORBA.INTERNAL;
 import service.DAO;
 import utils.AutoComplete;
+import utils.EditingCellHour;
 import utils.EditingCellList;
 import utils.EditingCellString;
-import utils.EditingCellHour;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static utils.Utils.nullToString;
 import static utils.Utils.timeConverter;
 
 public class RecordFormController {
@@ -175,7 +174,7 @@ public class RecordFormController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/recordForm.fxml"));
             fxmlLoader.setController(this);
             Parent parent = fxmlLoader.load();
-            SuperController.getInstance().setPage(parent,"Gestor de incidencias");
+            SuperController.getInstance().setPage(parent, "Gestor de incidencias");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -205,6 +204,7 @@ public class RecordFormController {
         resourceID.getSelectionModel().select(record.getResource());
         areaID.getSelectionModel().select(record.getArea());
         serviceID.getSelectionModel().select(record.getService());
+        addressID.setText(record.getAddress());
         evacuated_hID.setText(record.getEvacuated_h() + "");
         evacuated_mID.setText(record.getEvacuated_m() + "");
         assistance_hID.setText(record.getAssistance_h() + "");
@@ -241,6 +241,8 @@ public class RecordFormController {
             e.printStackTrace();
         }
 
+        keyID.getItems().addAll("CLAVE 0", "CLAVE 1.1", "CLAVE 1.2", "CLAVE 1.3", "CLAVE 2", "CLAVE 3", "CLAVE 5", "CLAVE 6");
+
         snackbar = new JFXSnackbar(rootID) {
             @Override
             public void refreshPopup() {
@@ -261,11 +263,13 @@ public class RecordFormController {
         transferTimeAssistanceID.setConverter(timeConverter);
         endTimeAssistanceID.setConverter(timeConverter);
 
-        JFXTextField[] nodes = {assistance_mID, assistance_hID, evacuated_hID, evacuated_mID};
-        for (JFXTextField node : nodes) {
+        Arrays.asList(assistance_mID, assistance_hID, evacuated_hID, evacuated_mID).forEach(node -> {
             node.textProperty().addListener(onlyNumbers(node));
             node.focusedProperty().addListener(minZero(node));
-        }
+        });
+
+        Arrays.asList(endTimeID, startTimeAssistanceID, transferTimeAssistanceID, endTimeAssistanceID)
+                .forEach(this::onDoubleClick);
 
         AutoComplete.set(resourceID,
                 (typedText, itemToCompare) -> itemToCompare.getCode().toLowerCase().contains(typedText.toLowerCase()));
@@ -278,13 +282,6 @@ public class RecordFormController {
 
         AutoComplete.set(hospitalID,
                 (typedText, itemToCompare) -> itemToCompare.getName().toLowerCase().contains(typedText.toLowerCase()));
-
-        endTimeID.getEditor().setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                if (endTimeID.getValue() == null)
-                    endTimeID.setValue(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
-            }
-        });
 
         areaID.valueProperty().addListener((ob, o, n) -> {
             try {
@@ -420,12 +417,14 @@ public class RecordFormController {
                                 .setRegistry(t.getNewValue()));
 
         addEventID.setOnAction(e -> {
-            Event event = new Event(record, eventsTableID.getItems().size() + 1, 0,
+            Event event = new Event(record, eventsTableID.getItems().size() + 1, keyID.getValue(),
                     startTimeAssistanceID.getValue(), transferTimeAssistanceID.getValue(),
                     endTimeAssistanceID.getValue(), AutoComplete.getValue(hospitalID), pathologyID.getText(),
                     patientID.getText(), getGender());
 
             eventsTableID.getItems().add(event);
+            if (maleID.isSelected()) evacuated_hID.setText((Integer.parseInt(evacuated_hID.getText()) + 1) + "");
+            if (femaleID.isSelected()) evacuated_mID.setText((Integer.parseInt(evacuated_mID.getText()) + 1) + "");
 
             try {
                 DAO.event.create(event);
@@ -527,9 +526,7 @@ public class RecordFormController {
 
     private ChangeListener<String> onlyNumbers(TextField node) {
         return (observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                node.setText(newValue.replaceAll("[^\\d]", ""));
-            }
+            if (!newValue.matches("\\d*")) node.setText(newValue.replaceAll("[^\\d]", ""));
         };
     }
 
@@ -541,5 +538,14 @@ public class RecordFormController {
 
             if (node.getText().equals("")) node.setText("0");
         };
+    }
+
+    private void onDoubleClick(JFXTimePicker node) {
+        node.getEditor().setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                if (node.getValue() == null)
+                    node.setValue(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
+            }
+        });
     }
 }
