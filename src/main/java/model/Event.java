@@ -3,6 +3,7 @@ package model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
+import utils.LocalTimeType;
 import utils.Utils;
 
 import java.time.LocalTime;
@@ -18,12 +19,12 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
     private int subcode;
     @DatabaseField
     private String key;
-    @DatabaseField
-    private String startTimeAssistance;
-    @DatabaseField
-    private String transferTimeAssistance;
-    @DatabaseField
-    private String endTimeAssistance;
+    @DatabaseField(persisterClass = LocalTimeType.class)
+    private LocalTime startTimeAssistance;
+    @DatabaseField(persisterClass = LocalTimeType.class)
+    private LocalTime transferTimeAssistance;
+    @DatabaseField(persisterClass = LocalTimeType.class)
+    private LocalTime endTimeAssistance;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Hospital hospital;
     @DatabaseField
@@ -40,9 +41,9 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         this.record = record;
         this.subcode = subcode;
         this.key = key;
-        this.startTimeAssistance = Utils.nullFromString(startTimeAssistance);
-        this.transferTimeAssistance = Utils.nullFromString(transferTimeAssistance);
-        this.endTimeAssistance = Utils.nullFromString(endTimeAssistance);
+        this.startTimeAssistance = startTimeAssistance;
+        this.transferTimeAssistance = transferTimeAssistance;
+        this.endTimeAssistance = endTimeAssistance;
         this.hospital = hospital;
         this.pathology = pathology;
         this.registry = registry;
@@ -65,15 +66,15 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         return key;
     }
 
-    public String getStartTimeAssistance() {
+    public LocalTime getStartTimeAssistance() {
         return startTimeAssistance;
     }
 
-    public String getTransferTimeAssistance() {
+    public LocalTime getTransferTimeAssistance() {
         return transferTimeAssistance;
     }
 
-    public String getEndTimeAssistance() {
+    public LocalTime getEndTimeAssistance() {
         return endTimeAssistance;
     }
 
@@ -105,15 +106,15 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         this.key = key;
     }
 
-    public void setStartTimeAssistance(String startTimeAssistance) {
+    public void setStartTimeAssistance(LocalTime startTimeAssistance) {
         this.startTimeAssistance = startTimeAssistance;
     }
 
-    public void setTransferTimeAssistance(String transferTimeAssistance) {
+    public void setTransferTimeAssistance(LocalTime transferTimeAssistance) {
         this.transferTimeAssistance = transferTimeAssistance;
     }
 
-    public void setEndTimeAssistance(String endTimeAssistance) {
+    public void setEndTimeAssistance(LocalTime endTimeAssistance) {
         this.endTimeAssistance = endTimeAssistance;
     }
 

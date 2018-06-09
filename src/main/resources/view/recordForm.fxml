@@ -77,7 +77,7 @@
                   <JFXComboBox fx:id="assemblyID" focusColor="#e53935" labelFloat="true" layoutX="249.0" layoutY="116.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="185.0" promptText="Asamblea" visibleRowCount="20" />
                   <JFXComboBox fx:id="resourceID" focusColor="#e53935" labelFloat="true" layoutX="248.0" layoutY="177.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="190.0" promptText="Recurso" visibleRowCount="20" />
                   <JFXComboBox fx:id="areaID" focusColor="#e53935" labelFloat="true" layoutX="462.0" layoutY="116.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="287.0" promptText="Área" visibleRowCount="20" />
-                  <JFXComboBox fx:id="serviceID" focusColor="#e53935" labelFloat="true" layoutX="462.0" layoutY="177.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="286.0" promptText="Servicio" />
+                  <JFXComboBox fx:id="serviceID" focusColor="#e53935" labelFloat="true" layoutX="462.0" layoutY="177.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="286.0" promptText="Servicio" visibleRowCount="20" />
                   <JFXTextField fx:id="assistance_hID" alignment="CENTER" focusColor="#e53935" layoutX="54.0" layoutY="266.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="36.0" text="0" unFocusColor="#2711e8" />
                   <JFXTextField fx:id="assistance_mID" alignment="CENTER" focusColor="#e53935" layoutX="54.0" layoutY="301.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="37.0" text="0" unFocusColor="#ce20da" />
                   <JFXTextField fx:id="evacuated_hID" alignment="CENTER" editable="false" focusColor="#2711e8" layoutX="138.0" layoutY="263.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="33.0" text="0" unFocusColor="#2711e8" />
@@ -97,7 +97,7 @@
                         <JFXTimePicker fx:id="startTimeAssistanceID" defaultColor="#e53935" layoutX="132.0" layoutY="56.0" prefHeight="25.0" prefWidth="165.0" promptText="Inicio asistencia" />
                         <JFXTimePicker fx:id="endTimeAssistanceID" defaultColor="#e53935" layoutX="329.0" layoutY="12.0" prefHeight="25.0" prefWidth="165.0" promptText="Fin" />
                         <JFXTimePicker fx:id="transferTimeAssistanceID" defaultColor="#e53935" layoutX="329.0" layoutY="55.0" prefHeight="25.0" prefWidth="165.0" promptText="Hora translado" />
-                        <JFXComboBox fx:id="hospitalID" focusColor="#e53935" layoutX="529.0" layoutY="14.0" prefHeight="23.0" prefWidth="234.0" promptText="Hospital" />
+                        <JFXComboBox fx:id="hospitalID" focusColor="#e53935" layoutX="529.0" layoutY="14.0" prefHeight="23.0" prefWidth="234.0" promptText="Hospital" visibleRowCount="15" />
                         <JFXTextField fx:id="pathologyID" focusColor="#e53935" labelFloat="true" layoutX="529.0" layoutY="57.0" prefHeight="23.0" prefWidth="398.0" promptText="Patología" />
                         <JFXComboBox fx:id="keyID" focusColor="#e53935" layoutX="798.0" layoutY="14.0" prefHeight="23.0" prefWidth="127.0" promptText="Clave" />
                         <JFXTextField fx:id="patientID" focusColor="#e53935" labelFloat="true" layoutX="962.0" layoutY="55.0" prefHeight="23.0" prefWidth="174.0" promptText="Registro" />
@@ -107,9 +107,9 @@
                            </toggleGroup>
                         </JFXRadioButton>
                         <JFXRadioButton fx:id="femaleID" layoutX="1066.0" layoutY="17.0" text="Mujer" toggleGroup="$gender" />
-                        <JFXButton fx:id="addEventID" layoutX="29.0" layoutY="35.0" prefHeight="31.0" prefWidth="70.0" ripplerFill="#ff6d6d" style="-fx-background-color: #eb2323;" text="Añadir" textFill="WHITE" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="35.0">
+                        <JFXButton fx:id="addEventID" layoutX="29.0" layoutY="35.0" prefHeight="31.0" prefWidth="70.0" ripplerFill="#ff6d6d" style="-fx-background-color: #eb2323;" text="Añadir" textFill="WHITE" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="32.0">
                            <font>
-                              <Font size="14.0" />
+                              <Font size="16.0" />
                            </font>
                            <cursor>
                               <Cursor fx:constant="HAND" />

@@ -15,10 +15,12 @@ import javafx.scene.shape.SVGPath;
 import model.Event;
 import model.Record;
 import service.DAO;
+import utils.Utils;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class RecordComponent extends AnchorPane {
@@ -98,11 +100,10 @@ public class RecordComponent extends AnchorPane {
     }
 
     private void init() {
-        codeID.setText("#" + String.valueOf(LocalDate.parse(record.getDate()).getYear()).substring(2, 4) + "/" +
-                String.format("%05d", record.getCode()));
+        codeID.setText(Utils.generateCode(record));
         assemblyID.setText(record.getAssembly().getName());
-        dateID.setText(record.getDate());
-        startTimeID.setText(record.getStartTime());
+        dateID.setText(record.getDate().format(Utils.dateTimeFormatter));
+        startTimeID.setText(record.getStartTime().toString());
         areaID.setText(record.getArea().getName());
         serviceID.setText(record.getService().getName());
         assistance_hID.setText(record.getAssistance_h() + "");
@@ -111,9 +112,12 @@ public class RecordComponent extends AnchorPane {
         evacuated_mID.setText(record.getEvacuated_m() + "");
 
         if (record.getResource() == null) {
-            //((VBox)resourceID.getParent()).getChildren().remove(resourceID);
-            resourceID.setText(""); // TODO eleminar si no existe pero añadir si existe
-        } else resourceID.setText(record.getResource().getCode());
+            ((VBox)resourceID.getParent()).getChildren().remove(resourceID);
+            resourceID.setText("");
+        } else {
+            if (resourceID.getParent() == null) ((VBox)assemblyID.getParent()).getChildren().add(0, resourceID);
+            resourceID.setText(record.getResource().getCode());
+        }
 
         placeID.setText(ifNull(record.getAddress()));
         notesID.setText(ifNull(record.getNotes()));
@@ -140,7 +144,7 @@ public class RecordComponent extends AnchorPane {
         } else {
             statusID.setText("Finalizado");
             badgeID.setStyle("-fx-background-color: #ff2026");
-            endTimeID.setText(record.getEndTime());
+            endTimeID.setText(record.getEndTime().toString());
         }
 
         rootID.setOnMouseClicked(event -> {
@@ -178,6 +182,10 @@ public class RecordComponent extends AnchorPane {
     private String ifNull(String s) {
         if (s == null) return "---";
         else return s;
+    }
+
+    public Record getRecord() {
+        return record;
     }
 
     public void refresh(boolean all) {

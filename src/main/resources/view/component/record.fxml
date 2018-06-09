@@ -28,9 +28,12 @@
             </AnchorPane>
             <HBox alignment="CENTER" fillHeight="false" minWidth="100.0" prefHeight="98.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                <children>
-                  <AnchorPane fx:id="badgeID" prefHeight="21.0" prefWidth="80.0" style="-fx-background-color: #FF9149; -fx-background-radius: 5;">
+                  <AnchorPane fx:id="badgeID" prefHeight="21.0" prefWidth="80.0" style="-fx-background-color: #FF9149;">
                      <children>
-                        <Label fx:id="statusID" alignment="CENTER" layoutX="26.0" layoutY="2.0" text="En progreso" textFill="WHITE" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0" />
+                        <Label fx:id="statusID" alignment="CENTER" layoutX="26.0" layoutY="2.0" text="En progreso" textFill="WHITE" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
                      </children>
                   </AnchorPane>
                </children>
@@ -41,10 +44,13 @@
                      <children>
                         <Label fx:id="resourceID" alignment="CENTER" contentDisplay="CENTER" text="A.11" textAlignment="CENTER">
                            <font>
-                              <Font size="15.0" />
+                              <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="assemblyID" alignment="CENTER" contentDisplay="CENTER" text="Valencia" textAlignment="CENTER" />
+                        <Label fx:id="assemblyID" alignment="CENTER" contentDisplay="CENTER" text="Valencia" textAlignment="CENTER">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
                      </children>
                   </VBox>
                </children>
@@ -53,16 +59,28 @@
                <children>
                   <VBox alignment="CENTER" spacing="10.0">
                      <children>
-                        <Label fx:id="startTimeID" alignment="CENTER" contentDisplay="CENTER" text="10:30" textAlignment="CENTER" />
-                        <Label fx:id="endTimeID" alignment="CENTER" contentDisplay="CENTER" text="17:00" textAlignment="CENTER" />
+                        <Label fx:id="startTimeID" alignment="CENTER" contentDisplay="CENTER" text="10:30" textAlignment="CENTER">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
+                        <Label fx:id="endTimeID" alignment="CENTER" contentDisplay="CENTER" text="17:00" textAlignment="CENTER">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
                      </children>
                   </VBox>
                </children>
             </HBox>
             <AnchorPane maxWidth="200.0" prefHeight="98.0" prefWidth="150.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Label fx:id="areaID" alignment="CENTER" contentDisplay="CENTER" layoutX="99.0" layoutY="26.0" text="Prevencion" textAlignment="CENTER" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
-                  <Label fx:id="serviceID" alignment="CENTER" contentDisplay="CENTER" layoutX="99.0" layoutY="56.0" text="Maritimo" textAlignment="CENTER" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+                  <Label fx:id="areaID" alignment="CENTER" contentDisplay="CENTER" layoutX="99.0" layoutY="26.0" prefHeight="17.0" prefWidth="126.0" text="Prevencion" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font></Label>
+                  <Label fx:id="serviceID" alignment="CENTER" contentDisplay="CENTER" layoutX="99.0" layoutY="56.0" text="Maritimo" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
                </children>
             </AnchorPane>
             <HBox alignment="CENTER" prefHeight="98.0" prefWidth="135.0" HBox.hgrow="ALWAYS">
@@ -93,7 +111,10 @@
             </HBox>
             <AnchorPane prefHeight="98.0" prefWidth="137.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Label fx:id="placeID" alignment="CENTER" layoutX="20.0" layoutY="28.0" prefHeight="42.0" prefWidth="97.0" text="Place" wrapText="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                  <Label fx:id="placeID" alignment="CENTER" layoutX="20.0" layoutY="28.0" prefHeight="42.0" prefWidth="97.0" text="Place" wrapText="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="98.0" prefWidth="100.0" HBox.hgrow="ALWAYS">

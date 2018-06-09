@@ -475,8 +475,8 @@ public class ReportController {
         int minutes = 0;
         for (Record record : query) {
             try {
-                LocalTime start = LocalTime.parse(record.getStartTime());
-                LocalTime finish = LocalTime.parse(record.getEndTime());
+                LocalTime start = record.getStartTime();
+                LocalTime finish = record.getEndTime();
                 hours = hours + Math.abs(finish.getHour() - start.getHour());
                 minutes = minutes + Math.abs(finish.getMinute() - start.getMinute());
             } catch (Exception e) {

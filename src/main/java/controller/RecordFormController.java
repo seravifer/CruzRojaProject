@@ -184,7 +184,7 @@ public class RecordFormController {
         loadView();
 
         dateID.setValue(LocalDate.now());
-        startTimeID.setValue(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
+        startTimeID.setValue(LocalTime.now());
         eventFormID.setDisable(true);
     }
 
@@ -192,12 +192,10 @@ public class RecordFormController {
         loadView();
         this.record = record;
 
-        LocalDate date = LocalDate.parse(record.getDate());
-        codeID.setText("#" + String.valueOf(date.getYear()).substring(2, 4) + "/" +
-                String.format("%05d", record.getCode()));
-        dateID.setValue(date);
-        startTimeID.setValue(LocalTime.parse(record.getStartTime()));
-        if (record.getEndTime() != null) endTimeID.setValue(LocalTime.parse(record.getEndTime()));
+        codeID.setText(Utils.generateCode(record));
+        dateID.setValue(record.getDate());
+        startTimeID.setValue(record.getStartTime());
+        if (record.getEndTime() != null) endTimeID.setValue(record.getEndTime());
         assemblyID.getSelectionModel().select(record.getAssembly());
         resourceID.getSelectionModel().select(record.getResource());
         areaID.getSelectionModel().select(record.getArea());
@@ -421,15 +419,12 @@ public class RecordFormController {
         codeID.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                 record = new Record();
-                record.setDate(dateID.getValue().toString());
+                record.setDate(dateID.getValue());
                 try {
                     DAO.record.create(record);
                     record.refresh();
 
-                    LocalDate date = LocalDate.parse(record.getDate());
-                    codeID.setText("#" + String.valueOf(date.getYear()).substring(2, 4) + "/" +
-                            String.format("%05d", record.getCode()));
-
+                    codeID.setText(Utils.generateCode(record));
                     eventFormID.setDisable(false);
                 } catch (SQLException e) {
                     snackbar.show("Se ha producido un error al generar el registro. " +
@@ -487,10 +482,10 @@ public class RecordFormController {
         }
 
         if (dateID.getValue() == null) dateID.setValue(LocalDate.now());
-        record.setDate(dateID.getValue().toString());
+        record.setDate(dateID.getValue());
         record.setResource(AutoComplete.getValue(resourceID));
         record.setAssembly(AutoComplete.getValue(assemblyID));
-        record.setStartTime(startTimeID.getValue().toString());
+        record.setStartTime(startTimeID.getValue());
         record.setEndTime(endTimeID.getValue());
         record.setArea(areaID.getValue());
         record.setService(serviceID.getValue());
@@ -498,9 +493,9 @@ public class RecordFormController {
         record.setAssistanceM(assistance_mID.getText());
         record.setEvacuatedH(evacuated_hID.getText());
         record.setEvacuatedM(evacuated_mID.getText());
-        record.setAddress(Utils.emptyStringToNull(addressID.getText()));
-        record.setRegistry(Utils.emptyStringToNull(registryID.getText()));
-        record.setNotes(Utils.emptyStringToNull(notesID.getText()));
+        record.setAddress(addressID.getText());
+        record.setRegistry(registryID.getText());
+        record.setNotes(notesID.getText());
         record.setOperative(AutoComplete.getValue(operativeID));
 
         try {
@@ -548,7 +543,7 @@ public class RecordFormController {
         node.getEditor().setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
                 if (node.getValue() == null)
-                    node.setValue(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))));
+                    node.setValue(LocalTime.now());
             }
         });
     }

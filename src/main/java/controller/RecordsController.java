@@ -168,16 +168,23 @@ public class RecordsController extends BorderPane {
         new Thread(task).start();
     }
 
-    public void refresh() { // TODO Añadir el nuevo registro si lo hay
+    public void refresh() {
         task = new Task<Void>() {
             @Override
-            public Void call() {
+            public Void call() throws SQLException {
                 List<Node> records = recordsID.getChildren();
 
                 for (Node node : records) {
                     RecordComponent recordComponent = (RecordComponent) node;
                     Platform.runLater(()-> recordComponent.refresh(!pendingID.isSelected()));
+                }
 
+                Record lastRecord = DAO.record.queryBuilder()
+                        .orderBy("ID_record", false)
+                        .queryForFirst();
+                RecordComponent lastRecordAdded = (RecordComponent) records.get(0);
+                if (!lastRecord.equals(lastRecordAdded.getRecord()) && lastRecord.getEndTime() == null) {
+                    Platform.runLater(()-> recordsID.getChildren().add(0, new RecordComponent(lastRecord)));
                 }
 
                 return null;

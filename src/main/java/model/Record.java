@@ -3,8 +3,11 @@ package model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
+import utils.LocalDateType;
+import utils.LocalTimeType;
 import utils.Utils;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @DatabaseTable(tableName = "Record")
@@ -12,18 +15,18 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
 
     @DatabaseField(generatedId = true)
     private int ID_record;
-    @DatabaseField
-    private String date;
+    @DatabaseField(persisterClass = LocalDateType.class)
+    private LocalDate date;
     @DatabaseField
     private int code;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Resource resource;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Assembly assembly;
-    @DatabaseField
-    private String startTime;
-    @DatabaseField
-    private String endTime;
+    @DatabaseField(persisterClass = LocalTimeType.class)
+    private LocalTime startTime;
+    @DatabaseField(persisterClass = LocalTimeType.class)
+    private LocalTime endTime;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Area area;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
@@ -47,15 +50,15 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
 
     public Record() {}
 
-    public Record(String date, int code, Resource resource, Assembly assembly, LocalTime startTime, LocalTime endTime,
+    public Record(LocalDate date, int code, Resource resource, Assembly assembly, LocalTime startTime, LocalTime endTime,
                   Area area, Service service, String address, String assistance_h, String assistance_m,
                   String evacuated_h, String evacuated_m, String registry, String notes, Operative operative) {
         this.date = date;
         this.code = code;
         this.resource = resource;
         this.assembly = assembly;
-        this.startTime = startTime.toString();
-        this.endTime = Utils.nullFromString(endTime);
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.area = area;
         this.service = service;
         this.address = address;
@@ -72,7 +75,7 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
         return ID_record;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -88,11 +91,11 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
         return assembly;
     }
 
-    public String getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
 
-    public String getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
 
@@ -140,7 +143,7 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
         this.ID_record = ID_record;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -156,13 +159,12 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
         this.assembly = assembly;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
     public void setEndTime(LocalTime endTime) {
-        if (endTime == null) this.endTime = null;
-        else this.endTime = endTime.toString();
+        this.endTime = endTime;
     }
 
     public void setArea(Area area) {
@@ -174,7 +176,7 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        this.address = Utils.emptyStringToNull(address);
     }
 
     public void setAssistanceH(String assistance_h) {
@@ -194,11 +196,11 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
     }
 
     public void setRegistry(String registry) {
-        this.registry = registry;
+        this.registry = Utils.emptyStringToNull(registry);
     }
 
     public void setNotes(String notes) {
-        this.notes = notes;
+        this.notes = Utils.emptyStringToNull(notes);
     }
 
     public void setOperative(Operative operative) {
@@ -220,4 +222,26 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
         return ID_record;
     }
 
+    @Override
+    public String toString() {
+        return "Record{" +
+                "ID_record=" + ID_record +
+                ", date='" + date + '\'' +
+                ", code=" + code +
+                ", resource=" + resource +
+                ", assembly=" + assembly +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", area=" + area +
+                ", service=" + service +
+                ", address='" + address + '\'' +
+                ", assistance_h=" + assistance_h +
+                ", assistance_m=" + assistance_m +
+                ", evacuated_h=" + evacuated_h +
+                ", evacuated_m=" + evacuated_m +
+                ", registry='" + registry + '\'' +
+                ", notes='" + notes + '\'' +
+                ", operative=" + operative +
+                '}';
+    }
 }

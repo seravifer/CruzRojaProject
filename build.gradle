@@ -19,7 +19,6 @@ dependencies {
     compile 'org.controlsfx:controlsfx:8.40.14'
     compile 'com.itextpdf:itextpdf:5.5.13'
     compile 'org.apache.poi:poi:3.17'
-
 }
 
 task fatJar(type: Jar) {
