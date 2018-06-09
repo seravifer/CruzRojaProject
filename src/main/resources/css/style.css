@@ -149,16 +149,17 @@
     -fx-text-fill: #ff4081;
 }
 
-/*#choice .combo-box-base, #choice .choice-box {
+#choice .combo-box-base, #choice .choice-box {
     -fx-background-color: transparent;
-    -fx-border-color: #2196F3;
-    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #4d4d4d;
+    -fx-border-width: 0 0 1 0;
     -fx-background-radius: 0;
     -fx-border-radius: 0;
 }
 
 #choice .combo-box:focused, #choice .choice-box:focused {
-    -fx-border-color: #2196F3;
+    -fx-border-color: #e53935;
+    -fx-border-width: 0 0 2 0;
 }
 
 #choice .combo-box-base>.label, #choice .choice-box>.label {
@@ -171,7 +172,7 @@
 }
 
 #choice .combo-box-base>.arrow-button>.arrow, #choice .choice-box>.open-button>.arrow {
-    -fx-background-color: rgb(200.0, 200.0, 200.0);
+    -fx-background-color: rgb(77.0, 77.0, 77.0);
 }
 
 #choice .combo-box-base .arrow-button:hover .arrow,
@@ -182,7 +183,7 @@
 
 #choice .menu-item:focused {
     -fx-background-color: rgb(230.0, 230.0, 230.0);
-}*/
+}
 
 /* Radiobutton */
 .jfx-radio-button {
