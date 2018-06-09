@@ -50,6 +50,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.print.PrinterJob;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import utils.HeaderFooter;
 import utils.ReportHelper;
@@ -151,8 +152,21 @@ public class ReportController {
     }
 
     @FXML
-    private void export(ActionEvent event) throws FileNotFoundException, DocumentException, IOException {
-        ReportHelper reportHelper = new ReportHelper("", textList, nodeList, query);
+    private void export_pdf(ActionEvent event) throws FileNotFoundException, DocumentException, IOException {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(new Stage());
+        if (file != null) {
+            ReportHelper reportHelper = new ReportHelper(file, textList, nodeList);
+        } else {
+            
+        }
+    }
+    
+    @FXML
+    private void export_xls(ActionEvent event) throws FileNotFoundException, DocumentException, IOException {
+        System.out.println("-");
     }
 
     @FXML

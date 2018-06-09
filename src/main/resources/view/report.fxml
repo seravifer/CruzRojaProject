@@ -37,7 +37,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </JFXButton>
-            <JFXButton layoutX="380.0" layoutY="20.0" onAction="#export" ripplerFill="#c42126" style="-fx-background-color: #f44336;" text="Exportar" textFill="WHITE">
+            <JFXButton layoutX="369.0" layoutY="21.0" onAction="#export_pdf" ripplerFill="#c42126" style="-fx-background-color: #f44336;" text="Exportar a PDF" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
@@ -46,6 +46,14 @@
                </cursor>
             </JFXButton>
             <JFXProgressBar fx:id="loadingID" disable="true" maxWidth="1.7976931348623157E308" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <JFXButton layoutX="501.0" layoutY="21.0" onAction="#export_xls" ripplerFill="#c42126" style="-fx-background-color: #f44336;" text="Exportar a XLS" textFill="WHITE">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
             </children>
             <effect>
                 <DropShadow color="#0000005d" height="29.53" offsetY="-1.0" radius="8.4275" width="6.18" />
