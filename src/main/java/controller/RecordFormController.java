@@ -21,10 +21,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
 import model.*;
 import service.DAO;
-import utils.AutoComplete;
-import utils.EditingCellHour;
-import utils.EditingCellList;
-import utils.EditingCellString;
+import utils.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -416,6 +413,26 @@ public class RecordFormController {
                         t.getTableView().getItems().get(t.getTablePosition().getRow())
                                 .setRegistry(t.getNewValue()));
 
+        codeID.setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                record = new Record();
+                record.setDate(dateID.getValue().toString());
+                try {
+                    DAO.record.create(record);
+                    record.refresh();
+
+                    LocalDate date = LocalDate.parse(record.getDate());
+                    codeID.setText("#" + String.valueOf(date.getYear()).substring(2, 4) + "/" +
+                            String.format("%05d", record.getCode()));
+
+                    eventFormID.setDisable(false);
+                } catch (SQLException e) {
+                    snackbar.show("Se ha producido un error al generar el registro. " +
+                            "Por favor, intentelo de nuevo.", 6000);
+                }
+            }
+        });
+
         addEventID.setOnAction(e -> {
             Event event = new Event(record, eventsTableID.getItems().size() + 1, keyID.getValue(),
                     startTimeAssistanceID.getValue(), transferTimeAssistanceID.getValue(),
@@ -459,57 +476,38 @@ public class RecordFormController {
     @FXML
     private void onSave() {
         if (validate()) {
+            snackbar.show("Los siguientes campos son obligatorios:\n " +
+                    "Asamblea, Area, Servicio, Fecha y Hora de inicio.", 8000);
             return;
         }
 
-        if (record == null) {
-            record = new Record(dateID.getValue().toString(), 0, AutoComplete.getValue(resourceID),
-                    AutoComplete.getValue(assemblyID), startTimeID.getValue(), endTimeID.getValue(), areaID.getValue(),
-                    serviceID.getValue(), "", assistance_hID.getText(), assistance_hID.getText(),
-                    evacuated_hID.getText(), evacuated_mID.getText(), registryID.getText(), notesID.getText(),
-                    AutoComplete.getValue(operativeID));
-            try {
-                DAO.record.create(record);
-                record.refresh();
+        if (dateID.getValue() == null) dateID.setValue(LocalDate.now());
+        record.setDate(dateID.getValue().toString());
+        record.setResource(AutoComplete.getValue(resourceID));
+        record.setAssembly(AutoComplete.getValue(assemblyID));
+        record.setStartTime(startTimeID.getValue().toString());
+        record.setEndTime(endTimeID.getValue());
+        record.setArea(areaID.getValue());
+        record.setService(serviceID.getValue());
+        record.setAssistanceH(assistance_hID.getText());
+        record.setAssistanceM(assistance_mID.getText());
+        record.setEvacuatedH(evacuated_hID.getText());
+        record.setEvacuatedM(evacuated_mID.getText());
+        record.setAddress(Utils.emptyStringToNull(addressID.getText()));
+        record.setRegistry(Utils.emptyStringToNull(registryID.getText()));
+        record.setNotes(Utils.emptyStringToNull(notesID.getText()));
+        record.setOperative(AutoComplete.getValue(operativeID));
 
-                LocalDate date = LocalDate.parse(record.getDate());
-                codeID.setText("#" + String.valueOf(date.getYear()).substring(2, 4) + "/" +
-                        String.format("%05d", record.getCode()));
+        try {
+            record.update();
 
-                snackbar.show("El registro " + codeID.getText() + " se ha guardado correctamente.", 4000);
-
-                eventFormID.setDisable(false); // TODO no deberia ser necesario guardar el registro
-            } catch (SQLException e) {
-                snackbar.show("Se ha producido un error al guardar el registro. Por favor, intentelo de nuevo.", 6000);
-                record = null;
+            for (Event event : eventsTableID.getItems()) {
+                event.update();
             }
-        } else {
-            record.setResource(AutoComplete.getValue(resourceID));
-            record.setAssembly(AutoComplete.getValue(assemblyID));
-            record.setStartTime(startTimeID.getValue().toString());
-            record.setEndTime(endTimeID.getValue());
-            record.setArea(areaID.getValue());
-            record.setService(serviceID.getValue());
-            record.setAssistanceH(assistance_hID.getText());
-            record.setAssistanceM(assistance_mID.getText());
-            record.setEvacuatedH(evacuated_hID.getText());
-            record.setEvacuatedM(evacuated_mID.getText());
-            record.setAddress(addressID.getText());
-            record.setRegistry(registryID.getText());
-            record.setNotes(notesID.getText());
-            record.setOperative(AutoComplete.getValue(operativeID));
 
-            try {
-                record.update();
-
-                for (Event event : eventsTableID.getItems()) {
-                    event.update();
-                }
-
-                snackbar.show("El registro " + codeID.getText() + " se ha guardado correctamente.", 4000);
-            } catch (SQLException e) {
-                snackbar.show("Se ha producido un error al guardar el registro. Por favor, intentelo de nuevo.", 6000);
-            }
+            snackbar.show("El registro " + codeID.getText() + " se ha guardado correctamente.", 4000);
+        } catch (SQLException e) {
+            snackbar.show("Se ha producido un error al guardar el registro. Por favor, intentelo de nuevo.", 6000);
         }
     }
 
@@ -524,6 +522,7 @@ public class RecordFormController {
         else return 0;
     }
 
+    /* Listener */
     private ChangeListener<String> onlyNumbers(TextField node) {
         return (observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) node.setText(newValue.replaceAll("[^\\d]", ""));

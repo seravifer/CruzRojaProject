@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
@@ -62,7 +63,7 @@ public class RecordComponent extends AnchorPane {
     private Label evacuated_mID;
 
     @FXML
-    private Label registryID;
+    private Label placeID;
 
     @FXML
     private Label notesID;
@@ -114,11 +115,8 @@ public class RecordComponent extends AnchorPane {
             resourceID.setText(""); // TODO eleminar si no existe pero añadir si existe
         } else resourceID.setText(record.getResource().getCode());
 
-        if (record.getRegistry().equals("")) registryID.setText("---");
-        else registryID.setText(record.getRegistry());
-
-        if (record.getAddress().equals("")) notesID.setText("---");
-        else notesID.setText(record.getNotes());
+        placeID.setText(ifNull(record.getAddress()));
+        notesID.setText(ifNull(record.getNotes()));
 
         if (record.getEndTime() == null) {
             Event event = null;
@@ -145,14 +143,19 @@ public class RecordComponent extends AnchorPane {
             endTimeID.setText(record.getEndTime());
         }
 
-        rootID.setOnMouseClicked(e -> Platform.runLater(() -> new RecordFormController(record)));
+        rootID.setOnMouseClicked(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                Platform.runLater(() -> new RecordFormController(record));
+            }
+        });
+
         editID.setOnMouseClicked(e -> Platform.runLater(() -> new RecordFormController(record)));
         deleteID.setOnMouseClicked(e -> Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Dialogo de confirmación");
             alert.setHeaderText(null);
             alert.setContentText("¿Estas seguro de que quieres borrar el registro " + codeID.getText()
-                    + "? No se podra revertir la acción.");
+                    + "? No se podra revertir los cambios.");
 
             ButtonType yesButton = new ButtonType("Sí");
             ButtonType noButton = new ButtonType("No");
@@ -170,6 +173,11 @@ public class RecordComponent extends AnchorPane {
                 alert.close();
             }
         }));
+    }
+
+    private String ifNull(String s) {
+        if (s == null) return "---";
+        else return s;
     }
 
     public void refresh() {

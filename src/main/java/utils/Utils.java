@@ -22,6 +22,12 @@ public final class Utils {
         else return o.toString();
     }
 
+    public static String emptyStringToNull(String s) {
+        String ns = s.trim();
+        if (ns.equals("")) return null;
+        else return ns;
+    }
+
     public static String generateCode(String date, int code) {
         return null; // TODO refactoring
     }

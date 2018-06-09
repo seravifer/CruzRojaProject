@@ -39,8 +39,8 @@ public class SuperController {
             }
         };*/
         stage.setScene(scene);
-        stage.setMinWidth(1040);
-        stage.setMinHeight(640);
+        stage.setMinWidth(1280);
+        stage.setMinHeight(720);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/icon.png")));
         stage.show();
     }

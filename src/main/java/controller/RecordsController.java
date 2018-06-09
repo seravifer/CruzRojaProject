@@ -168,7 +168,7 @@ public class RecordsController extends BorderPane {
         new Thread(task).start();
     }
 
-    public void refresh() {
+    public void refresh() { // TODO Añadir el nuevo registro si lo hay
         task = new Task<Void>() {
             @Override
             public Void call() {

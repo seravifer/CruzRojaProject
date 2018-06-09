@@ -93,7 +93,7 @@
             </HBox>
             <AnchorPane prefHeight="98.0" prefWidth="137.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Label fx:id="registryID" alignment="CENTER" layoutX="20.0" layoutY="28.0" prefHeight="42.0" prefWidth="97.0" text="Registry" wrapText="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+                  <Label fx:id="placeID" alignment="CENTER" layoutX="20.0" layoutY="28.0" prefHeight="42.0" prefWidth="97.0" text="Place" wrapText="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
                </children>
             </AnchorPane>
             <AnchorPane prefHeight="98.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
