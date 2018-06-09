@@ -52,6 +52,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import utils.HeaderFooter;
+import utils.ReportHelper;
 
 public class ReportController {
 
@@ -92,9 +93,6 @@ public class ReportController {
     private JFXCheckBox cb_resource;
 
     @FXML
-    private JFXCheckBox cb_applicant;
-
-    @FXML
     private JFXCheckBox cb_hours;
 
     @FXML
@@ -103,27 +101,26 @@ public class ReportController {
     @FXML
     private JFXCheckBox cb_graphs;
 
-    Document report;
     private static Font catFont = new Font(Font.FontFamily.COURIER, 18,
             Font.BOLD);
-    private static Font dogFont = new Font(Font.FontFamily.COURIER ,12,
+    private static Font dogFont = new Font(Font.FontFamily.COURIER, 12,
             Font.NORMAL);
     PieChart at_chart;
     PieChart ev_chart;
-
+    List<String> textList;
+    List<Node> nodeList;
+    List<Record> query;
+    
     public ReportController() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/report.fxml"));
             fxmlLoader.setController(this);
-
             Scene scene = new Scene(fxmlLoader.load(), 1200, 720);
             scene.getStylesheets().setAll(getClass().getResource("/css/style.css").toExternalForm());
             Stage stage = new Stage();
-
             stage.setTitle("Generador de informes");
             stage.setScene(scene);
             stage.show();
-
             init();
         } catch (IOException e) {
             e.printStackTrace();
@@ -132,6 +129,9 @@ public class ReportController {
 
     private void init() {
         try {
+            textList = new ArrayList<String>();
+            nodeList = new ArrayList<Node>();
+            query = new ArrayList<Record>();
             List<Assembly> assemblies = DAO.assembly.queryBuilder().query();
             List<Resource> resources = DAO.resource.queryBuilder().query();
             List<Area> areas = DAO.area.queryBuilder().query();
@@ -151,47 +151,30 @@ public class ReportController {
     }
 
     @FXML
-    private void export(ActionEvent event) {
-        PrinterJob job = PrinterJob.createPrinterJob();
-        if (job != null) {
-            System.out.println(job.jobStatusProperty().asString());
-            boolean printed = job.printPage(tabla_info);
-            if (printed) {
-                job.endJob();
-            } else {
-                System.out.println("Printing failed.");
-            }
-        } else {
-            System.out.println("Could not create a printer job.");
-        }
+    private void export(ActionEvent event) throws FileNotFoundException, DocumentException, IOException {
+        ReportHelper reportHelper = new ReportHelper("", textList, nodeList, query);
     }
 
     @FXML
     private void generate(ActionEvent event) throws SQLException, FileNotFoundException, DocumentException, IOException {
 
         tabla_info.getChildren().clear();
+        textList.clear();
+        nodeList.clear();
         QueryBuilder<Record, Integer> qb = DAO.record.queryBuilder();
         Where<Record, Integer> where = whereReportBuilder(qb.where());
-        List<Record> query = where.query();
+        query = where.query();
 
         tabla_info.setSpacing(10);
-        tabla_info.getChildren().add(new Label("Asamblea de " + assemblyID.getValue()));
-
+        String title = "Asamblea de " + assemblyID.getValue();
+        tabla_info.getChildren().add(new Label(title));
+        textList.add(title);
         if (query.isEmpty()) {
-            tabla_info.getChildren().add(new Label("No se ha realizado ningún registro."));
+            String err = "No se ha realizado ningún registro.";
+            tabla_info.getChildren().add(new Label(err));
+            textList.add(err);
             return;
         }
-
-        String route = new File(".").getCanonicalPath().concat("informe.pdf");
-        report = new Document();
-        PdfWriter instance = PdfWriter.getInstance(report, new FileOutputStream(route));
-        HeaderFooter pdfEvent = new HeaderFooter();
-        instance.setPageEvent(pdfEvent);
-        report.open();
-        Paragraph par = new Paragraph();
-        par.add(new Paragraph("Asamblea de "
-                + assemblyID.getValue().getName(), catFont));
-        report.add(par);
 
         if (cb_gender.isSelected()) {
             showGenderInfo(query);
@@ -212,8 +195,6 @@ public class ReportController {
         if (cb_hours.isSelected()) {
             showHoursInfo(query);
         }
-
-        report.close();
     }
 
     private Where<Record, Integer> whereReportBuilder(Where<Record, Integer> where) throws SQLException {
@@ -259,14 +240,12 @@ public class ReportController {
         int at_m = 0;
         int ev_h = 0;
         int ev_m = 0;
-
         for (Record record : query) {
             at_h += record.getAssistance_h();
             at_m += record.getAssistance_m();
             ev_h += record.getEvacuated_h();
             ev_m += record.getEvacuated_m();
         }
-
         String info = "Desglose de los servicios por genero: \n";
         info += "       - Hombres atendidos: " + at_h + "\n";
         info += "       - Mujeres atendidas: " + at_m + "\n";
@@ -278,11 +257,7 @@ public class ReportController {
                 + " han sido evacuadas. \nSe han realizado, en total, "
                 + query.size() + " registros.";
         tabla_info.getChildren().add(new Label(info));
-
-        Paragraph par = new Paragraph();
-        par.add(new Paragraph(info, dogFont));
-        report.add(par);
-
+        textList.add(info);
         if (cb_graphs.isSelected()) {
             HBox graphs = new HBox();
             ObservableList<PieChart.Data> at_data
@@ -330,14 +305,7 @@ public class ReportController {
             graphs.getChildren().add(at_chart);
             graphs.getChildren().add(ev_chart);
             tabla_info.getChildren().add(graphs);
-
-            WritableImage wisnap = graphs.snapshot(new SnapshotParameters(), null);
-            ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
-            ImageIO.write(SwingFXUtils.fromFXImage(wisnap, null), "png", byteOutput);
-            com.itextpdf.text.Image snapshot;
-            snapshot = com.itextpdf.text.Image.getInstance(byteOutput.toByteArray());
-            report.add(snapshot);
-            report.newPage();
+            nodeList.add(graphs);
         }
     }
 
@@ -345,18 +313,15 @@ public class ReportController {
         List<Service> queryS = DAO.services.queryBuilder().query();
         List<String> lista_services = new ArrayList<String>();
         List<String> lista_info = new ArrayList<String>();
-
+        XYChart.Series serie = new XYChart.Series();
         final NumberAxis yAxis = new NumberAxis();
         final CategoryAxis xAxis = new CategoryAxis();
-        final BarChart<String, Number> bc
-                = new BarChart<String, Number>(xAxis, yAxis);
+        final BarChart<String, Number> bc = new BarChart<String, Number>(xAxis, yAxis);
         bc.setCenterShape(true);
         bc.setBarGap(0);
-
         for (Record record : query) {
             lista_services.add(record.getService().getName());
         }
-
         for (Service service : queryS) {
             int count = 0;
             for (String s : lista_services) {
@@ -366,11 +331,8 @@ public class ReportController {
             }
             if (count != 0) {
                 String s = service.getName() + ": " + count;
-                XYChart.Series serie = new XYChart.Series();
-                serie.setName(service.getName());
                 serie.getData().add(new XYChart.Data(service.getName(), count));
                 lista_info.add(s);
-                bc.getData().addAll(serie);
             }
         }
         String info = "Desglose de los registros filtrados por servicio: \n";
@@ -378,21 +340,14 @@ public class ReportController {
             info += "       - " + s + "\n";
         }
         tabla_info.getChildren().add(new Label(info));
-        Paragraph par = new Paragraph();
-        par.add(new Paragraph(info, dogFont));
-        report.add(par);
+        textList.add(info);
         if (cb_graphs.isSelected()) {
+            bc.getData().add(serie);
             bc.setTitle("Desglose de registros por servicio");
             bc.setPrefSize(250, 250);
-            bc.setLegendVisible(true);
+            bc.setLegendVisible(false);
             tabla_info.getChildren().add(bc);
-            WritableImage wisnap = bc.snapshot(new SnapshotParameters(), null);
-            ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
-            ImageIO.write(SwingFXUtils.fromFXImage(wisnap, null), "png", byteOutput);
-            com.itextpdf.text.Image snapshot;
-            snapshot = com.itextpdf.text.Image.getInstance(byteOutput.toByteArray());
-            report.add(snapshot);
-            report.newPage();
+            nodeList.add(bc); 
         }
     }
 
@@ -400,18 +355,16 @@ public class ReportController {
         List<Area> queryA = DAO.area.queryBuilder().query();
         List<String> lista_areas = new ArrayList<String>();
         List<String> lista_info = new ArrayList<String>();
-
+        XYChart.Series serie = new XYChart.Series();
         final NumberAxis yAxis = new NumberAxis();
         final CategoryAxis xAxis = new CategoryAxis();
         final BarChart<String, Number> bc
                 = new BarChart<String, Number>(xAxis, yAxis);
         bc.setCenterShape(true);
         bc.setBarGap(0);
-
         for (Record record : query) {
             lista_areas.add(record.getArea().getName());
         }
-
         for (Area area : queryA) {
             int count = 0;
             for (String s : lista_areas) {
@@ -421,34 +374,23 @@ public class ReportController {
             }
             if (count != 0) {
                 String s = area.getName() + ": " + count;
-                XYChart.Series serie = new XYChart.Series();
-                serie.setName(area.getName());
                 serie.getData().add(new XYChart.Data(area.getName(), count));
                 lista_info.add(s);
-                bc.getData().addAll(serie);
             }
         }
-
         String info = "Desglose de los registros filtrados por area: \n";
         for (String s : lista_info) {
             info += "       - " + s + "\n";
         }
-        Paragraph par = new Paragraph();
-        par.add(new Paragraph(info, dogFont));
         tabla_info.getChildren().add(new Label(info));
-        report.add(par);
+        textList.add(info);
         if (cb_graphs.isSelected()) {
+            bc.getData().addAll(serie);
             bc.setTitle("Desglose de los registros por área");
             bc.setPrefSize(250, 250);
-            bc.setLegendVisible(true);
+            bc.setLegendVisible(false);
             tabla_info.getChildren().add(bc);
-            WritableImage wisnap = bc.snapshot(new SnapshotParameters(), null);
-            ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
-            ImageIO.write(SwingFXUtils.fromFXImage(wisnap, null), "png", byteOutput);
-            com.itextpdf.text.Image snapshot;
-            snapshot = com.itextpdf.text.Image.getInstance(byteOutput.toByteArray());
-            report.add(snapshot);
-            report.newPage();
+            nodeList.add(bc);
         }
     }
 
@@ -457,6 +399,7 @@ public class ReportController {
         List<String> lista_resource = new ArrayList<String>();
         List<String> lista_info = new ArrayList<String>();
 
+                XYChart.Series serie = new XYChart.Series();
         final NumberAxis yAxis = new NumberAxis();
         final CategoryAxis xAxis = new CategoryAxis();
         final BarChart<String, Number> bc
@@ -479,11 +422,8 @@ public class ReportController {
             }
             if (count != 0) {
                 String s = resource.getCode() + ": " + count;
-                XYChart.Series serie = new XYChart.Series();
-                serie.setName(resource.getCode());
                 serie.getData().add(new XYChart.Data(resource.getCode(), count));
                 lista_info.add(s);
-                bc.getData().addAll(serie);
             }
         }
 
@@ -491,23 +431,17 @@ public class ReportController {
         for (String s : lista_info) {
             info += "       - " + s + "\n";
         }
-        Paragraph par = new Paragraph();
-        par.add(new Paragraph(info, dogFont));
-        report.add(par);
-        tabla_info.getChildren().add(new Label(info));
 
+        tabla_info.getChildren().add(new Label(info));
+        textList.add(info);
+        
         if (cb_graphs.isSelected()) {
+            bc.getData().addAll(serie);
             bc.setTitle("Desglose de los registros por recurso");
             bc.setPrefSize(250, 250);
-            bc.setLegendVisible(true);
+            bc.setLegendVisible(false);
             tabla_info.getChildren().add(bc);
-            WritableImage wisnap = bc.snapshot(new SnapshotParameters(), null);
-            ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
-            ImageIO.write(SwingFXUtils.fromFXImage(wisnap, null), "png", byteOutput);
-            com.itextpdf.text.Image snapshot;
-            snapshot = com.itextpdf.text.Image.getInstance(byteOutput.toByteArray());
-            report.add(snapshot);
-            report.newPage();
+            nodeList.add(bc);
         }
     }
 
@@ -536,7 +470,7 @@ public class ReportController {
         String info = "Se han trabajado en total " + days + " dias, " + hours + " horas y "
                 + minutes + " minutos.";
         tabla_info.getChildren().add(new Label(info));
-        report.add(new Paragraph(info, dogFont));
+        textList.add(info);
     }
 
 }
