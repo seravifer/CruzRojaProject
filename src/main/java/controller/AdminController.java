@@ -189,10 +189,7 @@ public class AdminController {
     private Area area_update;
     private Hospital hospital_update;
     private User user_update;
-    private String ojoTachado = "M11.83,9L15,12.16C15,12.11 15,12.05 15,12A3,3 0 0,0 12,9C11.94,9 11.89,9 11.83,9M7.53,9.8L9.08,11.35C9.03,11.56 9,11.77 9,12A3,3 0 0,0 12,15C12.22,15 12.44,14.97 12.65,14.92L14.2,16.47C13.53,16.8 12.79,17 12,17A5,5 0 0,1 7,12C7,11.21 7.2,10.47 7.53,9.8M2,4.27L4.28,6.55L4.73,7C3.08,8.3 1.78,10 1,12C2.73,16.39 7,19.5 12,19.5C13.55,19.5 15.03,19.2 16.38,18.66L16.81,19.08L19.73,22L21,20.73L3.27,3M12,7A5,5 0 0,1 17,12C17,12.64 16.87,13.26 16.64,13.82L19.57,16.75C21.07,15.5 22.27,13.86 23,12C21.27,7.61 17,4.5 12,4.5C10.6,4.5 9.26,4.75 8,5.2L10.17,7.35C10.74,7.13 11.35,7 12,7Z";
-    private String ojoNormal = "M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z";
     private Boolean muestraEncriptado = true;
-    private String pass, pass_encrypt;
     private List<User> usuarios;
 
     public AdminController() {
@@ -237,14 +234,15 @@ public class AdminController {
             tablaHospitales.getItems().addAll(hospitales);
             tablaRecursos.getItems().addAll(recursos);
             tablaUsuarios.getItems().addAll(usuarios);
-            
+
+       
+
             NoEditable(tablaAreas);
             NoEditable(tablaServicios);
             NoEditable(tablaAsambleas);
             NoEditable(tablaHospitales);
             NoEditable(tablaRecursos);
             NoEditable(tablaUsuarios);
-        
 
             iconosColumnServicios.setCellValueFactory(
                     param -> new ReadOnlyObjectWrapper<>(param.getValue())
@@ -413,6 +411,7 @@ public class AdminController {
                     setGraphic(iconDelete);
                     iconDelete.setOnMouseClicked((event) -> {
                         Alert alert = getAlertDelete();
+
                         Optional<ButtonType> result = alert.showAndWait();
                         if (result.get() == alert.getButtonTypes().get(0)) {
                             getTableView().getItems().remove(user);
@@ -735,14 +734,6 @@ public class AdminController {
         return iconDelete;
     }
 
-    public SVGPath getIconEye() {
-        SVGPath iconEye = new SVGPath();
-        iconEye.setContent(ojoNormal);
-        iconEye.setCursor(Cursor.HAND);
-        iconEye.setFill(Paint.valueOf("#545454"));
-        return iconEye;
-    }
-
     public Alert getAlertDelete() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Dialogo de confirmación");
@@ -763,7 +754,7 @@ public class AdminController {
     }
 
     public void getPasswords() {
-        
+
         for (User usuario : tablaUsuarios.getItems()) {
             try {
                 usuario.setPassword(Security.decrypt(usuario.getPassword()));
@@ -773,8 +764,8 @@ public class AdminController {
 
         }
     }
-    
-    public void NoEditable(TableView tb){
+
+    public void NoEditable(TableView tb) {
         tb.widthProperty().addListener((ob, o, n) -> {
             TableHeaderRow header = (TableHeaderRow) tb.lookup("TableHeaderRow");
             header.reorderingProperty().addListener((ob2, o2, n2) -> header.setReordering(false));

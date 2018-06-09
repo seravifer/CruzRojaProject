@@ -69,6 +69,7 @@ public class LoginController extends AnchorPane {
                 }
             }
         });
+
     }
 
     @FXML
@@ -77,21 +78,29 @@ public class LoginController extends AnchorPane {
     }
 
     public void login() throws Exception {
-        String usuario = user.getText();
-        String pass = Security.encrypt(password.getText());
-        try {
-            User u = DAO.users.queryBuilder().where().eq("username", usuario).queryForFirst();
-            if (u == null) {
-                textAlert.setText("Usuario incorrecto o no registrado.");
-            } else if (!pass.equals(u.getPassword())) {
-                textAlert.setText("Contraseña incorrecta,vuelve a intentarlo.");
-            } else {
-                new RecordsController(u);
-            }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        new Thread() {
+            public void run() {
+
+                try {
+                    String usuario = user.getText();
+                    String pass = Security.encrypt(password.getText());
+                    User u = DAO.users.queryBuilder().where().eq("username", usuario).queryForFirst();
+                    if (u == null) {
+                        textAlert.setText("Usuario incorrecto o no registrado.");
+                    } else if (!pass.equals(u.getPassword())) {
+                        textAlert.setText("Contraseña incorrecta,vuelve a intentarlo.");
+                    } else {
+                        new RecordsController(u);
+                    }
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (Exception ex) {
+                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }.start();
     }
 
 }
