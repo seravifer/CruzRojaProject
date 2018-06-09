@@ -1,12 +1,8 @@
 package controller;
 
 import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.jfoenix.controls.*;
@@ -23,37 +19,33 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.time.temporal.ChronoUnit;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javax.imageio.ImageIO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.print.PrinterJob;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import utils.HeaderFooter;
-import utils.ReportHelper;
+import utils.ReportPDFHelper;
+import utils.ReportXLSHelper;
 
 public class ReportController {
 
@@ -108,12 +100,7 @@ public class ReportController {
     @FXML
     private JFXButton xlsButtonID;
 
-    private static Font catFont = new Font(Font.FontFamily.COURIER, 18,
-            Font.BOLD);
-    private static Font dogFont = new Font(Font.FontFamily.COURIER, 12,
-            Font.NORMAL);
-    PieChart at_chart;
-    PieChart ev_chart;
+    PieChart at_chart, ev_chart;
     List<String> textList;
     List<Node> nodeList;
     List<Record> query;
@@ -162,24 +149,28 @@ public class ReportController {
     @FXML
     private void export_pdf(ActionEvent event) throws FileNotFoundException, DocumentException, IOException {
         FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Archivos PDF (*.pdf)", "*.pdf");
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showSaveDialog(new Stage());
         if (file != null) {
-            ReportHelper reportHelper = new ReportHelper(file, textList, nodeList);
-        } else {
-
+            ReportPDFHelper reportPDFHelper = new ReportPDFHelper(file, textList, nodeList);
         }
     }
 
     @FXML
-    private void export_xls(ActionEvent event) throws FileNotFoundException, DocumentException, IOException {
-        System.out.println("-");
+    private void export_xls(ActionEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Archivos XLS (*.xls)", "*.xls");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showSaveDialog(new Stage());
+        if (file != null) {
+            ReportXLSHelper reportXLSHelper = new ReportXLSHelper(file, query);
+        }
     }
 
     @FXML
     private void generate(ActionEvent event) throws SQLException, FileNotFoundException, DocumentException, IOException {
-
+        query.clear();
         tabla_info.getChildren().clear();
         textList.clear();
         nodeList.clear();
@@ -195,6 +186,8 @@ public class ReportController {
             String err = "No se ha realizado ningún registro.";
             tabla_info.getChildren().add(new Label(err));
             textList.add(err);
+            pdfButtonID.setDisable(true);
+            xlsButtonID.setDisable(true);
             return;
         }
 
@@ -333,7 +326,7 @@ public class ReportController {
         }
     }
 
-    private void showServiceInfo(List<Record> query) throws SQLException, IOException, BadElementException, DocumentException {
+    private void showServiceInfo(List<Record> query) throws SQLException {
         List<Service> queryS = DAO.services.queryBuilder().query();
         List<String> lista_services = new ArrayList<String>();
         List<String> lista_info = new ArrayList<String>();
@@ -375,7 +368,7 @@ public class ReportController {
         }
     }
 
-    private void showAreaInfo(List<Record> query) throws SQLException, IOException, BadElementException, DocumentException {
+    private void showAreaInfo(List<Record> query) throws SQLException {
         List<Area> queryA = DAO.area.queryBuilder().query();
         List<String> lista_areas = new ArrayList<String>();
         List<String> lista_info = new ArrayList<String>();
@@ -418,7 +411,7 @@ public class ReportController {
         }
     }
 
-    private void showResourceInfo(List<Record> query) throws SQLException, IOException, BadElementException, DocumentException {
+    private void showResourceInfo(List<Record> query) throws SQLException {
         List<Resource> queryR = DAO.resource.queryBuilder().query();
         List<String> lista_resource = new ArrayList<String>();
         List<String> lista_info = new ArrayList<String>();
@@ -469,18 +462,15 @@ public class ReportController {
         }
     }
 
-    private void showHoursInfo(List<Record> query) throws DocumentException {
-        int days = 0;
-        int hours = 0;
-        int minutes = 0;
+    private void showHoursInfo(List<Record> query) {
+        long days = 0, hours = 0, minutes = 0;
         for (Record record : query) {
             try {
                 LocalTime start = record.getStartTime();
                 LocalTime finish = record.getEndTime();
-                hours = hours + Math.abs(finish.getHour() - start.getHour());
-                minutes = minutes + Math.abs(finish.getMinute() - start.getMinute());
+                minutes = minutes + ChronoUnit.MINUTES.between(start, finish);
             } catch (Exception e) {
-                // Podrán haber Record que no hayan acabado (por error o porque aún están operativos)
+
             }
         }
         while (minutes > 60) {

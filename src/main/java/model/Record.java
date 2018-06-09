@@ -244,4 +244,26 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
                 ", operative=" + operative +
                 '}';
     }
+    
+    public Object[] getInfo() {
+        Object[] info  = new Object[17];
+        try { info[0]  = this.getID_record() + ""; } catch (Exception e) { info[0]  = "-"; }
+        try { info[1]  = this.getDate().toString() + ""; } catch (Exception e) { info[1]  = "-"; }
+        try { info[2]  = this.getCode() + ""; } catch (Exception e) { info[2]  = "-"; }
+        try { info[3]  = this.getResource().getCode() + ""; } catch (Exception e) { info[3]  = "-"; }
+        try { info[4]  = this.getAssembly().getName() + ""; } catch (Exception e) { info[4]  = "-"; }
+        try { info[5]  = this.getStartTime().toString() + ""; } catch (Exception e) { info[5]  = "-"; }
+        try { info[6]  = this.getEndTime().toString() + ""; } catch (Exception e) { info[6]  = "-"; }
+        try { info[7]  = this.getArea().getName() + ""; } catch (Exception e) { info[7]  = "-"; }
+        try { info[8]  = this.getService().getName() + ""; } catch (Exception e) { info[8]  = "-"; }
+        try { info[9]  = this.getAddress() + ""; } catch (Exception e) { info[9]  = "-"; }
+        try { info[10] = this.getAssistance_h() + ""; } catch (Exception e) { info[10] = "-"; }
+        try { info[11] = this.getAssistance_m() + ""; } catch (Exception e) { info[11] = "-"; }
+        try { info[12] = this.getEvacuated_h() + ""; } catch (Exception e) { info[12] = "-"; }
+        try { info[13] = this.getEvacuated_m() + ""; } catch (Exception e) { info[13] = "-"; }
+        try { info[14] = this.getRegistry() + ""; } catch (Exception e) { info[14] = "-"; }
+        try { info[15] = this.getNotes() + ""; } catch (Exception e) { info[15] = "-"; }
+        try { info[16] = this.getOperative().getName() + ""; } catch (Exception e) { info[16] = "-"; }
+        return info;
+    }
 }

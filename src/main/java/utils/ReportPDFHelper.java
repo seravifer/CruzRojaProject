@@ -17,7 +17,7 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.image.WritableImage;
 import javax.imageio.ImageIO;
 
-public class ReportHelper {
+public class ReportPDFHelper {
 
     Document document;
     private static final com.itextpdf.text.Font catFont = 
@@ -27,7 +27,7 @@ public class ReportHelper {
             new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.COURIER, 12,
             com.itextpdf.text.Font.NORMAL);
 
-    public ReportHelper(File file, List<String> text, List<Node> graphs)
+    public ReportPDFHelper(File file, List<String> text, List<Node> graphs)
             throws FileNotFoundException, DocumentException, IOException {
         document = new Document();
         PdfWriter instance = PdfWriter.getInstance(document, new FileOutputStream(file));
