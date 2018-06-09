@@ -176,7 +176,7 @@ public class RecordsController extends BorderPane {
 
                 for (Node node : records) {
                     RecordComponent recordComponent = (RecordComponent) node;
-                    Platform.runLater(recordComponent::refresh);
+                    Platform.runLater(()-> recordComponent.refresh(!pendingID.isSelected()));
 
                 }
 

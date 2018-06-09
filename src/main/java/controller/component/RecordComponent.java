@@ -180,11 +180,11 @@ public class RecordComponent extends AnchorPane {
         else return s;
     }
 
-    public void refresh() {
+    public void refresh(boolean all) {
         try {
             record.refresh();
             init();
-            if (record.getEndTime() != null) {
+            if (!all && record.getEndTime() != null) {
                 ((VBox)this.getParent()).getChildren().remove(this);
             }
         } catch (SQLException e) {

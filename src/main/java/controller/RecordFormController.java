@@ -20,6 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
 import model.*;
+import org.controlsfx.control.textfield.TextFields;
 import service.DAO;
 import utils.*;
 
@@ -345,6 +346,10 @@ public class RecordFormController {
                         if (result.get() == yesButton) {
                             try {
                                 event.delete();
+
+                                if (event.getGender() == 1) evacuated_hID.setText((Integer.parseInt(evacuated_hID.getText()) - 1) + "");
+                                if (event.getGender() == 2) evacuated_mID.setText((Integer.parseInt(evacuated_mID.getText()) - 1) + "");
+
                                 getTableView().getItems().remove(event);
                             } catch (SQLException e1) {
                                 e1.printStackTrace();

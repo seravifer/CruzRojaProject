@@ -49,6 +49,7 @@ public class AutoComplete {
                     moveCaretToPos = true;
                     caretPos = comboBox.getEditor().getCaretPosition();
                 } else if (event.getCode() == KeyCode.ENTER) {
+                    comboBox.getSelectionModel().select(comboBox.getSelectionModel().getSelectedIndex());
                     return;
                 }
 

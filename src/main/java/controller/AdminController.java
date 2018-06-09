@@ -10,16 +10,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import model.*;
 import service.DAO;
+import utils.Security;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -27,21 +28,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Tab;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
-import javafx.util.Callback;
-import utils.Security;
-import utils.Utils;
 
 public class AdminController {
 
@@ -186,6 +172,10 @@ public class AdminController {
 
     @FXML
     private JFXToggleButton togglePass;
+
+    @FXML
+    private Tab tabRecursos;
+
     private Service servicio_update;
     private Assembly asamblea_update;
     private Resource recurso_update;
@@ -193,11 +183,8 @@ public class AdminController {
     private Hospital hospital_update;
     private User user_update;
     private Boolean muestraEncriptado = true;
-    private List<User> usuarios;
-    @FXML
-    private Tab tabRecursos;
 
-    public AdminController() {
+    AdminController() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/view/admin.fxml"));
@@ -211,25 +198,25 @@ public class AdminController {
             stage.setMinHeight(480);
             scene.getStylesheets().setAll(getClass().getResource("/css/style.css").toExternalForm());
 
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/img/icon.png")));
             stage.setTitle("Panel Administrador de Cruz Roja");
             stage.setScene(scene);
             stage.show();
 
             init();
         } catch (IOException e) {
-            Logger logger = Logger.getLogger(getClass().getName());
-            logger.log(Level.SEVERE, "Failed to create new Window.", e);
+            e.printStackTrace();
         }
     }
 
-    public void init() {
+    private void init() {
         try {
+            List<User> usuarios = DAO.users.queryBuilder().query();
             List<Area> areas = DAO.area.queryBuilder().query();
             List<Service> servicios = DAO.services.queryBuilder().query();
             List<Assembly> asambleas = DAO.assembly.queryBuilder().query();
             List<Resource> recursos = DAO.resource.queryBuilder().query();
             List<Hospital> hospitales = DAO.hospital.queryBuilder().query();
-            usuarios = DAO.users.queryBuilder().query();
 
             areaServicios.getItems().addAll(areas);
             asambleaRecursos.getItems().addAll(asambleas);
@@ -240,31 +227,19 @@ public class AdminController {
             tablaRecursos.getItems().addAll(recursos);
             tablaUsuarios.getItems().addAll(usuarios);
 
-            NoEditable(tablaAreas);
-            NoEditable(tablaServicios);
-            NoEditable(tablaAsambleas);
-            NoEditable(tablaHospitales);
-            NoEditable(tablaRecursos);
-            NoEditable(tablaUsuarios);
+            noEditable(tablaAreas);
+            noEditable(tablaServicios);
+            noEditable(tablaAsambleas);
+            noEditable(tablaHospitales);
+            noEditable(tablaRecursos);
+            noEditable(tablaUsuarios);
 
-            iconosColumnServicios.setCellValueFactory(
-                    param -> new ReadOnlyObjectWrapper<>(param.getValue())
-            );
-            iconosColumnAreas.setCellValueFactory(
-                    param -> new ReadOnlyObjectWrapper<>(param.getValue())
-            );
-            iconosColumnAsamblea.setCellValueFactory(
-                    param -> new ReadOnlyObjectWrapper<>(param.getValue())
-            );
-            iconosColumnRecursos.setCellValueFactory(
-                    param -> new ReadOnlyObjectWrapper<>(param.getValue())
-            );
-            iconosColumnHospital.setCellValueFactory(
-                    param -> new ReadOnlyObjectWrapper<>(param.getValue())
-            );
-            iconosColumnUsuarios.setCellValueFactory(
-                    param -> new ReadOnlyObjectWrapper<>(param.getValue())
-            );
+            iconosColumnServicios.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+            iconosColumnAreas.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+            iconosColumnAsamblea.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+            iconosColumnRecursos.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+            iconosColumnHospital.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+            iconosColumnUsuarios.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 
             iconosColumnServicios.setCellFactory(param -> new TableCell<Service, Service>() {
                 protected void updateItem(Service servicio, boolean empty) {
@@ -289,7 +264,6 @@ public class AdminController {
                         } else {
                             alert.close();
                         }
-
                     });
                 }
             });
@@ -316,10 +290,10 @@ public class AdminController {
                         } else {
                             alert.close();
                         }
-
                     });
                 }
             });
+
             iconosColumnAsamblea.setCellFactory(param -> new TableCell<Assembly, Assembly>() {
                 protected void updateItem(Assembly asamblea, boolean empty) {
                     super.updateItem(asamblea, empty);
@@ -342,7 +316,6 @@ public class AdminController {
                         } else {
                             alert.close();
                         }
-
                     });
                 }
             });
@@ -357,7 +330,6 @@ public class AdminController {
                     }
                     setGraphic(iconDelete);
                     iconDelete.setOnMouseClicked((event) -> {
-
                         Alert alert = getAlertDelete();
                         Optional<ButtonType> result = alert.showAndWait();
                         if (result.get() == alert.getButtonTypes().get(0)) {
@@ -399,10 +371,10 @@ public class AdminController {
                         } else {
                             alert.close();
                         }
-
                     });
                 }
             });
+
             iconosColumnUsuarios.setCellFactory(param -> new TableCell<User, User>() {
                 protected void updateItem(User user, boolean empty) {
                     super.updateItem(user, empty);
@@ -430,13 +402,12 @@ public class AdminController {
                     });
                 }
             });
+
             getPasswords();
+
             togglePass.setOnAction((event) -> {
-
                 try {
-
                     if (muestraEncriptado) {
-
                         passwordColumnUsuario.setCellValueFactory(new PropertyValueFactory<>("password"));
                         muestraEncriptado = false;
                     } else {
@@ -447,8 +418,8 @@ public class AdminController {
                     Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 tablaUsuarios.refresh();
-
             });
+
             nombreColumnServicios.setCellValueFactory(new PropertyValueFactory<>("name"));
             areaColumnServicios.setCellValueFactory(new PropertyValueFactory<>("area"));
 
@@ -541,7 +512,6 @@ public class AdminController {
 
             botonAsambleas.setOnAction((event) -> {
                 try {
-
                     if (asamblea_update == null) {
                         Assembly asamblea = new Assembly(nombreAsambleas.getText(), codigoAsambleas.getText());
                         DAO.assembly.create(asamblea);
@@ -563,9 +533,7 @@ public class AdminController {
                 }
             });
 
-            botonRecursos.setOnAction((event) -> {
-                recursosAction();
-            });
+            botonRecursos.setOnAction((event) -> recursosAction());
             botonHospital.setOnAction((event) -> {
                 try {
                     if (hospital_update == null) {
@@ -588,6 +556,7 @@ public class AdminController {
                     e.printStackTrace();
                 }
             });
+
             botonUsuario.setOnAction((event) -> {
                 try {
                     if (user_update == null) {
@@ -633,9 +602,9 @@ public class AdminController {
             });
             return row;
         });
+
         tablaAsambleas.setRowFactory(tv -> {
             TableRow<Assembly> row = getRow();
-
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     nombreAsambleas.setText(row.getItem().getName());
@@ -646,6 +615,7 @@ public class AdminController {
             });
             return row;
         });
+
         tablaRecursos.setRowFactory(tv -> {
             TableRow<Resource> row = getRow();
 
@@ -660,6 +630,7 @@ public class AdminController {
             });
             return row;
         });
+
         tablaAreas.setRowFactory(tv -> {
             TableRow<Area> row = getRow();
 
@@ -687,6 +658,7 @@ public class AdminController {
             });
             return row;
         });
+
         tablaUsuarios.setRowFactory(tv -> {
             TableRow<User> row = getRow();
             row.setOnMouseClicked(event -> {
@@ -707,7 +679,7 @@ public class AdminController {
 
     }
 
-    public SVGPath getIconDelete() {
+    private SVGPath getIconDelete() {
         SVGPath iconDelete = new SVGPath();
         iconDelete.setContent("M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z");
         iconDelete.setCursor(Cursor.HAND);
@@ -716,7 +688,7 @@ public class AdminController {
         return iconDelete;
     }
 
-    public Alert getAlertDelete() {
+    private Alert getAlertDelete() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Dialogo de confirmación");
         alert.setHeaderText(null);
@@ -729,25 +701,23 @@ public class AdminController {
         return alert;
     }
 
-    public <T> TableRow getRow() {
+    private <T> TableRow getRow() {
         TableRow<T> row = new TableRow<>();
         row.setCursor(Cursor.HAND);
         return row;
     }
 
-    public void getPasswords() {
-
+    private void getPasswords() {
         for (User usuario : tablaUsuarios.getItems()) {
             try {
                 usuario.setPassword(Security.decrypt(usuario.getPassword()));
             } catch (Exception ex) {
-                Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+                ex.printStackTrace();
             }
-
         }
     }
 
-    public void NoEditable(TableView tb) {
+    private void noEditable(TableView tb) {
         tb.widthProperty().addListener((ob, o, n) -> {
             TableHeaderRow header = (TableHeaderRow) tb.lookup("TableHeaderRow");
             header.reorderingProperty().addListener((ob2, o2, n2) -> header.setReordering(false));
@@ -765,7 +735,7 @@ public class AdminController {
         }
     }
 
-    public void recursosAction() {
+    private void recursosAction() {
         try {
             if (recurso_update == null) {
                 Resource recurso = new Resource(nombreRecursos.getText(), codigoRecursos.getText(), asambleaRecursos.getValue());
@@ -790,4 +760,5 @@ public class AdminController {
             e.printStackTrace();
         }
     }
+
 }

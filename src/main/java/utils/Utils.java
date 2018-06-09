@@ -23,9 +23,13 @@ public final class Utils {
     }
 
     public static String emptyStringToNull(String s) {
-        String ns = s.trim();
-        if (ns.equals("")) return null;
-        else return ns;
+        if (s != null) {
+            String ns = s.trim();
+            if (ns.equals("")) return null;
+            else return ns;
+        }
+
+        return null;
     }
 
     public static String generateCode(String date, int code) {
