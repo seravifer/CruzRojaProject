@@ -51,7 +51,7 @@ public class ReportHelper {
             }
         }
         document.close();
-
+        /* 
         // HSSFWorkbook
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("Información");
@@ -92,7 +92,7 @@ public class ReportHelper {
             e.printStackTrace();
         } finally {
             workbook.close();
-        }
+        */
     }
 
     private void addTitle(String text) throws DocumentException {
