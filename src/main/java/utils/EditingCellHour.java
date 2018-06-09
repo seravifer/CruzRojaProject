@@ -14,7 +14,7 @@ import java.util.Locale;
 
 import static utils.Utils.timeConverter;
 
-public class EditingCellHour extends TableCell<Event, String> {
+public class EditingCellHour extends TableCell<Event, LocalTime> {
 
     private JFXTimePicker textField;
 
@@ -35,12 +35,12 @@ public class EditingCellHour extends TableCell<Event, String> {
     @Override
     public void cancelEdit() {
         super.cancelEdit();
-        setText(getItem());
+        //setText(getItem());
         setGraphic(null);
     }
 
     @Override
-    public void updateItem(String item, boolean empty) {
+    public void updateItem(LocalTime item, boolean empty) {
         super.updateItem(item, empty);
         if (empty) {
             setText(null);
@@ -48,7 +48,7 @@ public class EditingCellHour extends TableCell<Event, String> {
         } else {
             if (isEditing()) {
                 if (textField != null) {
-                    if (!getString().isEmpty() || getString() != null) textField.setValue(LocalTime.parse(getString()));
+                    textField.setValue(getItem());
                 }
                 setText(null);
                 setGraphic(textField);
@@ -61,19 +61,17 @@ public class EditingCellHour extends TableCell<Event, String> {
 
     private void createTextField() {
         textField = new JFXTimePicker();
-        if (!getString().isEmpty() && getString() != null) textField.setValue(LocalTime.parse(getString()));
+        textField.setValue(getItem());
         textField.setMinWidth(this.getWidth());
         textField.getEditor().setAlignment(Pos.CENTER);
         textField.setConverter(timeConverter);
-        textField.focusedProperty().addListener((ob, o, n) -> {
-            if (!n) {
-                if (textField.getValue() != null) commitEdit(textField.getValue().toString());
-            }
+        textField.focusedProperty().addListener((ob, o, focused) -> {
+            if (!focused) commitEdit(textField.getValue());
         });
 
         textField.setOnKeyPressed(t -> {
             if (t.getCode() == KeyCode.ENTER) {
-                commitEdit(textField.getValue().toString());
+                commitEdit(textField.getValue());
             } else if (t.getCode() == KeyCode.ESCAPE) {
                 cancelEdit();
             }
@@ -81,6 +79,6 @@ public class EditingCellHour extends TableCell<Event, String> {
     }
 
     private String getString() {
-        return getItem() == null ? "" : getItem();
+        return getItem() == null ? "" : getItem().toString();
     }
 }

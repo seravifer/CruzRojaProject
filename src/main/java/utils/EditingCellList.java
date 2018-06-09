@@ -63,6 +63,7 @@ public class EditingCellList extends TableCell<Event, Hospital> {
         comboBoxID.focusedProperty().addListener((ob, o, focused) -> {
             if (!focused) commitEdit(comboBoxID.getValue());
         });
+
         comboBoxID.setOnKeyPressed(t -> {
             if (t.getCode() == KeyCode.ENTER) {
                 commitEdit(comboBoxID.getValue());

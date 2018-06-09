@@ -137,13 +137,13 @@ public class RecordFormController {
     private TableColumn<Event, Hospital> transferColumID;
 
     @FXML
-    private TableColumn<Event, String> startTimeAssistanceColumID;
+    private TableColumn<Event, LocalTime> startTimeAssistanceColumID;
 
     @FXML
-    private TableColumn<Event, String> transferTimeAssistanceColumID;
+    private TableColumn<Event, LocalTime> transferTimeAssistanceColumID;
 
     @FXML
-    private TableColumn<Event, String> endTimeAssistanceColumID;
+    private TableColumn<Event, LocalTime> endTimeAssistanceColumID;
 
     @FXML
     private TableColumn<Event, Integer> keyColumID;
@@ -301,9 +301,9 @@ public class RecordFormController {
         genderColumID.setCellValueFactory(new PropertyValueFactory<>("gender"));
         iconColumnID.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 
-        startTimeAssistanceColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellHour());
-        transferTimeAssistanceColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellHour());
-        endTimeAssistanceColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellHour());
+        startTimeAssistanceColumID.setCellFactory((TableColumn<Event, LocalTime> p) -> new EditingCellHour());
+        transferTimeAssistanceColumID.setCellFactory((TableColumn<Event, LocalTime> p) -> new EditingCellHour());
+        endTimeAssistanceColumID.setCellFactory((TableColumn<Event, LocalTime> p) -> new EditingCellHour());
         pathologyColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellString());
         registryColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellString());
 
@@ -388,17 +388,17 @@ public class RecordFormController {
         });
 
         startTimeAssistanceColumID.setOnEditCommit(
-                (TableColumn.CellEditEvent<Event, String> t) ->
+                (TableColumn.CellEditEvent<Event, LocalTime> t) ->
                         t.getTableView().getItems().get(t.getTablePosition().getRow())
                                 .setStartTimeAssistance(t.getNewValue()));
 
         transferTimeAssistanceColumID.setOnEditCommit(
-                (TableColumn.CellEditEvent<Event, String> t) ->
+                (TableColumn.CellEditEvent<Event, LocalTime> t) ->
                         t.getTableView().getItems().get(t.getTablePosition().getRow())
                                 .setTransferTimeAssistance(t.getNewValue()));
 
         endTimeAssistanceColumID.setOnEditCommit(
-                (TableColumn.CellEditEvent<Event, String> t) ->
+                (TableColumn.CellEditEvent<Event, LocalTime> t) ->
                         t.getTableView().getItems().get(t.getTablePosition().getRow())
                                 .setEndTimeAssistance(t.getNewValue()));
         transferColumID.setOnEditCommit(

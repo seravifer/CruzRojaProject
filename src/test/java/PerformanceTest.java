@@ -26,7 +26,8 @@ public class PerformanceTest {
         List<Area> areas = DAO.area.queryBuilder().query();
         List<Operative> operatives = DAO.operatives.queryBuilder().query();
         List<Hospital> hospitals = DAO.hospital.queryBuilder().query();
-        List<String> keys = new ArrayList<>(Arrays.asList("CLAVE 0", "CLAVE 1.1", "CLAVE 1.2", "CLAVE 1.3", "CLAVE 2", "CLAVE 3", "CLAVE 5", "CLAVE 6"));
+        List<String> keys = new ArrayList<>(Arrays.asList("CLAVE 0", "CLAVE 1.1", "CLAVE 1.2", "CLAVE 1.3", "CLAVE 2",
+                "CLAVE 3", "CLAVE 5", "CLAVE 6"));
 
 
         for (int i = 0; i < 2000; i++) {

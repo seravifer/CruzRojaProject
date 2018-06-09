@@ -3,47 +3,26 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="principalPane" alignment="CENTER" maxHeight="700.0" maxWidth="1200.0" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="principalPane" alignment="CENTER" fillWidth="false" maxHeight="700.0" maxWidth="1200.0" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="CENTER" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" style="-fx-background-color: #FFF;">
+      <AnchorPane prefHeight="303.0" prefWidth="300.0" style="-fx-background-color: #fff; -fx-background-radius: 2px;" VBox.vgrow="NEVER">
          <children>
-            <ImageView fitHeight="50.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+            <ImageView fitHeight="50.0" fitWidth="400.0" layoutX="72.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../img/logo.png" />
                </image>
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
             </ImageView>
-            <JFXTextField fx:id="user" alignment="CENTER" focusColor="#f44336" labelFloat="true" maxWidth="1.7976931348623157E308" promptText="Usuario">
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </JFXTextField>
-            <JFXPasswordField fx:id="password" alignment="CENTER" focusColor="#f44336" labelFloat="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Contraseña" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </JFXPasswordField>
-            <JFXButton fx:id="login" maxWidth="1.7976931348623157E308" onAction="#loginAction" style="-fx-background-color: #f44336 #f44336;" text="Entrar" textFill="WHITE">
-               <VBox.margin>
-                  <Insets bottom="20.0" top="20.0" />
-               </VBox.margin>
-            </JFXButton>
-            <Text fx:id="textAlert" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <JFXTextField fx:id="user" alignment="TOP_LEFT" focusColor="#f44336" labelFloat="true" layoutX="72.0" layoutY="126.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="155.0" promptText="Usuario" />
+            <JFXPasswordField fx:id="password" alignment="TOP_LEFT" focusColor="#f44336" labelFloat="true" layoutX="74.0" layoutY="173.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="155.0" promptText="Contraseña" />
+            <JFXButton fx:id="login" layoutX="152.0" layoutY="228.0" maxWidth="1.7976931348623157E308" onAction="#loginAction" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #f44336 #f44336;" text="Entrar" textFill="WHITE" />
+            <Text fx:id="textAlert" fill="RED" layoutX="73.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" />
          </children>
-         <padding>
-            <Insets bottom="30.0" left="50.0" right="50.0" top="30.0" />
-         </padding>
-      </VBox>
+      </AnchorPane>
    </children>
-   <padding>
-      <Insets bottom="20.0" left="50.0" right="50.0" top="20.0" />
-   </padding>
 </VBox>

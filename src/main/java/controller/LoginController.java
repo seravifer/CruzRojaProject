@@ -3,15 +3,7 @@ package controller;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-import java.io.IOException;
-import java.math.BigInteger;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,15 +12,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-import model.Area;
 import model.User;
 import service.DAO;
-import static service.DAO.users;
-
 import utils.Security;
-import utils.Utils;
+
+import java.io.IOException;
 
 public class LoginController extends AnchorPane {
 
@@ -43,6 +31,7 @@ public class LoginController extends AnchorPane {
 
     @FXML
     private Text textAlert;
+
     @FXML
     private VBox principalPane;
 
@@ -61,46 +50,35 @@ public class LoginController extends AnchorPane {
 
     private void init() {
         principalPane.setOnKeyPressed((event) -> {
-            if (KeyCode.ENTER == event.getCode()) {
-                try {
-                    login();
-                } catch (Exception ex) {
-                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+            if (KeyCode.ENTER == event.getCode()) login();
         });
-
+        // DEBUG
+        user.setText("root");
+        password.setText("root");
     }
 
     @FXML
-    void loginAction(ActionEvent event) throws NoSuchAlgorithmException, InvalidKeySpecException, Exception {
+    void loginAction(ActionEvent event) {
         login();
     }
 
-    public void login() throws Exception {
-
-        new Thread() {
-            public void run() {
-
-                try {
-                    String usuario = user.getText();
-                    String pass = Security.encrypt(password.getText());
-                    User u = DAO.users.queryBuilder().where().eq("username", usuario).queryForFirst();
-                    if (u == null) {
-                        textAlert.setText("Usuario incorrecto o no registrado.");
-                    } else if (!pass.equals(u.getPassword())) {
-                        textAlert.setText("Contraseña incorrecta,vuelve a intentarlo.");
-                    } else {
-                        new RecordsController(u);
-                    }
-
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                } catch (Exception ex) {
-                    Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+    private void login() {
+        new Thread(() -> {
+            try {
+                String usuario = user.getText();
+                String pass = Security.encrypt(password.getText());
+                User user = DAO.users.queryBuilder().where().eq("username", usuario).queryForFirst();
+                if (user == null) {
+                    textAlert.setText("Usuario incorrecto o no registrado.");
+                } else if (!pass.equals(user.getPassword())) {
+                    textAlert.setText("Contraseña incorrecta,vuelve a intentarlo.");
+                } else {
+                    Platform.runLater(() -> new RecordsController(user));
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }.start();
+        }).start();
     }
 
 }

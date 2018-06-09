@@ -13,12 +13,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        // new LoginController();
         if (!new File("./db").exists()) {
             System.err.println("No existe la base de datos.");
         }
-
-        new RecordsController(null);
+        new LoginController();
+        // new RecordsController(null);
     }
 
 }
