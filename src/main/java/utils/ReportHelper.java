@@ -20,9 +20,11 @@ import javax.imageio.ImageIO;
 public class ReportHelper {
 
     Document document;
-    private static final com.itextpdf.text.Font catFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.COURIER, 18,
+    private static final com.itextpdf.text.Font catFont = 
+            new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.COURIER, 18,
             com.itextpdf.text.Font.BOLD);
-    private static final com.itextpdf.text.Font dugFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.COURIER, 12,
+    private static final com.itextpdf.text.Font dugFont = 
+            new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.COURIER, 12,
             com.itextpdf.text.Font.NORMAL);
 
     public ReportHelper(File file, List<String> text, List<Node> graphs)
@@ -40,7 +42,6 @@ public class ReportHelper {
                     addGraph(graphs.get(i - 1));
                 }
             } catch (Exception e) {
-
             }
         }
         document.close();

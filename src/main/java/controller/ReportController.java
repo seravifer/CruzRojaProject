@@ -102,6 +102,12 @@ public class ReportController {
     @FXML
     private JFXCheckBox cb_graphs;
 
+    @FXML
+    private JFXButton pdfButtonID;
+
+    @FXML
+    private JFXButton xlsButtonID;
+
     private static Font catFont = new Font(Font.FontFamily.COURIER, 18,
             Font.BOLD);
     private static Font dogFont = new Font(Font.FontFamily.COURIER, 12,
@@ -111,7 +117,7 @@ public class ReportController {
     List<String> textList;
     List<Node> nodeList;
     List<Record> query;
-    
+
     public ReportController() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/report.fxml"));
@@ -130,6 +136,8 @@ public class ReportController {
 
     private void init() {
         try {
+            pdfButtonID.setDisable(true);
+            xlsButtonID.setDisable(true);
             textList = new ArrayList<String>();
             nodeList = new ArrayList<Node>();
             query = new ArrayList<Record>();
@@ -160,10 +168,10 @@ public class ReportController {
         if (file != null) {
             ReportHelper reportHelper = new ReportHelper(file, textList, nodeList);
         } else {
-            
+
         }
     }
-    
+
     @FXML
     private void export_xls(ActionEvent event) throws FileNotFoundException, DocumentException, IOException {
         System.out.println("-");
@@ -209,6 +217,8 @@ public class ReportController {
         if (cb_hours.isSelected()) {
             showHoursInfo(query);
         }
+        pdfButtonID.setDisable(false);
+        xlsButtonID.setDisable(false);
     }
 
     private Where<Record, Integer> whereReportBuilder(Where<Record, Integer> where) throws SQLException {
@@ -361,7 +371,7 @@ public class ReportController {
             bc.setPrefSize(250, 250);
             bc.setLegendVisible(false);
             tabla_info.getChildren().add(bc);
-            nodeList.add(bc); 
+            nodeList.add(bc);
         }
     }
 
@@ -413,7 +423,7 @@ public class ReportController {
         List<String> lista_resource = new ArrayList<String>();
         List<String> lista_info = new ArrayList<String>();
 
-                XYChart.Series serie = new XYChart.Series();
+        XYChart.Series serie = new XYChart.Series();
         final NumberAxis yAxis = new NumberAxis();
         final CategoryAxis xAxis = new CategoryAxis();
         final BarChart<String, Number> bc
@@ -448,7 +458,7 @@ public class ReportController {
 
         tabla_info.getChildren().add(new Label(info));
         textList.add(info);
-        
+
         if (cb_graphs.isSelected()) {
             bc.getData().addAll(serie);
             bc.setTitle("Desglose de los registros por recurso");

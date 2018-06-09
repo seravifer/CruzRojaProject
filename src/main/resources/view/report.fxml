@@ -37,7 +37,7 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </JFXButton>
-            <JFXButton layoutX="369.0" layoutY="21.0" onAction="#export_pdf" ripplerFill="#c42126" style="-fx-background-color: #f44336;" text="Exportar a PDF" textFill="WHITE">
+            <JFXButton fx:id="pdfButtonID" layoutX="369.0" layoutY="21.0" onAction="#export_pdf" ripplerFill="#c42126" style="-fx-background-color: #f44336;" text="Exportar a PDF" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
@@ -46,7 +46,7 @@
                </cursor>
             </JFXButton>
             <JFXProgressBar fx:id="loadingID" disable="true" maxWidth="1.7976931348623157E308" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-            <JFXButton layoutX="501.0" layoutY="21.0" onAction="#export_xls" ripplerFill="#c42126" style="-fx-background-color: #f44336;" text="Exportar a XLS" textFill="WHITE">
+            <JFXButton layoutX="501.0" layoutY="21.0" onAction="#export_xls" ripplerFill="#c42126" style="-fx-background-color: #f44336;" text="Exportar a XLS" textFill="WHITE" fx:id="xlsButtonID">
                <font>
                   <Font size="15.0" />
                </font>
@@ -72,7 +72,6 @@
                   <CheckComboBox id="choice" fx:id="serviceID" prefHeight="25.0" prefWidth="359.0" />
                   <CheckComboBox id="choice" fx:id="areaID" prefHeight="25.0" prefWidth="379.0" />
                   <CheckComboBox id="choice" fx:id="resourceID" prefHeight="25.0" prefWidth="431.0" />
-                  <CheckComboBox id="choice" fx:id="applicantID" prefHeight="25.0" prefWidth="306.0" />
                   <JFXCheckBox fx:id="cb_gender" checkedColor="#c42126" text="Desglosar por género" />
                   <JFXCheckBox fx:id="cb_service" checkedColor="#c42126" text="Desglosar por servicio" />
                   <JFXCheckBox fx:id="cb_areas" checkedColor="#c42126" text="Desglosar por áreas" />
