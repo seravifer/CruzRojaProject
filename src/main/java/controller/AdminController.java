@@ -33,8 +33,11 @@ import javafx.event.ActionEvent;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Tab;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import utils.Security;
@@ -191,6 +194,8 @@ public class AdminController {
     private User user_update;
     private Boolean muestraEncriptado = true;
     private List<User> usuarios;
+    @FXML
+    private Tab tabRecursos;
 
     public AdminController() {
         try {
@@ -234,8 +239,6 @@ public class AdminController {
             tablaHospitales.getItems().addAll(hospitales);
             tablaRecursos.getItems().addAll(recursos);
             tablaUsuarios.getItems().addAll(usuarios);
-
-       
 
             NoEditable(tablaAreas);
             NoEditable(tablaServicios);
@@ -561,29 +564,7 @@ public class AdminController {
             });
 
             botonRecursos.setOnAction((event) -> {
-                try {
-                    if (recurso_update == null) {
-                        Resource recurso = new Resource(nombreRecursos.getText(), codigoRecursos.getText(), asambleaRecursos.getValue());
-                        DAO.resource.create(recurso);
-                        tablaRecursos.getItems().add(recurso);
-                        nombreRecursos.clear();
-                        codigoRecursos.clear();
-                        asambleaRecursos.setValue(null);
-                    } else {
-                        recurso_update.setName(nombreRecursos.getText());
-                        recurso_update.setCode(codigoRecursos.getText());
-                        recurso_update.setAssembly(asambleaRecursos.getValue());
-                        DAO.resource.update(recurso_update);
-                        tablaRecursos.refresh();
-                        recurso_update = null;
-                        botonRecursos.setText("Añadir");
-                        nombreRecursos.clear();
-                        codigoRecursos.clear();
-                        asambleaRecursos.setValue(null);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                recursosAction();
             });
             botonHospital.setOnAction((event) -> {
                 try {
@@ -723,6 +704,7 @@ public class AdminController {
             });
             return row;
         });
+
     }
 
     public SVGPath getIconDelete() {
@@ -770,5 +752,42 @@ public class AdminController {
             TableHeaderRow header = (TableHeaderRow) tb.lookup("TableHeaderRow");
             header.reorderingProperty().addListener((ob2, o2, n2) -> header.setReordering(false));
         });
+    }
+
+    @FXML
+    void tabRecursos(KeyEvent event) {
+        if (KeyCode.ENTER == event.getCode()) {
+            try {
+                recursosAction();
+            } catch (Exception ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void recursosAction() {
+        try {
+            if (recurso_update == null) {
+                Resource recurso = new Resource(nombreRecursos.getText(), codigoRecursos.getText(), asambleaRecursos.getValue());
+                DAO.resource.create(recurso);
+                tablaRecursos.getItems().add(recurso);
+                nombreRecursos.clear();
+                codigoRecursos.clear();
+                asambleaRecursos.setValue(null);
+            } else {
+                recurso_update.setName(nombreRecursos.getText());
+                recurso_update.setCode(codigoRecursos.getText());
+                recurso_update.setAssembly(asambleaRecursos.getValue());
+                DAO.resource.update(recurso_update);
+                tablaRecursos.refresh();
+                recurso_update = null;
+                botonRecursos.setText("Añadir");
+                nombreRecursos.clear();
+                codigoRecursos.clear();
+                asambleaRecursos.setValue(null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
