@@ -71,6 +71,9 @@ public class RecordsController extends BorderPane {
     private SVGPath refreshID;
 
     @FXML
+    private JFXComboBox<Integer> limitID;
+
+    @FXML
     private JFXButton operativeID;
 
     @FXML
@@ -84,12 +87,12 @@ public class RecordsController extends BorderPane {
 
     public RecordsController() {}
     
-    public RecordsController(User user) {
+    RecordsController(User user) {
          try {
              FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
              fxmlLoader.setController(this);
              Parent parent = fxmlLoader.load();
-            SuperController.getInstance().setHome(parent, this);
+             SuperController.getInstance().setHome(parent, this);
          } catch (IOException e) {
              e.printStackTrace();
          }
@@ -99,15 +102,18 @@ public class RecordsController extends BorderPane {
      }
 
     private void init() {
-        //userID.setText(user.getName());
-        //logoutID.setOnMouseClicked(e -> SuperController.getInstance().setPage());
+        userID.setText(user.getName());
+        logoutID.setOnMouseClicked(e -> new LoginController());
         addID.setOnAction((e) -> new RecordFormController());
         settingsID.setOnMouseClicked(e -> new AdminController());
         reportID.setOnMouseClicked(e -> new ReportController());
         refreshID.setOnMouseClicked(e -> filter());
 
-        //fromID.setValue(LocalDate.now());
-        fromID.setValue(LocalDate.of(2018, 1, 1));
+        limitID.getItems().addAll(10, 20, 50, 100, 300, 1000);
+        limitID.setValue(50);
+
+        fromID.setValue(LocalDate.now());
+        //fromID.setValue(LocalDate.of(2018, 1, 1));
         toID.setValue(LocalDate.now());
 
         recordsID.getChildren().addListener((ListChangeListener<Node>) c -> {
@@ -140,14 +146,13 @@ public class RecordsController extends BorderPane {
         filter();
     }
 
-    // TODO refactoring y arreglar
     private void filter() {
         task = new Task<Void>() {
             @Override
-            public Void call() throws SQLException {
+            public Void call() throws SQLException, InterruptedException {
                 QueryBuilder<Record, Integer> queryBuilder = DAO.record.queryBuilder();
 
-                Where<Record, Integer> where = queryBuilder
+                Where<Record, Integer> where = queryBuilder.limit((long) limitID.getValue())
                         .where().between("date", fromID.getValue(), toID.getValue());
 
                 if (pendingID.isSelected()) where.and().isNull("endTime");
@@ -158,6 +163,7 @@ public class RecordsController extends BorderPane {
 
                 for (Record record : records) {
                     Platform.runLater(() -> recordsID.getChildren().add(0, new RecordComponent(record)));
+                    Thread.sleep(100);
                 }
 
                 return null;
@@ -194,7 +200,6 @@ public class RecordsController extends BorderPane {
         task.stateProperty().addListener(onUpdating());
         new Thread(task).start();
     }
-    // END TODO
 
     private void limitDays() {
         toID.setDayCellFactory(picker -> new DateCell() {

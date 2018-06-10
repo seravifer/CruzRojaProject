@@ -86,11 +86,10 @@ public class RecordComponent extends AnchorPane {
 
     public RecordComponent(Record record) {
         this.record = record;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/component/record.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
         try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/component/record.fxml"));
+            fxmlLoader.setRoot(this);
+            fxmlLoader.setController(this);
             fxmlLoader.load();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -127,7 +126,7 @@ public class RecordComponent extends AnchorPane {
             try {
                 QueryBuilder<Event, Integer> queryBuilder = DAO.event.queryBuilder();
                 event = queryBuilder.where().eq("record_id", record.getID_record())
-                        .and().isNull("endTimeAssistance").queryForFirst();
+                        .and().isNull("endTime").queryForFirst();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }

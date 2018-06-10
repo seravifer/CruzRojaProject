@@ -4,7 +4,6 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.misc.BaseDaoEnabled;
 import com.j256.ormlite.table.DatabaseTable;
 import utils.LocalTimeType;
-import utils.Utils;
 
 import java.time.LocalTime;
 
@@ -20,11 +19,13 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
     @DatabaseField
     private String key;
     @DatabaseField(persisterClass = LocalTimeType.class)
-    private LocalTime startTimeAssistance;
+    private LocalTime startTime;
     @DatabaseField(persisterClass = LocalTimeType.class)
-    private LocalTime transferTimeAssistance;
+    private LocalTime startAssistance;
     @DatabaseField(persisterClass = LocalTimeType.class)
-    private LocalTime endTimeAssistance;
+    private LocalTime transferTime;
+    @DatabaseField(persisterClass = LocalTimeType.class)
+    private LocalTime endTime;
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Hospital hospital;
     @DatabaseField
@@ -36,14 +37,15 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
 
     public Event() {}
 
-    public Event(Record record, int subcode, String key, LocalTime startTimeAssistance, LocalTime transferTimeAssistance,
-                 LocalTime endTimeAssistance, Hospital hospital, String pathology, String registry, Integer gender) {
+    public Event(Record record, int subcode, String key, LocalTime startTime, LocalTime startAssistance, LocalTime transferTime,
+                 LocalTime endTime, Hospital hospital, String pathology, String registry, Integer gender) {
         this.record = record;
         this.subcode = subcode;
         this.key = key;
-        this.startTimeAssistance = startTimeAssistance;
-        this.transferTimeAssistance = transferTimeAssistance;
-        this.endTimeAssistance = endTimeAssistance;
+        this.startTime = startTime;
+        this.startAssistance = startAssistance;
+        this.transferTime = transferTime;
+        this.endTime = endTime;
         this.hospital = hospital;
         this.pathology = pathology;
         this.registry = registry;
@@ -66,16 +68,20 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         return key;
     }
 
-    public LocalTime getStartTimeAssistance() {
-        return startTimeAssistance;
+    public LocalTime getStartTime() {
+        return startTime;
     }
 
-    public LocalTime getTransferTimeAssistance() {
-        return transferTimeAssistance;
+    public LocalTime getStartAssistance() {
+        return startAssistance;
     }
 
-    public LocalTime getEndTimeAssistance() {
-        return endTimeAssistance;
+    public LocalTime getTransferTime() {
+        return transferTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
     }
 
     public Hospital getHospital() {
@@ -106,16 +112,20 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         this.key = key;
     }
 
-    public void setStartTimeAssistance(LocalTime startTimeAssistance) {
-        this.startTimeAssistance = startTimeAssistance;
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
     }
 
-    public void setTransferTimeAssistance(LocalTime transferTimeAssistance) {
-        this.transferTimeAssistance = transferTimeAssistance;
+    public void setStartAssistance(LocalTime startAssistance) {
+        this.startAssistance = startAssistance;
     }
 
-    public void setEndTimeAssistance(LocalTime endTimeAssistance) {
-        this.endTimeAssistance = endTimeAssistance;
+    public void setTransferTime(LocalTime transferTime) {
+        this.transferTime = transferTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
     }
 
     public void setHospital(Hospital hospital) {

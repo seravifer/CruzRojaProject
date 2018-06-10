@@ -20,7 +20,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.SVGPath;
 import model.*;
-import org.controlsfx.control.textfield.TextFields;
 import service.DAO;
 import utils.*;
 
@@ -28,7 +27,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -98,13 +96,16 @@ public class RecordFormController {
     private JFXComboBox<Hospital> hospitalID;
 
     @FXML
-    private JFXTimePicker startTimeAssistanceID;
+    private JFXTimePicker startTimeEventID;
 
     @FXML
-    private JFXTimePicker transferTimeAssistanceID;
+    private JFXTimePicker startAssitanceEventID;
 
     @FXML
-    private JFXTimePicker endTimeAssistanceID;
+    private JFXTimePicker endTimeEventID;
+
+    @FXML
+    private JFXTimePicker transferTimeEventID;
 
     @FXML
     private JFXTextField pathologyID;
@@ -137,13 +138,16 @@ public class RecordFormController {
     private TableColumn<Event, Hospital> transferColumID;
 
     @FXML
-    private TableColumn<Event, LocalTime> startTimeAssistanceColumID;
+    private TableColumn<Event, LocalTime> startTimeColumID;
 
     @FXML
-    private TableColumn<Event, LocalTime> transferTimeAssistanceColumID;
+    private TableColumn<Event, LocalTime> startAssitanceColumID;
 
     @FXML
-    private TableColumn<Event, LocalTime> endTimeAssistanceColumID;
+    private TableColumn<Event, LocalTime> transferTimeColumID;
+
+    @FXML
+    private TableColumn<Event, LocalTime> endTimeColumID;
 
     @FXML
     private TableColumn<Event, Integer> keyColumID;
@@ -255,16 +259,18 @@ public class RecordFormController {
 
         startTimeID.setConverter(timeConverter);
         endTimeID.setConverter(timeConverter);
-        startTimeAssistanceID.setConverter(timeConverter);
-        transferTimeAssistanceID.setConverter(timeConverter);
-        endTimeAssistanceID.setConverter(timeConverter);
+
+        startTimeEventID.setConverter(timeConverter);
+        startAssitanceEventID.setConverter(timeConverter);
+        transferTimeEventID.setConverter(timeConverter);
+        endTimeEventID.setConverter(timeConverter);
 
         Arrays.asList(assistance_mID, assistance_hID, evacuated_hID, evacuated_mID).forEach(node -> {
             node.textProperty().addListener(onlyNumbers(node));
             node.focusedProperty().addListener(minZero(node));
         });
 
-        Arrays.asList(endTimeID, startTimeAssistanceID, transferTimeAssistanceID, endTimeAssistanceID)
+        Arrays.asList(endTimeID, startTimeEventID, endTimeEventID, transferTimeEventID, startAssitanceEventID)
                 .forEach(this::onDoubleClick);
 
         AutoComplete.set(resourceID,
@@ -292,18 +298,20 @@ public class RecordFormController {
 
         subCodeColumID.setCellValueFactory(new PropertyValueFactory<>("subcode"));
         keyColumID.setCellValueFactory(new PropertyValueFactory<>("key"));
-        startTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("startTimeAssistance"));
-        transferTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("transferTimeAssistance"));
-        endTimeAssistanceColumID.setCellValueFactory(new PropertyValueFactory<>("endTimeAssistance"));
+        startTimeColumID.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        startAssitanceColumID.setCellValueFactory(new PropertyValueFactory<>("startAssistance"));
+        transferTimeColumID.setCellValueFactory(new PropertyValueFactory<>("transferTime"));
+        endTimeColumID.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         transferColumID.setCellValueFactory(new PropertyValueFactory<>("hospital"));
         pathologyColumID.setCellValueFactory(new PropertyValueFactory<>("pathology"));
         registryColumID.setCellValueFactory(new PropertyValueFactory<>("registry"));
         genderColumID.setCellValueFactory(new PropertyValueFactory<>("gender"));
         iconColumnID.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
 
-        startTimeAssistanceColumID.setCellFactory((TableColumn<Event, LocalTime> p) -> new EditingCellHour());
-        transferTimeAssistanceColumID.setCellFactory((TableColumn<Event, LocalTime> p) -> new EditingCellHour());
-        endTimeAssistanceColumID.setCellFactory((TableColumn<Event, LocalTime> p) -> new EditingCellHour());
+        startTimeColumID.setCellFactory((TableColumn<Event, LocalTime> p) -> new EditingCellHour());
+        startAssitanceColumID.setCellFactory((TableColumn<Event, LocalTime> p) -> new EditingCellHour());
+        transferTimeColumID.setCellFactory((TableColumn<Event, LocalTime> p) -> new EditingCellHour());
+        endTimeColumID.setCellFactory((TableColumn<Event, LocalTime> p) -> new EditingCellHour());
         pathologyColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellString());
         registryColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellString());
 
@@ -387,24 +395,25 @@ public class RecordFormController {
             }
         });
 
-        startTimeAssistanceColumID.setOnEditCommit(
+        startTimeColumID.setOnEditCommit(
                 (TableColumn.CellEditEvent<Event, LocalTime> t) ->
                         t.getTableView().getItems().get(t.getTablePosition().getRow())
-                                .setStartTimeAssistance(t.getNewValue()));
+                                .setStartTime(t.getNewValue()));
 
-        transferTimeAssistanceColumID.setOnEditCommit(
+        startAssitanceColumID.setOnEditCommit(
                 (TableColumn.CellEditEvent<Event, LocalTime> t) ->
                         t.getTableView().getItems().get(t.getTablePosition().getRow())
-                                .setTransferTimeAssistance(t.getNewValue()));
+                                .setStartAssistance(t.getNewValue()));
 
-        endTimeAssistanceColumID.setOnEditCommit(
+        transferTimeColumID.setOnEditCommit(
                 (TableColumn.CellEditEvent<Event, LocalTime> t) ->
                         t.getTableView().getItems().get(t.getTablePosition().getRow())
-                                .setEndTimeAssistance(t.getNewValue()));
-        transferColumID.setOnEditCommit(
-                (TableColumn.CellEditEvent<Event, Hospital> t) ->
+                                .setTransferTime(t.getNewValue()));
+
+        endTimeColumID.setOnEditCommit(
+                (TableColumn.CellEditEvent<Event, LocalTime> t) ->
                         t.getTableView().getItems().get(t.getTablePosition().getRow())
-                                .setHospital(t.getNewValue()));
+                                .setEndTime(t.getNewValue()));
 
         pathologyColumID.setOnEditCommit(
                 (TableColumn.CellEditEvent<Event, String> t) ->
@@ -417,7 +426,7 @@ public class RecordFormController {
                                 .setRegistry(t.getNewValue()));
 
         codeID.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+            if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2 && record == null) {
                 record = new Record();
                 record.setDate(dateID.getValue());
                 try {
@@ -426,6 +435,7 @@ public class RecordFormController {
 
                     codeID.setText(Utils.generateCode(record));
                     eventFormID.setDisable(false);
+                    codeID.setCursor(Cursor.DEFAULT);
                 } catch (SQLException e) {
                     snackbar.show("Se ha producido un error al generar el registro. " +
                             "Por favor, intentelo de nuevo.", 6000);
@@ -435,8 +445,8 @@ public class RecordFormController {
 
         addEventID.setOnAction(e -> {
             Event event = new Event(record, eventsTableID.getItems().size() + 1, keyID.getValue(),
-                    startTimeAssistanceID.getValue(), transferTimeAssistanceID.getValue(),
-                    endTimeAssistanceID.getValue(), AutoComplete.getValue(hospitalID), pathologyID.getText(),
+                    startTimeEventID.getValue(), startAssitanceEventID.getValue(),
+                    transferTimeEventID.getValue(), endTimeEventID.getValue(), AutoComplete.getValue(hospitalID), pathologyID.getText(),
                     patientID.getText(), getGender());
 
             eventsTableID.getItems().add(event);
@@ -446,9 +456,10 @@ public class RecordFormController {
             try {
                 DAO.event.create(event);
 
-                startTimeAssistanceID.setValue(null);
-                endTimeAssistanceID.setValue(null);
-                transferTimeAssistanceID.setValue(null);
+                startTimeEventID.setValue(null);
+                endTimeEventID.setValue(null);
+                transferTimeEventID.setValue(null);
+                startAssitanceEventID.setValue(null);
                 patientID.clear();
                 hospitalID.setValue(null);
                 pathologyID.clear();
@@ -481,7 +492,9 @@ public class RecordFormController {
             return;
         }
 
+        if (record == null) record = new Record();
         if (dateID.getValue() == null) dateID.setValue(LocalDate.now());
+
         record.setDate(dateID.getValue());
         record.setResource(AutoComplete.getValue(resourceID));
         record.setAssembly(AutoComplete.getValue(assemblyID));

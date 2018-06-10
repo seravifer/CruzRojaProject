@@ -5,6 +5,7 @@ sourceCompatibility = 1.8
 version = '1.0'
 mainClassName = 'App'
 compileJava.options.encoding = 'UTF-8'
+applicationDefaultJvmArgs = ["-Dprism.forceGPU=true",  "-Dprism.order=es2,j2d"]
 
 repositories {
     mavenCentral()
@@ -28,10 +29,6 @@ test {
 
     testLogging {
         events "passed", "skipped", "failed"
-    }
-
-    reports {
-        html.enabled = true
     }
 }
 

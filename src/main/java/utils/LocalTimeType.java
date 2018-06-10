@@ -42,7 +42,7 @@ public class LocalTimeType extends BaseDateType {
     @Override
     public Object javaToSqlArg(FieldType fieldType, Object javaObject) {
         LocalTime date = (LocalTime) javaObject;
-        if (date != null) return date.toString();
+        if (date != null) return date.getHour() + ":" + date.getMinute();
         else return null;
     }
 
