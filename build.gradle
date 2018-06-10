@@ -19,6 +19,20 @@ dependencies {
     compile 'org.controlsfx:controlsfx:8.40.14'
     compile 'com.itextpdf:itextpdf:5.5.13'
     compile 'org.apache.poi:poi:3.17'
+    testCompile('org.junit.jupiter:junit-jupiter-api:5.2.0')
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
+}
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+
+    reports {
+        html.enabled = true
+    }
 }
 
 task fatJar(type: Jar) {
