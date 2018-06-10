@@ -26,7 +26,6 @@ import utils.ReportPDFHelper;
 import utils.ReportXLSHelper;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -38,46 +37,63 @@ import java.util.Optional;
 
 public class ReportController {
 
-    PieChart at_chart, ev_chart;
-    List<String> textList;
-    List<Node> nodeList;
-    List<Record> query;
     @FXML
     private JFXProgressBar loadingID;
+
     @FXML
     private JFXDatePicker startDateID;
+
     @FXML
     private JFXDatePicker endDateID;
+
     @FXML
     private JFXComboBox<Assembly> assemblyID;
+
     @FXML
     private CheckComboBox<Area> areaID;
+
     @FXML
     private CheckComboBox<Service> serviceID;
+
     @FXML
     private CheckComboBox<Resource> resourceID;
+
     @FXML
     private AnchorPane pageID;
+
     @FXML
     private JFXCheckBox cb_gender;
+
     @FXML
     private JFXCheckBox cb_service;
+
     @FXML
     private JFXCheckBox cb_areas;
+
     @FXML
     private JFXCheckBox cb_resource;
+
     @FXML
     private JFXCheckBox cb_hours;
+
     @FXML
     private VBox tabla_info;
+
     @FXML
     private JFXCheckBox cb_graphs;
+
     @FXML
     private JFXButton pdfButtonID;
+
     @FXML
     private JFXButton xlsButtonID;
 
-    public ReportController() {
+    private PieChart at_chart, ev_chart;
+    private List<String> textList;
+    private List<Node> nodeList;
+    private List<Record> query;
+
+    ReportController() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/report.fxml"));
             fxmlLoader.setController(this);
@@ -97,9 +113,10 @@ public class ReportController {
         try {
             pdfButtonID.setDisable(true);
             xlsButtonID.setDisable(true);
-            textList = new ArrayList<String>();
-            nodeList = new ArrayList<Node>();
-            query = new ArrayList<Record>();
+            textList = new ArrayList<>();
+            nodeList = new ArrayList<>();
+            query = new ArrayList<>();
+
             List<Assembly> assemblies = DAO.assembly.queryBuilder().query();
             List<Resource> resources = DAO.resource.queryBuilder().query();
             List<Area> areas = DAO.area.queryBuilder().query();
@@ -119,13 +136,14 @@ public class ReportController {
     }
 
     @FXML
-    private void export_pdf(ActionEvent event) throws FileNotFoundException, DocumentException, IOException {
+    private void export_pdf(ActionEvent event) throws DocumentException, IOException {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Archivos PDF (*.pdf)", "*.pdf");
         fileChooser.getExtensionFilters().add(extFilter);
+        fileChooser.setInitialFileName("Reporte - " + assemblyID.getValue().getName());
         File file = fileChooser.showSaveDialog(new Stage());
         if (file != null) {
-            ReportPDFHelper reportPDFHelper = new ReportPDFHelper(file, textList, nodeList);
+            new ReportPDFHelper(file, textList, nodeList);
         }
     }
 
@@ -134,18 +152,20 @@ public class ReportController {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Archivos XLS (*.xls)", "*.xls");
         fileChooser.getExtensionFilters().add(extFilter);
+        fileChooser.setInitialFileName("Reporte - " + assemblyID.getValue().getName());
         File file = fileChooser.showSaveDialog(new Stage());
         if (file != null) {
-            ReportXLSHelper reportXLSHelper = new ReportXLSHelper(file, query);
+            new ReportXLSHelper(file, query);
         }
     }
 
     @FXML
-    private void generate(ActionEvent event) throws SQLException, FileNotFoundException, DocumentException, IOException {
+    private void generate(ActionEvent event) throws SQLException {
         query.clear();
         tabla_info.getChildren().clear();
         textList.clear();
         nodeList.clear();
+
         QueryBuilder<Record, Integer> qb = DAO.record.queryBuilder();
         Where<Record, Integer> where = whereReportBuilder(qb.where());
         query = where.query();
@@ -163,34 +183,22 @@ public class ReportController {
             return;
         }
 
-        if (cb_gender.isSelected()) {
-            showGenderInfo(query);
-        }
+        if (cb_gender.isSelected()) showGenderInfo(query);
+        if (cb_service.isSelected()) showServiceInfo(query);
+        if (cb_areas.isSelected()) showAreaInfo(query);
+        if (cb_resource.isSelected()) showResourceInfo(query);
+        if (cb_hours.isSelected()) showHoursInfo(query);
 
-        if (cb_service.isSelected()) {
-            showServiceInfo(query);
-        }
-
-        if (cb_areas.isSelected()) {
-            showAreaInfo(query);
-        }
-
-        if (cb_resource.isSelected()) {
-            showResourceInfo(query);
-        }
-
-        if (cb_hours.isSelected()) {
-            showHoursInfo(query);
-        }
         pdfButtonID.setDisable(false);
         xlsButtonID.setDisable(false);
     }
 
     private Where<Record, Integer> whereReportBuilder(Where<Record, Integer> where) throws SQLException {
+        int total = 1;
 
         LocalDate sd = startDateID.getValue();
         LocalDate ed = endDateID.getValue();
-        int total = 1;
+
         where.between("date", sd, ed);
         ObservableList<Area> checkedArea = areaID.getCheckModel().getCheckedItems();
         ObservableList<Service> checkedService = serviceID.getCheckModel().getCheckedItems();
@@ -224,17 +232,16 @@ public class ReportController {
         return where;
     }
 
-    private void showGenderInfo(List<Record> query) throws DocumentException, IOException {
-        int at_h = 0;
-        int at_m = 0;
-        int ev_h = 0;
-        int ev_m = 0;
+    private void showGenderInfo(List<Record> query) {
+        int at_h = 0, at_m = 0, ev_h = 0, ev_m = 0;
+
         for (Record record : query) {
             at_h += record.getAssistance_h();
             at_m += record.getAssistance_m();
             ev_h += record.getEvacuated_h();
             ev_m += record.getEvacuated_m();
         }
+
         String info = "Desglose de los servicios por genero: \n";
         info += "       - Hombres atendidos: " + at_h + "\n";
         info += "       - Mujeres atendidas: " + at_m + "\n";
@@ -247,6 +254,7 @@ public class ReportController {
                 + query.size() + " registros.";
         tabla_info.getChildren().add(new Label(info));
         textList.add(info);
+
         if (cb_graphs.isSelected()) {
             HBox graphs = new HBox();
             ObservableList<PieChart.Data> at_data
@@ -267,13 +275,14 @@ public class ReportController {
                     super.layoutChartChildren(top, left, contentWidth, contentHeight);
                 }
             };
+
             at_chart.setLabelsVisible(true);
             at_chart.setPrefSize(250, 250);
             at_chart.setLegendVisible(true);
-            ObservableList<PieChart.Data> ev_data
-                    = FXCollections.observableArrayList(
+            ObservableList<PieChart.Data> ev_data = FXCollections.observableArrayList(
                     new PieChart.Data("Hombres evacuados", ev_h),
                     new PieChart.Data("Mujeres evacuadas", ev_m));
+
             ev_chart = new PieChart(ev_data) {
                 @Override
                 protected void layoutChartChildren(double top, double left, double contentWidth, double contentHeight) {
@@ -288,6 +297,7 @@ public class ReportController {
                     super.layoutChartChildren(top, left, contentWidth, contentHeight);
                 }
             };
+
             ev_chart.setTitle("Desglose por género");
             ev_chart.setPrefSize(250, 350);
             ev_chart.setLabelsVisible(true);
@@ -300,17 +310,19 @@ public class ReportController {
 
     private void showServiceInfo(List<Record> query) throws SQLException {
         List<Service> queryS = DAO.services.queryBuilder().query();
-        List<String> lista_services = new ArrayList<String>();
-        List<String> lista_info = new ArrayList<String>();
+        List<String> lista_services = new ArrayList<>();
+        List<String> lista_info = new ArrayList<>();
         XYChart.Series serie = new XYChart.Series();
         final NumberAxis yAxis = new NumberAxis();
         final CategoryAxis xAxis = new CategoryAxis();
-        final BarChart<String, Number> bc = new BarChart<String, Number>(xAxis, yAxis);
+        final BarChart<String, Number> bc = new BarChart<>(xAxis, yAxis);
         bc.setCenterShape(true);
         bc.setBarGap(0);
+
         for (Record record : query) {
             lista_services.add(record.getService().getName());
         }
+
         for (Service service : queryS) {
             int count = 0;
             for (String s : lista_services) {
@@ -324,12 +336,15 @@ public class ReportController {
                 lista_info.add(s);
             }
         }
-        String info = "Desglose de los registros filtrados por servicio: \n";
+
+        StringBuilder info = new StringBuilder("Desglose de los registros filtrados por servicio: \n");
         for (String s : lista_info) {
-            info += "       - " + s + "\n";
+            info.append("       - ").append(s).append("\n");
         }
-        tabla_info.getChildren().add(new Label(info));
-        textList.add(info);
+
+        tabla_info.getChildren().add(new Label(info.toString()));
+        textList.add(info.toString());
+
         if (cb_graphs.isSelected()) {
             bc.getData().add(serie);
             bc.setTitle("Desglose de registros por servicio");
@@ -342,18 +357,19 @@ public class ReportController {
 
     private void showAreaInfo(List<Record> query) throws SQLException {
         List<Area> queryA = DAO.area.queryBuilder().query();
-        List<String> lista_areas = new ArrayList<String>();
-        List<String> lista_info = new ArrayList<String>();
+        List<String> lista_areas = new ArrayList<>();
+        List<String> lista_info = new ArrayList<>();
         XYChart.Series serie = new XYChart.Series();
         final NumberAxis yAxis = new NumberAxis();
         final CategoryAxis xAxis = new CategoryAxis();
-        final BarChart<String, Number> bc
-                = new BarChart<String, Number>(xAxis, yAxis);
+        final BarChart<String, Number> bc = new BarChart<>(xAxis, yAxis);
         bc.setCenterShape(true);
         bc.setBarGap(0);
+
         for (Record record : query) {
             lista_areas.add(record.getArea().getName());
         }
+
         for (Area area : queryA) {
             int count = 0;
             for (String s : lista_areas) {
@@ -367,12 +383,15 @@ public class ReportController {
                 lista_info.add(s);
             }
         }
-        String info = "Desglose de los registros filtrados por area: \n";
+
+        StringBuilder info = new StringBuilder("Desglose de los registros filtrados por area: \n");
         for (String s : lista_info) {
-            info += "       - " + s + "\n";
+            info.append("       - ").append(s).append("\n");
         }
-        tabla_info.getChildren().add(new Label(info));
-        textList.add(info);
+
+        tabla_info.getChildren().add(new Label(info.toString()));
+        textList.add(info.toString());
+
         if (cb_graphs.isSelected()) {
             bc.getData().addAll(serie);
             bc.setTitle("Desglose de los registros por área");
@@ -385,14 +404,13 @@ public class ReportController {
 
     private void showResourceInfo(List<Record> query) throws SQLException {
         List<Resource> queryR = DAO.resource.queryBuilder().query();
-        List<String> lista_resource = new ArrayList<String>();
-        List<String> lista_info = new ArrayList<String>();
+        List<String> lista_resource = new ArrayList<>();
+        List<String> lista_info = new ArrayList<>();
 
         XYChart.Series serie = new XYChart.Series();
         final NumberAxis yAxis = new NumberAxis();
         final CategoryAxis xAxis = new CategoryAxis();
-        final BarChart<String, Number> bc
-                = new BarChart<String, Number>(xAxis, yAxis);
+        final BarChart<String, Number> bc = new BarChart<>(xAxis, yAxis);
         bc.setCenterShape(true);
         bc.setBarGap(0);
 
@@ -404,11 +422,11 @@ public class ReportController {
 
         for (Resource resource : queryR) {
             int count = 0;
+
             for (String s : lista_resource) {
-                if (resource.getCode().equals(s)) {
-                    count++;
-                }
+                if (resource.getCode().equals(s)) count++;
             }
+
             if (count != 0) {
                 String s = resource.getCode() + ": " + count;
                 serie.getData().add(new XYChart.Data(resource.getCode(), count));
@@ -416,13 +434,13 @@ public class ReportController {
             }
         }
 
-        String info = "Desglose de los registros filtrados por recurso: \n";
+        StringBuilder info = new StringBuilder("Desglose de los registros filtrados por recurso: \n");
         for (String s : lista_info) {
-            info += "       - " + s + "\n";
+            info.append("       - ").append(s).append("\n");
         }
 
-        tabla_info.getChildren().add(new Label(info));
-        textList.add(info);
+        tabla_info.getChildren().add(new Label(info.toString()));
+        textList.add(info.toString());
 
         if (cb_graphs.isSelected()) {
             bc.getData().addAll(serie);
@@ -442,19 +460,22 @@ public class ReportController {
                 LocalTime finish = record.getEndTime();
                 minutes = minutes + ChronoUnit.MINUTES.between(start, finish);
             } catch (Exception e) {
-
+                System.err.println("Un error muy turbio");
             }
         }
+
         while (minutes > 60) {
             minutes = minutes - 60;
             hours = hours + 1;
         }
+
         while (hours > 24) {
             hours = hours - 24;
             days = days + 1;
         }
-        String info = "Se han trabajado en total " + days + " dias, " + hours + " horas y "
-                + minutes + " minutos.";
+
+        String info = "Se han trabajado en total " + days + " dias, " + hours + " horas y " + minutes + " minutos.";
+
         tabla_info.getChildren().add(new Label(info));
         textList.add(info);
     }

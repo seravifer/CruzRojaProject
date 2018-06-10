@@ -13,10 +13,11 @@ import java.util.List;
 
 public class ReportXLSHelper {
 
-    public ReportXLSHelper(File file, List<Record> query) throws IOException {
+    public ReportXLSHelper(File file, List<Record> query) {
         HSSFWorkbook workBook = new HSSFWorkbook();
         HSSFSheet sheet = workBook.createSheet();
         HSSFRow headingRow = sheet.createRow(0);
+
         headingRow.createCell((short) 0).setCellValue("ID_RECORD");
         headingRow.createCell((short) 1).setCellValue("FECHA");
         headingRow.createCell((short) 2).setCellValue("CÓDIGO");
@@ -34,15 +35,19 @@ public class ReportXLSHelper {
         headingRow.createCell((short) 14).setCellValue("REGISTRO");
         headingRow.createCell((short) 15).setCellValue("OPERATIVO");
         headingRow.createCell((short) 16).setCellValue("NOTAS");
+
         short rowNo = 1;
+
         for (Record r : query) {
             HSSFRow row = sheet.createRow(rowNo);
             Object[] info = r.getInfo();
+
             for (int i = 0; i < 17; i++) {
                 row.createCell((short) i).setCellValue((String) info[i]);
             }
             rowNo++;
         }
+
         try {
             FileOutputStream fos = new FileOutputStream(file);
             workBook.write(fos);
