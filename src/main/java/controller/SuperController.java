@@ -3,8 +3,14 @@ package controller;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.util.Optional;
 
 public class SuperController {
 
@@ -20,7 +26,7 @@ public class SuperController {
         scene.getStylesheets().setAll(getClass().getResource("/css/style.css").toExternalForm());
 
         stage = new Stage();
-        /*stage.setOnCloseRequest(event -> {
+        stage.setOnCloseRequest(event -> {
             Alert closeConfirmation = new Alert(Alert.AlertType.CONFIRMATION, "¿Estas seguro de que quieres salir?");
             Button exitButton = (Button) closeConfirmation.getDialogPane().lookupButton(ButtonType.OK);
             exitButton.setText("Salir");
@@ -31,7 +37,7 @@ public class SuperController {
             if (!ButtonType.OK.equals(closeResponse.get())) {
                 event.consume();
             }
-        };*/
+        });
         stage.setScene(scene);
         stage.setMinWidth(1280);
         stage.setMinHeight(720);

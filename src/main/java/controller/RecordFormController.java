@@ -135,7 +135,7 @@ public class RecordFormController {
     private TableColumn<Event, Integer> subCodeColumID;
 
     @FXML
-    private TableColumn<Event, Hospital> transferColumID;
+    private TableColumn<Event, Hospital> hospitalColumID;
 
     @FXML
     private TableColumn<Event, LocalTime> startTimeColumID;
@@ -150,7 +150,7 @@ public class RecordFormController {
     private TableColumn<Event, LocalTime> endTimeColumID;
 
     @FXML
-    private TableColumn<Event, Integer> keyColumID;
+    private TableColumn<Event, String> keyColumID;
 
     @FXML
     private TableColumn<Event, String> pathologyColumID;
@@ -236,12 +236,14 @@ public class RecordFormController {
             operativeID.getItems().addAll(operatives);
             hospitalID.getItems().addAll(hospitals);
 
-            transferColumID.setCellFactory((TableColumn<Event, Hospital> p) -> new EditingCellList(hospitals));
+            hospitalColumID.setCellFactory((TableColumn<Event, Hospital> p) -> new EditingCellHospital(hospitals));
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        keyID.getItems().addAll("CLAVE 0", "CLAVE 1.1", "CLAVE 1.2", "CLAVE 1.3", "CLAVE 2", "CLAVE 3", "CLAVE 5", "CLAVE 6");
+        List<String> keys = Arrays.asList("CLAVE 0", "CLAVE 1.1", "CLAVE 1.2", "CLAVE 1.3", "CLAVE 2", "CLAVE 3", "CLAVE 5", "CLAVE 6");
+        keyID.getItems().addAll(keys);
+        keyColumID.setCellFactory((TableColumn<Event, String> p) -> new EditingCellList(keys));
 
         snackbar = new JFXSnackbar(rootID) {
             @Override
@@ -302,7 +304,7 @@ public class RecordFormController {
         startAssitanceColumID.setCellValueFactory(new PropertyValueFactory<>("startAssistance"));
         transferTimeColumID.setCellValueFactory(new PropertyValueFactory<>("transferTime"));
         endTimeColumID.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        transferColumID.setCellValueFactory(new PropertyValueFactory<>("hospital"));
+        hospitalColumID.setCellValueFactory(new PropertyValueFactory<>("hospital"));
         pathologyColumID.setCellValueFactory(new PropertyValueFactory<>("pathology"));
         registryColumID.setCellValueFactory(new PropertyValueFactory<>("registry"));
         genderColumID.setCellValueFactory(new PropertyValueFactory<>("gender"));
@@ -394,6 +396,15 @@ public class RecordFormController {
                     }
                     setGraphic(icon);
                 }
+
+                this.setOnMouseClicked(event -> {
+                    if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
+                        Event e = (Event) getTableRow().getItem();
+                        if (item == 1) e.setGender(2);
+                        else e.setGender(1);
+                        eventsTableID.refresh();
+                    }
+                });
             }
         });
 
@@ -416,6 +427,11 @@ public class RecordFormController {
                 (TableColumn.CellEditEvent<Event, LocalTime> t) ->
                         t.getTableView().getItems().get(t.getTablePosition().getRow())
                                 .setEndTime(t.getNewValue()));
+
+        keyColumID.setOnEditCommit(
+                (TableColumn.CellEditEvent<Event, String> t) ->
+                        t.getTableView().getItems().get(t.getTablePosition().getRow())
+                                .setKey(t.getNewValue()));
 
         pathologyColumID.setOnEditCommit(
                 (TableColumn.CellEditEvent<Event, String> t) ->

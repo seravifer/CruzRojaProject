@@ -68,9 +68,9 @@
                     <children>
                         <JFXDatePicker fx:id="startDateID" defaultColor="#e53935" prefHeight="25.0" prefWidth="295.0" promptText="Fecha de inicio" showWeekNumbers="true" />
                         <JFXDatePicker fx:id="endDateID" defaultColor="#e53935" prefHeight="25.0" prefWidth="262.0" promptText="Fecha de fin" showWeekNumbers="true" />
-                        <JFXComboBox fx:id="assemblyID" focusColor="#e53935" prefHeight="26.0" prefWidth="228.0" />
+                        <JFXComboBox fx:id="assemblyID" focusColor="#e53935" prefHeight="26.0" prefWidth="228.0" promptText="Asamblea" />
+                        <CheckComboBox id="choice" fx:id="areaID" prefHeight="24.0" prefWidth="215.0" />
                         <CheckComboBox id="choice" fx:id="serviceID" prefHeight="25.0" prefWidth="359.0" />
-                        <CheckComboBox id="choice" fx:id="areaID" prefHeight="25.0" prefWidth="379.0" />
                         <CheckComboBox id="choice" fx:id="resourceID" prefHeight="25.0" prefWidth="431.0" />
                         <JFXCheckBox fx:id="cb_gender" checkedColor="#c42126" text="Desglosar por género" />
                         <JFXCheckBox fx:id="cb_service" checkedColor="#c42126" text="Desglosar por servicio" />

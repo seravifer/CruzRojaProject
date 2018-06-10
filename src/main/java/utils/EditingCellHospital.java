@@ -5,16 +5,17 @@ import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.input.KeyCode;
 import model.Event;
+import model.Hospital;
 
 import java.util.List;
 
-public class EditingCellList extends TableCell<Event, String> {
+public class EditingCellHospital extends TableCell<Event, Hospital> {
 
-    private JFXComboBox<String> comboBoxID;
-    private List<String> stringList;
+    private JFXComboBox<Hospital> comboBoxID;
+    private List<Hospital> hospitals;
 
-    public EditingCellList(List<String> stringList) {
-        this.stringList = stringList;
+    public EditingCellHospital(List<Hospital> hospitals) {
+        this.hospitals = hospitals;
     }
 
     @Override
@@ -30,23 +31,23 @@ public class EditingCellList extends TableCell<Event, String> {
     @Override
     public void cancelEdit() {
         super.cancelEdit();
-        setText(getItem());
+        //setText(getItem());
         setGraphic(null);
     }
 
     @Override
-    public void updateItem(String item, boolean empty) {
+    public void updateItem(Hospital item, boolean empty) {
         super.updateItem(item, empty);
         if (item == null || empty) {
             setText(null);
             setGraphic(null);
         } else {
             if (isEditing()) {
-                if (comboBoxID != null && getItem() != null) comboBoxID.setValue(getItem());
+                if (comboBoxID != null && getItem() != null) comboBoxID.getSelectionModel().select(getItem());
                 setText(null);
                 setGraphic(comboBoxID);
             } else {
-                setText(item);
+                setText(item.getCode());
                 setGraphic(null);
             }
         }
@@ -54,11 +55,10 @@ public class EditingCellList extends TableCell<Event, String> {
 
     private void createComboBox() {
         comboBoxID = new JFXComboBox<>();
-        comboBoxID.getItems().setAll(stringList);
+        comboBoxID.getItems().setAll(hospitals);
         if (getItem() != null) comboBoxID.setValue(getItem());
         comboBoxID.setMinWidth(this.getWidth());
         comboBoxID.getEditor().setAlignment(Pos.CENTER);
-
         comboBoxID.focusedProperty().addListener((ob, o, focused) -> {
             if (!focused) commitEdit(comboBoxID.getValue());
         });
