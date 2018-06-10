@@ -82,7 +82,7 @@ public class RecordComponent extends AnchorPane {
 
     private Record record;
 
-    public RecordComponent(Record record) {
+    public RecordComponent(final Record record) {
         this.record = record;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/component/record.fxml"));

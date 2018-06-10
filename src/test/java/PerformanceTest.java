@@ -1,4 +1,5 @@
 import model.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import service.DAO;
 
@@ -22,12 +23,12 @@ class PerformanceTest {
             "recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
 
     @Test
+    @DisplayName("Comprueba la inserción de registros con eventos")
     void addRecords() throws SQLException {
         int total = 0;
         List<Assembly> assemblies = DAO.assembly.queryBuilder().query();
         List<Resource> resources = DAO.resource.queryBuilder().query();
         List<Area> areas = DAO.area.queryBuilder().query();
-        List<Operative> operatives = DAO.operatives.queryBuilder().query();
         List<Hospital> hospitals = DAO.hospital.queryBuilder().query();
         List<String> keys = new ArrayList<>(Arrays.asList("CLAVE 0", "CLAVE 1.1", "CLAVE 1.2", "CLAVE 1.3", "CLAVE 2",
                 "CLAVE 3", "CLAVE 5", "CLAVE 6"));

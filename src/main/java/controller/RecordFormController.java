@@ -445,19 +445,7 @@ public class RecordFormController {
 
         codeID.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2 && record == null) {
-                record = new Record();
-                record.setDate(dateID.getValue());
-                try {
-                    DAO.record.create(record);
-                    record.refresh();
-
-                    codeID.setText(Utils.generateCode(record));
-                    eventFormID.setDisable(false);
-                    codeID.setCursor(Cursor.DEFAULT);
-                } catch (SQLException e) {
-                    snackbar.show("Se ha producido un error al generar el registro. " +
-                            "Por favor, intentelo de nuevo.", 6000);
-                }
+                addRecord();
             }
         });
 
@@ -510,7 +498,7 @@ public class RecordFormController {
             return;
         }
 
-        if (record == null) record = new Record();
+        if (record == null) addRecord();
         if (dateID.getValue() == null) dateID.setValue(LocalDate.now());
 
         record.setDate(dateID.getValue());
@@ -551,6 +539,22 @@ public class RecordFormController {
         if (maleID.isSelected()) return 1;
         else if (femaleID.isSelected()) return 2;
         else return 0;
+    }
+
+    private void addRecord() {
+        record = new Record();
+        record.setDate(dateID.getValue());
+        try {
+            DAO.record.create(record);
+            record.refresh();
+
+            codeID.setText(Utils.generateCode(record));
+            eventFormID.setDisable(false);
+            codeID.setCursor(Cursor.DEFAULT);
+        } catch (SQLException e) {
+            snackbar.show("Se ha producido un error al generar el registro. " +
+                    "Por favor, intentelo de nuevo.", 6000);
+        }
     }
 
     /* Listener */

@@ -1,4 +1,3 @@
-
 import model.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,11 +6,20 @@ import service.DAO;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class Tests {
-
+    
     @Test
-    @DisplayName("Add Hospital")
+    @DisplayName("Comprueba que no guarda cadenas vacias")
+    void myFirstTest() {
+        Record record = new Record();
+        record.setNotes("");
+        assertNull(record.getNotes());
+    }
+    
+    @Test
+    @DisplayName("Modulo Hospitales")
     void addHospital() throws SQLException {
         Hospital hos = new Hospital("H.Tests", "Hospital Tests", null);
         int size_before = DAO.hospital.queryBuilder().query().size();
@@ -24,7 +32,7 @@ class Tests {
     }
 
     @Test
-    @DisplayName("Add Recursos")
+    @DisplayName("Modulo Recursos")
     void addResource() throws SQLException {
         Resource recurso = new Resource("Ambulancia", "A.0.1", null);
         int size_before = DAO.resource.queryBuilder().query().size();
@@ -37,7 +45,7 @@ class Tests {
     }
 
     @Test
-    @DisplayName("Add Area")
+    @DisplayName("Modulo Areas")
     void addArea() throws SQLException {
         Area area = new Area("Nombre_area", "nom_area");
         int size_before = DAO.area.queryBuilder().query().size();
@@ -50,7 +58,7 @@ class Tests {
     }
 
     @Test
-    @DisplayName("Add Asamblea")
+    @DisplayName("Modulo Asambleas")
     void addAsamblea() throws SQLException {
         Assembly asam = new Assembly("nombre_asamblea", "N.A");
         int size_before = DAO.assembly.queryBuilder().query().size();
@@ -63,7 +71,7 @@ class Tests {
     }
 
     @Test
-    @DisplayName("Add Operative")
+    @DisplayName("Modulo Operativos")
     void addOperative() throws SQLException {
         Operative op = new Operative("op", "today");
         int size_before = DAO.operatives.queryBuilder().query().size();
@@ -76,7 +84,7 @@ class Tests {
     }
 
     @Test
-    @DisplayName("Add Service")
+    @DisplayName("Modulo Servicios")
     void addService() throws SQLException {
         Service servicio = new Service("servicio", null);
         int size_before = DAO.services.queryBuilder().query().size();
@@ -89,7 +97,7 @@ class Tests {
     }
 
     @Test
-    @DisplayName("Add User")
+    @DisplayName("Modulo Usarios")
     void addUser() throws SQLException {
         User usuario = new User("user", "usr", "elio");
         int size_before = DAO.users.queryBuilder().query().size();
