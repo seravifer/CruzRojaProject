@@ -212,6 +212,10 @@ public class ReportController {
             where.or(checkedArea.size());
             total++;
         }
+        
+        for (Service service : checkedService) {
+            where.eq("service_id", service.getID());
+        }
 
         if (!checkedService.isEmpty()) {
             where.or(checkedService.size());
