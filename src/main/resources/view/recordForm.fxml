@@ -131,15 +131,15 @@
                         <TableView fx:id="eventsTableID" editable="true" focusTraversable="false" layoutX="20.0" layoutY="497.0" prefHeight="260.0" prefWidth="1170.0" styleClass="eventTable" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="497.0">
                             <columns>
                                 <TableColumn fx:id="subCodeColumID" editable="false" maxWidth="150.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Código" />
-                                <TableColumn fx:id="hospitalColumID" editable="false" maxWidth="600.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Hospital" />
-                                <TableColumn fx:id="startTimeColumID" editable="false" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Hora inicio" />
-                                <TableColumn fx:id="startAssitanceColumID" editable="false" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Inicio asistencia" />
-                                <TableColumn fx:id="transferTimeColumID" editable="false" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Inicio translado" />
-                                <TableColumn fx:id="endTimeColumID" editable="false" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Hora fin" />
-                                <TableColumn fx:id="keyColumID" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false" text="Clave" />
-                                <TableColumn fx:id="pathologyColumID" editable="false" prefWidth="171.0" sortable="false" text="Patología" />
-                                <TableColumn fx:id="genderColumID" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" sortable="false" text="Genero" />
-                                <TableColumn fx:id="registryColumID" editable="false" prefWidth="132.0" sortable="false" text="Registro" />
+                                <TableColumn fx:id="hospitalColumID" maxWidth="600.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Hospital" />
+                                <TableColumn fx:id="startTimeColumID" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Hora inicio" />
+                                <TableColumn fx:id="startAssitanceColumID" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Inicio asistencia" />
+                                <TableColumn fx:id="transferTimeColumID" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Inicio translado" />
+                                <TableColumn fx:id="endTimeColumID" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Hora fin" />
+                                <TableColumn fx:id="keyColumID" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" sortable="false" text="Clave" />
+                                <TableColumn fx:id="pathologyColumID" prefWidth="171.0" sortable="false" text="Patología" />
+                                <TableColumn fx:id="genderColumID" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" sortable="false" text="Genero" />
+                                <TableColumn fx:id="registryColumID" prefWidth="132.0" sortable="false" text="Registro" />
                                 <TableColumn fx:id="iconColumnID" editable="false" maxWidth="36.0" minWidth="36.0" prefWidth="36.0" sortable="false" />
                             </columns>
                             <columnResizePolicy>

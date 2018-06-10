@@ -1,14 +1,16 @@
 package utils;
 
+import com.jfoenix.controls.JFXTextField;
 import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 import model.Event;
 
 public class EditingCellString extends TableCell<Event, String> {
 
-    private TextField textField;
+    private JFXTextField textField;
 
     public EditingCellString() {
     }
@@ -53,9 +55,9 @@ public class EditingCellString extends TableCell<Event, String> {
     }
 
     private void createTextField() {
-        textField = new TextField(getString());
+        textField = new JFXTextField(getString());
+        textField.setFocusColor(Color.valueOf("#e53935"));
         textField.setMinWidth(this.getWidth());
-        textField.setId("textfieldEvent");
         textField.setAlignment(Pos.CENTER);
         textField.focusedProperty().addListener((ob, o, n) -> {
             if (!n) commitEdit(textField.getText());

@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXComboBox;
 import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 import model.Event;
 
 import java.util.List;
@@ -54,6 +55,7 @@ public class EditingCellList extends TableCell<Event, String> {
 
     private void createComboBox() {
         comboBoxID = new JFXComboBox<>();
+        comboBoxID.setFocusColor(Color.valueOf("#e53935"));
         comboBoxID.getItems().setAll(stringList);
         if (getItem() != null) comboBoxID.setValue(getItem());
         comboBoxID.setMinWidth(this.getWidth());
