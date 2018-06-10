@@ -19,8 +19,6 @@ import utils.Utils;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class RecordComponent extends AnchorPane {
@@ -111,10 +109,10 @@ public class RecordComponent extends AnchorPane {
         evacuated_mID.setText(record.getEvacuated_m() + "");
 
         if (record.getResource() == null) {
-            ((VBox)resourceID.getParent()).getChildren().remove(resourceID);
+            ((VBox) resourceID.getParent()).getChildren().remove(resourceID);
             resourceID.setText("");
         } else {
-            if (resourceID.getParent() == null) ((VBox)assemblyID.getParent()).getChildren().add(0, resourceID);
+            if (resourceID.getParent() == null) ((VBox) assemblyID.getParent()).getChildren().add(0, resourceID);
             resourceID.setText(record.getResource().getCode());
         }
 
@@ -165,7 +163,7 @@ public class RecordComponent extends AnchorPane {
             alert.getButtonTypes().setAll(yesButton, noButton);
 
             Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == yesButton){
+            if (result.get() == yesButton) {
                 try {
                     record.delete();
                     ((VBox) this.getParent()).getChildren().remove(this);
@@ -192,7 +190,7 @@ public class RecordComponent extends AnchorPane {
             record.refresh();
             init();
             if (!all && record.getEndTime() != null) {
-                ((VBox)this.getParent()).getChildren().remove(this);
+                ((VBox) this.getParent()).getChildren().remove(this);
             }
         } catch (SQLException e) {
             e.printStackTrace();

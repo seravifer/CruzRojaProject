@@ -171,19 +171,6 @@ public class RecordFormController {
 
     private Record record;
 
-    private void loadView() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/recordForm.fxml"));
-            fxmlLoader.setController(this);
-            Parent parent = fxmlLoader.load();
-            SuperController.getInstance().setPage(parent, "Gestor de incidencias");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        init();
-    }
-
     public RecordFormController() {
         loadView();
 
@@ -220,6 +207,19 @@ public class RecordFormController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void loadView() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/recordForm.fxml"));
+            fxmlLoader.setController(this);
+            Parent parent = fxmlLoader.load();
+            SuperController.getInstance().setPage(parent, "Gestor de incidencias");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        init();
     }
 
     private void init() {
@@ -353,8 +353,10 @@ public class RecordFormController {
                             try {
                                 event.delete();
 
-                                if (event.getGender() == 1) evacuated_hID.setText((Integer.parseInt(evacuated_hID.getText()) - 1) + "");
-                                if (event.getGender() == 2) evacuated_mID.setText((Integer.parseInt(evacuated_mID.getText()) - 1) + "");
+                                if (event.getGender() == 1)
+                                    evacuated_hID.setText((Integer.parseInt(evacuated_hID.getText()) - 1) + "");
+                                if (event.getGender() == 2)
+                                    evacuated_mID.setText((Integer.parseInt(evacuated_mID.getText()) - 1) + "");
 
                                 getTableView().getItems().remove(event);
                             } catch (SQLException e1) {

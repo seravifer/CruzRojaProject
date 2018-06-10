@@ -3,14 +3,8 @@ package controller;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.util.Optional;
 
 public class SuperController {
 
@@ -45,6 +39,13 @@ public class SuperController {
         stage.show();
     }
 
+    public static SuperController getInstance() {
+        if (instance == null) {
+            instance = new SuperController();
+        }
+        return instance;
+    }
+
     public void setPage(Parent page, String title) {
         stage.setTitle(title);
         stage.getScene().setRoot(page);
@@ -59,12 +60,5 @@ public class SuperController {
     public void goBack() {
         stage.getScene().setRoot(home);
         controller.refresh();
-    }
-
-    public static SuperController getInstance() {
-        if(instance == null) {
-            instance = new SuperController();
-        }
-        return instance;
     }
 }

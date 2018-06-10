@@ -35,7 +35,8 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
     @DatabaseField
     private Integer gender;
 
-    public Event() {}
+    public Event() {
+    }
 
     public Event(Record record, int subcode, String key, LocalTime startTime, LocalTime startAssistance, LocalTime transferTime,
                  LocalTime endTime, Hospital hospital, String pathology, String registry, Integer gender) {
@@ -60,84 +61,84 @@ public class Event extends BaseDaoEnabled<Event, Integer> {
         return record;
     }
 
-    public int getSubcode() {
-        return subcode;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public LocalTime getStartTime() {
-        return startTime;
-    }
-
-    public LocalTime getStartAssistance() {
-        return startAssistance;
-    }
-
-    public LocalTime getTransferTime() {
-        return transferTime;
-    }
-
-    public LocalTime getEndTime() {
-        return endTime;
-    }
-
-    public Hospital getHospital() {
-        return hospital;
-    }
-
-    public String getPathology() {
-        return pathology;
-    }
-
-    public String getRegistry() {
-        return registry;
-    }
-
-    public Integer getGender() {
-        return gender;
-    }
-
     public void setRecord(Record record) {
         this.record = record;
+    }
+
+    public int getSubcode() {
+        return subcode;
     }
 
     public void setSubcode(int subcode) {
         this.subcode = subcode;
     }
 
+    public String getKey() {
+        return key;
+    }
+
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
     }
 
     public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
 
+    public LocalTime getStartAssistance() {
+        return startAssistance;
+    }
+
     public void setStartAssistance(LocalTime startAssistance) {
         this.startAssistance = startAssistance;
+    }
+
+    public LocalTime getTransferTime() {
+        return transferTime;
     }
 
     public void setTransferTime(LocalTime transferTime) {
         this.transferTime = transferTime;
     }
 
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
+    }
+
+    public Hospital getHospital() {
+        return hospital;
     }
 
     public void setHospital(Hospital hospital) {
         this.hospital = hospital;
     }
 
+    public String getPathology() {
+        return pathology;
+    }
+
     public void setPathology(String pathology) {
         this.pathology = pathology;
     }
 
+    public String getRegistry() {
+        return registry;
+    }
+
     public void setRegistry(String registry) {
         this.registry = registry;
+    }
+
+    public Integer getGender() {
+        return gender;
     }
 
     public void setGender(Integer gender) {

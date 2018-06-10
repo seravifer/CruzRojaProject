@@ -15,7 +15,8 @@ public class Assembly {
     @DatabaseField(canBeNull = false, unique = true)
     private String name;
 
-    public Assembly() {}
+    public Assembly() {
+    }
 
     public Assembly(String name, String code) {
         this.code = code;
@@ -30,16 +31,16 @@ public class Assembly {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getCode() {
         return code;
     }
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override

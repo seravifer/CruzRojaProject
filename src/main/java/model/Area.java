@@ -17,7 +17,8 @@ public class Area {
     @DatabaseField(canBeNull = false, unique = true)
     private String short_name;
 
-    public Area() {}
+    public Area() {
+    }
 
     public Area(String name, String short_name) {
         this.name = name;
@@ -32,12 +33,12 @@ public class Area {
         return name;
     }
 
-    public String getShortName() {
-        return short_name;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getShortName() {
+        return short_name;
     }
 
     public void setShortName(String short_name) {

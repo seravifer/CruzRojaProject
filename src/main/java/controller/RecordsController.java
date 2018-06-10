@@ -20,14 +20,13 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.shape.SVGPath;
 import model.Record;
+import model.User;
 import service.DAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
-
-import model.User;
 
 public class RecordsController extends BorderPane {
 
@@ -81,25 +80,26 @@ public class RecordsController extends BorderPane {
 
     @FXML
     private Label userID;
-    
+
     private User user;
     private Task task;
 
-    public RecordsController() {}
-    
-    RecordsController(User user) {
-         try {
-             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
-             fxmlLoader.setController(this);
-             Parent parent = fxmlLoader.load();
-             SuperController.getInstance().setHome(parent, this);
-         } catch (IOException e) {
-             e.printStackTrace();
-         }
+    public RecordsController() {
+    }
 
-         this.user = user;
-         init();
-     }
+    RecordsController(User user) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/records.fxml"));
+            fxmlLoader.setController(this);
+            Parent parent = fxmlLoader.load();
+            SuperController.getInstance().setHome(parent, this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        this.user = user;
+        init();
+    }
 
     private void init() {
         userID.setText(user.getName());
@@ -182,7 +182,7 @@ public class RecordsController extends BorderPane {
 
                 for (Node node : records) {
                     RecordComponent recordComponent = (RecordComponent) node;
-                    Platform.runLater(()-> recordComponent.refresh(!pendingID.isSelected()));
+                    Platform.runLater(() -> recordComponent.refresh(!pendingID.isSelected()));
                 }
 
                 Record lastRecord = DAO.record.queryBuilder()
@@ -190,7 +190,7 @@ public class RecordsController extends BorderPane {
                         .queryForFirst();
                 RecordComponent lastRecordAdded = (RecordComponent) records.get(0);
                 if (!lastRecord.equals(lastRecordAdded.getRecord()) && lastRecord.getEndTime() == null) {
-                    Platform.runLater(()-> recordsID.getChildren().add(0, new RecordComponent(lastRecord)));
+                    Platform.runLater(() -> recordsID.getChildren().add(0, new RecordComponent(lastRecord)));
                 }
 
                 return null;
@@ -213,7 +213,7 @@ public class RecordsController extends BorderPane {
 
     private ChangeListener onUpdating() {
         return (ob, o, status) -> {
-            if(status == Worker.State.RUNNING) {
+            if (status == Worker.State.RUNNING) {
                 optionsID.setDisable(true);
                 loadID.setVisible(true);
             } else if (status == Worker.State.SUCCEEDED) {

@@ -32,16 +32,16 @@
 }
 
 .eventTable .table-row-cell:filled:selected {
-    -fx-background: -fx-control-inner-background ;
-    -fx-background-color: -fx-table-cell-border-color, -fx-background ;
-    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-background: -fx-control-inner-background;
+    -fx-background-color: -fx-table-cell-border-color, -fx-background;
+    -fx-background-insets: 0, 0 0 1 0;
     -fx-table-cell-border-color: derive(-fx-color, 5%);
 }
 
 .eventTable .table-row-cell:odd:filled:selected {
-    -fx-background: -fx-control-inner-background ;
-    -fx-background-color: -fx-table-cell-border-color, -fx-background ;
-    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-background: -fx-control-inner-background;
+    -fx-background-color: -fx-table-cell-border-color, -fx-background;
+    -fx-background-insets: 0, 0 0 1 0;
     -fx-table-cell-border-color: derive(-fx-color, 5%);
 }
 
@@ -51,14 +51,15 @@
 
 .table-row-cell:empty, .table-cell:empty:hover {
     -fx-background-color: transparent;
-} 
+}
 
 /*  Admin Table */
-.tablaAdmin .table-row-cell:selected .table-cell{ 
+.tablaAdmin .table-row-cell:selected .table-cell {
     -fx-background-color: #EEEEEE;
-    -fx-color:  #000000;
+    -fx-color: #000000;
 }
-.table-view:focused .table-row-cell:selected{
+
+.table-view:focused .table-row-cell:selected {
     -fx-background-color: transparent;
     -fx-table-cell-border-color: transparent;
     -fx-text-fill: BLACK;
@@ -67,7 +68,6 @@
 .table-view:focused .table-row-cell:selected .table-cell {
     -fx-text-fill: BLACK;
 }
-
 
 /* Tab Pane */
 .jfx-tab-pane .tab-header-background {
@@ -95,7 +95,7 @@
     -fx-shape: "m 1099,704 q 0,-52 -37,-91 L 410,-38 q -37,-37 -90,-37 -53,0 -90,37 l -76,75 q -37,39 -37,91 0,53 37,90 l 486,486 -486,485 q -37,39 -37,91 0,53 37,90 l 76,75 q 36,38 90,38 54,0 90,-38 l 652,-651 q 37,-37 37,-90 z"
 }
 
-.jfx-tab-pane .headers-region > .tab-selected-line{
+.jfx-tab-pane .headers-region > .tab-selected-line {
     -fx-pref-width: 1px !important;
     -fx-pref-height: 2px;
 }
@@ -108,9 +108,8 @@
     -fx-background-color: #FFFFFF;;
 }
 
-
 .jfx-tab-pane .headers-region .tab .tab-container .tab-label {
-    -fx-text-fill: rgba(255,255,255, 1);
+    -fx-text-fill: rgba(255, 255, 255, 1);
     -fx-font-weight: BOLD;
     -fx-padding: 6 10 6 10;
     -fx-font-size: 16;
@@ -120,14 +119,13 @@
     -fx-text-fill: WHITE;
 }
 
-
-#textfieldEvent  {
-    -fx-background-color: #31a8a9, white , white;
+#textfieldEvent {
+    -fx-background-color: #31a8a9, white, white;
     -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
 }
 
 #textfieldEvent:focused {
-    -fx-background-color: #31a8a9, white , white;
+    -fx-background-color: #31a8a9, white, white;
     -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
 }
 
@@ -162,16 +160,16 @@
     -fx-border-width: 0 0 2 0;
 }
 
-#choice .combo-box-base>.label, #choice .choice-box>.label {
+#choice .combo-box-base > .label, #choice .choice-box > .label {
     -fx-padding: 0.7em 0.7em 0.7em 0em;
 }
 
-#choice .combo-box-base>.arrow-button, #choice .choice-box>.open-button {
+#choice .combo-box-base > .arrow-button, #choice .choice-box > .open-button {
     -fx-padding: 1.2em 0.7em 1.2em 0.5em;
     -fx-background-radius: 0.0 2.0 2.0 0.0;
 }
 
-#choice .combo-box-base>.arrow-button>.arrow, #choice .choice-box>.open-button>.arrow {
+#choice .combo-box-base > .arrow-button > .arrow, #choice .choice-box > .open-button > .arrow {
     -fx-background-color: rgb(77.0, 77.0, 77.0);
 }
 
@@ -200,25 +198,25 @@
 }
 
 .scroll-bar:horizontal .track,
-.scroll-bar:vertical .track{
+.scroll-bar:vertical .track {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-background-radius: 0em;
-    -fx-border-radius:2em;
+    -fx-border-radius: 2em;
 }
 
-.scroll-bar:horizontal .increment-button ,
+.scroll-bar:horizontal .increment-button,
 .scroll-bar:horizontal .decrement-button {
     -fx-background-color: transparent;
     -fx-background-radius: 0em;
-    -fx-padding:0 0 10 0;
+    -fx-padding: 0 0 10 0;
 }
 
-.scroll-bar:vertical .increment-button ,
+.scroll-bar:vertical .increment-button,
 .scroll-bar:vertical .decrement-button {
     -fx-background-color: transparent;
     -fx-background-radius: 0em;
-    -fx-padding:0 10 0 0;
+    -fx-padding: 0 10 0 0;
 }
 
 .scroll-bar .increment-arrow,

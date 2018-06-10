@@ -4,7 +4,6 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Objects;
-import java.util.StringJoiner;
 
 @DatabaseTable(tableName = "Operative")
 public class Operative {
@@ -16,7 +15,8 @@ public class Operative {
     @DatabaseField
     private String date;
 
-    public Operative() {}
+    public Operative() {
+    }
 
     public Operative(String name, String date) {
         this.name = name;
@@ -31,12 +31,12 @@ public class Operative {
         return name;
     }
 
-    public String getDate() {
-        return date;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public void setDate(String date) {

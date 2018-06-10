@@ -10,7 +10,8 @@ public class EditingCellString extends TableCell<Event, String> {
 
     private TextField textField;
 
-    public EditingCellString() {}
+    public EditingCellString() {
+    }
 
     @Override
     public void startEdit() {

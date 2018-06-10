@@ -15,7 +15,8 @@ public class User {
     @DatabaseField
     private String password;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String name_user, String username, String password) {
         this.name_user = name_user;
@@ -31,27 +32,28 @@ public class User {
         return name_user;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-    public String getHide(){
-        return "*****";
-    }
-
     public void setName(String name_user) {
         this.name_user = name_user;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getHide() {
+        return "*****";
     }
 
     @Override

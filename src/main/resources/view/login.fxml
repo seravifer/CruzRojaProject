@@ -8,21 +8,32 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-
-<VBox fx:id="principalPane" alignment="CENTER" fillWidth="false" maxHeight="700.0" maxWidth="1200.0" prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <AnchorPane prefHeight="303.0" prefWidth="300.0" style="-fx-background-color: #fff; -fx-background-radius: 2px;" VBox.vgrow="NEVER">
-         <children>
-            <ImageView fitHeight="50.0" fitWidth="400.0" layoutX="72.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/logo.png" />
-               </image>
-            </ImageView>
-            <JFXTextField fx:id="user" alignment="TOP_LEFT" focusColor="#f44336" labelFloat="true" layoutX="72.0" layoutY="126.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="155.0" promptText="Usuario" />
-            <JFXPasswordField fx:id="password" alignment="TOP_LEFT" focusColor="#f44336" labelFloat="true" layoutX="74.0" layoutY="173.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="155.0" promptText="Contraseña" />
-            <JFXButton fx:id="login" layoutX="111.0" layoutY="226.0" maxWidth="1.7976931348623157E308" onAction="#loginAction" prefHeight="25.0" prefWidth="76.0" style="-fx-background-color: #f44336 #f44336;" text="Entrar" textFill="WHITE" />
-            <Text fx:id="textAlert" fill="RED" layoutX="73.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-         </children>
-      </AnchorPane>
-   </children>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="principalPane" alignment="CENTER" fillWidth="false" maxHeight="700.0" maxWidth="1200.0"
+      prefHeight="700.0" prefWidth="1200.0" style="-fx-background-color: #fafafa;"
+      xmlns="http://javafx.com/javafx/8.0.141">
+    <children>
+        <AnchorPane prefHeight="303.0" prefWidth="300.0" style="-fx-background-color: #fff; -fx-background-radius: 2px;"
+                    VBox.vgrow="NEVER">
+            <children>
+                <ImageView fitHeight="50.0" fitWidth="400.0" layoutX="72.0" layoutY="46.0" pickOnBounds="true"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@../img/logo.png"/>
+                    </image>
+                </ImageView>
+                <JFXTextField fx:id="user" alignment="TOP_LEFT" focusColor="#f44336" labelFloat="true" layoutX="72.0"
+                              layoutY="126.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="155.0"
+                              promptText="Usuario"/>
+                <JFXPasswordField fx:id="password" alignment="TOP_LEFT" focusColor="#f44336" labelFloat="true"
+                                  layoutX="74.0" layoutY="173.0" maxHeight="1.7976931348623157E308"
+                                  maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="155.0"
+                                  promptText="Contraseña"/>
+                <JFXButton fx:id="login" layoutX="111.0" layoutY="226.0" maxWidth="1.7976931348623157E308"
+                           onAction="#loginAction" prefHeight="25.0" prefWidth="76.0"
+                           style="-fx-background-color: #f44336 #f44336;" text="Entrar" textFill="WHITE"/>
+                <Text fx:id="textAlert" fill="RED" layoutX="73.0" layoutY="223.0" strokeType="OUTSIDE"
+                      strokeWidth="0.0"/>
+            </children>
+        </AnchorPane>
+    </children>
 </VBox>

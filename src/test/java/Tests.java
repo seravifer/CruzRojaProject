@@ -1,37 +1,19 @@
 
-import java.sql.SQLException;
-import java.time.LocalTime;
-import model.Area;
-import model.Assembly;
-import model.Event;
-import model.Hospital;
-import model.Operative;
-import model.Record;
-import model.Resource;
-import model.Service;
-import model.User;
+import model.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import service.DAO;
 
-class TestExample {
+import java.sql.SQLException;
 
-    @Test
-    @DisplayName("Comprueba que no guarda cadenas vacias")
-    void myFirstTest() {
-        Record record = new Record();
-        record.setNotes("");
-        //assertEquals(null, record.getNotes());
-        assertNull(record.getNotes());
-    }
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class Tests {
 
     @Test
     @DisplayName("Add Hospital")
     void addHospital() throws SQLException {
-        Hospital hos = new Hospital("H.Test", "Hospital Test", null);
+        Hospital hos = new Hospital("H.Tests", "Hospital Tests", null);
         int size_before = DAO.hospital.queryBuilder().query().size();
         DAO.hospital.create(hos);
         int size_after = DAO.hospital.queryBuilder().query().size();
@@ -80,42 +62,43 @@ class TestExample {
         assertEquals(size_before + 1, size_after);
     }
 
-       @Test
+    @Test
     @DisplayName("Add Operative")
-    void addOperative() throws SQLException{
+    void addOperative() throws SQLException {
         Operative op = new Operative("op", "today");
         int size_before = DAO.operatives.queryBuilder().query().size();
         DAO.operatives.create(op);
         int size_after = DAO.operatives.queryBuilder().query().size();
-        Operative op_aux = DAO.operatives.queryBuilder().orderBy("ID_operative", false).queryForFirst();    
+        Operative op_aux = DAO.operatives.queryBuilder().orderBy("ID_operative", false).queryForFirst();
         DAO.operatives.delete(op);
-        assertEquals(op, op_aux);  
+        assertEquals(op, op_aux);
         assertEquals(size_before + 1, size_after);
     }
-         @Test
+
+    @Test
     @DisplayName("Add Service")
-    void addService() throws SQLException{
+    void addService() throws SQLException {
         Service servicio = new Service("servicio", null);
         int size_before = DAO.services.queryBuilder().query().size();
         DAO.services.create(servicio);
         int size_after = DAO.services.queryBuilder().query().size();
-        Service serv_aux = DAO.services.queryBuilder().orderBy("ID_service", false).queryForFirst();    
+        Service serv_aux = DAO.services.queryBuilder().orderBy("ID_service", false).queryForFirst();
         DAO.services.delete(servicio);
-        assertEquals(servicio, serv_aux);  
+        assertEquals(servicio, serv_aux);
         assertEquals(size_before + 1, size_after);
     }
-         @Test
+
+    @Test
     @DisplayName("Add User")
-    void addUser() throws SQLException{
+    void addUser() throws SQLException {
         User usuario = new User("user", "usr", "elio");
         int size_before = DAO.users.queryBuilder().query().size();
         DAO.users.create(usuario);
         int size_after = DAO.users.queryBuilder().query().size();
-        User usr_aux = DAO.users.queryBuilder().orderBy("ID_user", false).queryForFirst();    
+        User usr_aux = DAO.users.queryBuilder().orderBy("ID_user", false).queryForFirst();
         DAO.users.delete(usuario);
-        assertEquals(usuario, usr_aux);  
+        assertEquals(usuario, usr_aux);
         assertEquals(size_before + 1, size_after);
     }
-    
 
 }

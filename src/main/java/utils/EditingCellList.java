@@ -7,7 +7,6 @@ import javafx.scene.input.KeyCode;
 import model.Event;
 import model.Hospital;
 
-import java.time.LocalTime;
 import java.util.List;
 
 public class EditingCellList extends TableCell<Event, Hospital> {

@@ -19,7 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="1002.0" style="-fx-background-color: #F1F4F5;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="1002.0" style="-fx-background-color: #F1F4F5;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <AnchorPane maxHeight="70.0" prefHeight="70.0" prefWidth="802.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
             <children>
@@ -37,23 +37,23 @@
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </JFXButton>
-            <JFXButton fx:id="pdfButtonID" layoutX="369.0" layoutY="21.0" onAction="#export_pdf" ripplerFill="#c42126" style="-fx-background-color: #f44336;" text="Exportar a PDF" textFill="WHITE">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
-            <JFXProgressBar fx:id="loadingID" disable="true" maxWidth="1.7976931348623157E308" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-            <JFXButton layoutX="501.0" layoutY="21.0" onAction="#export_xls" ripplerFill="#c42126" style="-fx-background-color: #f44336;" text="Exportar a XLS" textFill="WHITE" fx:id="xlsButtonID">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </JFXButton>
+                <JFXButton fx:id="pdfButtonID" layoutX="369.0" layoutY="21.0" onAction="#export_pdf" ripplerFill="#c42126" style="-fx-background-color: #f44336;" text="Exportar a PDF" textFill="WHITE">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXButton>
+                <JFXProgressBar fx:id="loadingID" disable="true" maxWidth="1.7976931348623157E308" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                <JFXButton layoutX="501.0" layoutY="21.0" onAction="#export_xls" ripplerFill="#c42126" style="-fx-background-color: #f44336;" text="Exportar a XLS" textFill="WHITE" fx:id="xlsButtonID">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </JFXButton>
             </children>
             <effect>
                 <DropShadow color="#0000005d" height="29.53" offsetY="-1.0" radius="8.4275" width="6.18" />
@@ -61,54 +61,55 @@
         </AnchorPane>
     </top>
 
-   <left>
-      <AnchorPane prefHeight="514.0" prefWidth="255.0" style="-fx-background-color: #fff; -fx-border-color: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent); -fx-border-style: solid; -fx-border-width: 4px 0 0 0;" BorderPane.alignment="CENTER">
-         <children>
-            <VBox layoutX="8.0" layoutY="14.0" prefHeight="479.0" prefWidth="254.0" spacing="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-               <children>
-                  <JFXDatePicker fx:id="startDateID" defaultColor="#e53935" prefHeight="25.0" prefWidth="295.0" promptText="Fecha de inicio" showWeekNumbers="true" />
-                  <JFXDatePicker fx:id="endDateID" defaultColor="#e53935" prefHeight="25.0" prefWidth="262.0" promptText="Fecha de fin" showWeekNumbers="true" />
-                  <JFXComboBox fx:id="assemblyID" focusColor="#e53935" prefHeight="26.0" prefWidth="228.0" />
-                  <CheckComboBox id="choice" fx:id="serviceID" prefHeight="25.0" prefWidth="359.0" />
-                  <CheckComboBox id="choice" fx:id="areaID" prefHeight="25.0" prefWidth="379.0" />
-                  <CheckComboBox id="choice" fx:id="resourceID" prefHeight="25.0" prefWidth="431.0" />
-                  <JFXCheckBox fx:id="cb_gender" checkedColor="#c42126" text="Desglosar por género" />
-                  <JFXCheckBox fx:id="cb_service" checkedColor="#c42126" text="Desglosar por servicio" />
-                  <JFXCheckBox fx:id="cb_areas" checkedColor="#c42126" text="Desglosar por áreas" />
-                  <JFXCheckBox fx:id="cb_resource" checkedColor="#c42126" text="Desglosar por recurso" />
-                  <JFXCheckBox fx:id="cb_hours" checkedColor="#c42126" text="Mostrar horas de servicio" />
-                  <JFXCheckBox fx:id="cb_graphs" checkedColor="#c42126" text="Mostrar gráficos" />
-               </children>
-            </VBox>
-         </children>
-      </AnchorPane>
-   </left>
-   <center>
-      <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
-         <content>
-            <VBox alignment="TOP_CENTER">
-               <children>
-                  <HBox alignment="TOP_CENTER">
-                     <children>
-                        <AnchorPane fx:id="pageID" prefHeight="842.0" prefWidth="595.0" style="-fx-background-color: #fff;">
-                           <HBox.margin>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </HBox.margin>
-                           <padding>
-                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                           </padding>
-                           <children>
-                              <VBox fx:id="tabla_info" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0">
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding></VBox>
-                           </children>
-                        </AnchorPane>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-         </content>
-      </ScrollPane>
-   </center>
+    <left>
+        <AnchorPane prefHeight="514.0" prefWidth="255.0" style="-fx-background-color: #fff; -fx-border-color: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent); -fx-border-style: solid; -fx-border-width: 4px 0 0 0;" BorderPane.alignment="CENTER">
+            <children>
+                <VBox layoutX="8.0" layoutY="14.0" prefHeight="479.0" prefWidth="254.0" spacing="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                    <children>
+                        <JFXDatePicker fx:id="startDateID" defaultColor="#e53935" prefHeight="25.0" prefWidth="295.0" promptText="Fecha de inicio" showWeekNumbers="true" />
+                        <JFXDatePicker fx:id="endDateID" defaultColor="#e53935" prefHeight="25.0" prefWidth="262.0" promptText="Fecha de fin" showWeekNumbers="true" />
+                        <JFXComboBox fx:id="assemblyID" focusColor="#e53935" prefHeight="26.0" prefWidth="228.0" />
+                        <CheckComboBox id="choice" fx:id="serviceID" prefHeight="25.0" prefWidth="359.0" />
+                        <CheckComboBox id="choice" fx:id="areaID" prefHeight="25.0" prefWidth="379.0" />
+                        <CheckComboBox id="choice" fx:id="resourceID" prefHeight="25.0" prefWidth="431.0" />
+                        <JFXCheckBox fx:id="cb_gender" checkedColor="#c42126" text="Desglosar por género" />
+                        <JFXCheckBox fx:id="cb_service" checkedColor="#c42126" text="Desglosar por servicio" />
+                        <JFXCheckBox fx:id="cb_areas" checkedColor="#c42126" text="Desglosar por áreas" />
+                        <JFXCheckBox fx:id="cb_resource" checkedColor="#c42126" text="Desglosar por recurso" />
+                        <JFXCheckBox fx:id="cb_hours" checkedColor="#c42126" text="Mostrar horas de servicio" />
+                        <JFXCheckBox fx:id="cb_graphs" checkedColor="#c42126" text="Mostrar gráficos" />
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+    </left>
+    <center>
+        <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
+            <content>
+                <VBox alignment="TOP_CENTER">
+                    <children>
+                        <HBox alignment="TOP_CENTER">
+                            <children>
+                                <AnchorPane fx:id="pageID" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="842.0" prefWidth="595.0" style="-fx-background-color: #fff;">
+                                    <HBox.margin>
+                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                    </HBox.margin>
+                                    <padding>
+                                        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+                                    </padding>
+                                    <children>
+                                        <VBox fx:id="tabla_info" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                            </padding>
+                                        </VBox>
+                                    </children>
+                                </AnchorPane>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
 </BorderPane>

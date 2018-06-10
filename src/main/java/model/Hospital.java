@@ -4,7 +4,6 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Objects;
-import java.util.StringJoiner;
 
 @DatabaseTable(tableName = "Hospital")
 public class Hospital {
@@ -18,7 +17,8 @@ public class Hospital {
     @DatabaseField
     private String assembly;
 
-    public Hospital() {}
+    public Hospital() {
+    }
 
     public Hospital(String code, String name, String assembly) {
         this.code = code;
@@ -34,20 +34,20 @@ public class Hospital {
         return code;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getAssembly() {
-        return assembly;
-    }
-
     public void setCode(String code) {
         this.code = code;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAssembly() {
+        return assembly;
     }
 
     public void setAssembly(String assembly) {

@@ -5,27 +5,24 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.List;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.WritableImage;
+
 import javax.imageio.ImageIO;
+import java.io.*;
+import java.util.List;
 
 public class ReportPDFHelper {
 
-    Document document;
-    private static final com.itextpdf.text.Font catFont = 
+    private static final com.itextpdf.text.Font catFont =
             new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.COURIER, 18,
-            com.itextpdf.text.Font.BOLD);
-    private static final com.itextpdf.text.Font dugFont = 
+                    com.itextpdf.text.Font.BOLD);
+    private static final com.itextpdf.text.Font dugFont =
             new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.COURIER, 12,
-            com.itextpdf.text.Font.NORMAL);
+                    com.itextpdf.text.Font.NORMAL);
+    Document document;
 
     public ReportPDFHelper(File file, List<String> text, List<Node> graphs)
             throws FileNotFoundException, DocumentException, IOException {

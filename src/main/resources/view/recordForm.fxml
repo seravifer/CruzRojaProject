@@ -1,152 +1,229 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXDatePicker?>
-<?import com.jfoenix.controls.JFXRadioButton?>
-<?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXTimePicker?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.ToggleGroup?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.Font?>
-
-<BorderPane fx:id="rootID" prefHeight="887.0" prefWidth="1252.0" style="-fx-background-color: #F4F4F4;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="rootID" prefHeight="887.0" prefWidth="1252.0"
+            style="-fx-background-color: #F4F4F4;" xmlns="http://javafx.com/javafx/8.0.141">
     <top>
-        <AnchorPane maxHeight="70.0" prefHeight="70.0" prefWidth="802.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
+        <AnchorPane maxHeight="70.0" prefHeight="70.0" prefWidth="802.0" style="-fx-background-color: #fff;"
+                    BorderPane.alignment="CENTER">
             <children>
-                <ImageView fitHeight="47.0" fitWidth="138.0" layoutX="35.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="35.0">
+                <ImageView fitHeight="47.0" fitWidth="138.0" layoutX="35.0" layoutY="13.0" pickOnBounds="true"
+                           preserveRatio="true" AnchorPane.leftAnchor="35.0">
                     <image>
-                        <Image url="@../img/logo.png" />
+                        <Image url="@../img/logo.png"/>
                     </image>
                 </ImageView>
-                <Label alignment="CENTER_RIGHT" layoutX="700.0" layoutY="22.0" prefHeight="27.0" prefWidth="165.0" text="Nombre Apellido" textFill="#656565" AnchorPane.rightAnchor="137.0">
+                <Label alignment="CENTER_RIGHT" layoutX="700.0" layoutY="22.0" prefHeight="27.0" prefWidth="165.0"
+                       text="Nombre Apellido" textFill="#656565" AnchorPane.rightAnchor="137.0">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="18.0"/>
                     </font>
                 </Label>
-                <JFXButton layoutX="231.0" layoutY="21.0" onAction="#onSave" ripplerFill="#c42126" style="-fx-background-color: #f44336;" text="Guardar" textFill="WHITE">
+                <JFXButton layoutX="231.0" layoutY="21.0" onAction="#onSave" ripplerFill="#c42126"
+                           style="-fx-background-color: #f44336;" text="Guardar" textFill="WHITE">
                     <font>
-                        <Font size="15.0" />
+                        <Font size="15.0"/>
                     </font>
                     <cursor>
-                        <Cursor fx:constant="HAND" />
+                        <Cursor fx:constant="HAND"/>
                     </cursor>
                 </JFXButton>
-                <SVGPath fx:id="settingsID" content="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" fill="#656565" layoutX="957.4548223018646" layoutY="23.0" pickOnBounds="true" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="25.0">
+                <SVGPath fx:id="settingsID"
+                         content="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"
+                         fill="#656565" layoutX="957.4548223018646" layoutY="23.0" pickOnBounds="true"
+                         AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="25.0">
                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor></SVGPath>
-                <SVGPath content="M16.56,5.44L15.11,6.89C16.84,7.94 18,9.83 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12C6,9.83 7.16,7.94 8.88,6.88L7.44,5.44C5.36,6.88 4,9.28 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12C20,9.28 18.64,6.88 16.56,5.44M13,3H11V13H13" fill="#656565" layoutX="877.0" layoutY="24.0" pickOnBounds="true" scaleX="1.2" scaleY="1.2" AnchorPane.rightAnchor="105.0">
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </SVGPath>
+                <SVGPath
+                        content="M16.56,5.44L15.11,6.89C16.84,7.94 18,9.83 18,12A6,6 0 0,1 12,18A6,6 0 0,1 6,12C6,9.83 7.16,7.94 8.88,6.88L7.44,5.44C5.36,6.88 4,9.28 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12C20,9.28 18.64,6.88 16.56,5.44M13,3H11V13H13"
+                        fill="#656565" layoutX="877.0" layoutY="24.0" pickOnBounds="true" scaleX="1.2" scaleY="1.2"
+                        AnchorPane.rightAnchor="105.0">
                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor></SVGPath>
-                <Line endY="20.0" layoutX="917.0" layoutY="27.0" stroke="#c3c3c36b" AnchorPane.rightAnchor="84.5" />
-                <SVGPath fx:id="reportID" content="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M7,20H9V14H7V20M11,20H13V12H11V20M15,20H17V16H15V20Z" fill="#656565" layoutX="928.0" layoutY="23.0" pickOnBounds="true" AnchorPane.rightAnchor="54.0">
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </SVGPath>
+                <Line endY="20.0" layoutX="917.0" layoutY="27.0" stroke="#c3c3c36b" AnchorPane.rightAnchor="84.5"/>
+                <SVGPath fx:id="reportID"
+                         content="M13,9H18.5L13,3.5V9M6,2H14L20,8V20A2,2 0 0,1 18,22H6C4.89,22 4,21.1 4,20V4C4,2.89 4.89,2 6,2M7,20H9V14H7V20M11,20H13V12H11V20M15,20H17V16H15V20Z"
+                         fill="#656565" layoutX="928.0" layoutY="23.0" pickOnBounds="true"
+                         AnchorPane.rightAnchor="54.0">
                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor></SVGPath>
-                </children>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </SVGPath>
+            </children>
             <effect>
-                <DropShadow color="#0000005d" height="29.53" offsetY="-1.0" radius="8.4275" width="6.18" />
+                <DropShadow color="#0000005d" height="29.53" offsetY="-1.0" radius="8.4275" width="6.18"/>
             </effect>
         </AnchorPane>
     </top>
     <center>
-      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="780.0">
-         <children>
-            <AnchorPane layoutX="20.0" layoutY="40.0" style="-fx-background-color: #fff;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
-               <children>
-                  <Label fx:id="codeID" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="22.0" maxWidth="1.7976931348623157E308" text="#18/-------" textAlignment="CENTER" AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="22.0">
-                     <font>
-                        <Font size="34.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Label>
-                  <JFXDatePicker fx:id="dateID" defaultColor="#e53935" layoutX="246.0" layoutY="32.0" promptText="Fecha" />
-                  <JFXTimePicker fx:id="startTimeID" defaultColor="#e53935" layoutX="25.0" layoutY="117.0" maxWidth="1.7976931348623157E308" promptText="Hora de inicio" />
-                  <JFXTimePicker fx:id="endTimeID" defaultColor="#e53935" layoutX="25.0" layoutY="177.0" maxWidth="1.7976931348623157E308" promptText="Hora de fin" />
-                  <JFXComboBox fx:id="assemblyID" focusColor="#e53935" labelFloat="true" layoutX="249.0" layoutY="116.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="185.0" promptText="Asamblea" visibleRowCount="20" />
-                  <JFXComboBox fx:id="resourceID" focusColor="#e53935" labelFloat="true" layoutX="248.0" layoutY="177.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="190.0" promptText="Recurso" visibleRowCount="20" />
-                  <JFXComboBox fx:id="areaID" focusColor="#e53935" labelFloat="true" layoutX="462.0" layoutY="116.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="287.0" promptText="Área" visibleRowCount="20" />
-                  <JFXComboBox fx:id="serviceID" focusColor="#e53935" labelFloat="true" layoutX="462.0" layoutY="177.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="286.0" promptText="Servicio" visibleRowCount="20" />
-                  <JFXTextField fx:id="assistance_hID" alignment="CENTER" focusColor="#e53935" layoutX="54.0" layoutY="266.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="36.0" text="0" unFocusColor="#2711e8" />
-                  <JFXTextField fx:id="assistance_mID" alignment="CENTER" focusColor="#e53935" layoutX="54.0" layoutY="301.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="37.0" text="0" unFocusColor="#ce20da" />
-                  <JFXTextField fx:id="evacuated_hID" alignment="CENTER" editable="false" focusColor="#2711e8" layoutX="138.0" layoutY="263.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="33.0" text="0" unFocusColor="#2711e8" />
-                  <JFXTextField fx:id="evacuated_mID" alignment="CENTER" editable="false" focusColor="#ce20da" layoutX="138.0" layoutY="301.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="33.0" text="0" unFocusColor="#ce20da" />
-                  <JFXTextField fx:id="addressID" focusColor="#e53935" labelFloat="true" layoutX="249.0" layoutY="244.0" maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="499.0" promptText="Lugar de intervención" />
-                  <JFXTextField fx:id="registryID" focusColor="#e53935" labelFloat="true" layoutX="249.0" layoutY="299.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="165.0" promptText="Registro" />
-                  <JFXTextField fx:id="notesID" focusColor="#e53935" labelFloat="true" layoutX="436.0" layoutY="297.0" maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="314.0" promptText="Notas" />
-                  <SVGPath content="M9,9C10.29,9 11.5,9.41 12.47,10.11L17.58,5H13V3H21V11H19V6.41L13.89,11.5C14.59,12.5 15,13.7 15,15A6,6 0 0,1 9,21A6,6 0 0,1 3,15A6,6 0 0,1 9,9M9,11A4,4 0 0,0 5,15A4,4 0 0,0 9,19A4,4 0 0,0 13,15A4,4 0 0,0 9,11Z" fill="#2711e8" layoutX="108.0" layoutY="269.0" />
-                  <SVGPath content="M12,4A6,6 0 0,1 18,10C18,12.97 15.84,15.44 13,15.92V18H15V20H13V22H11V20H9V18H11V15.92C8.16,15.44 6,12.97 6,10A6,6 0 0,1 12,4M12,6A4,4 0 0,0 8,10A4,4 0 0,0 12,14A4,4 0 0,0 16,10A4,4 0 0,0 12,6Z" fill="#ce20da" layoutX="108.0" layoutY="305.0" />
-                  <SVGPath content="M9,9C10.29,9 11.5,9.41 12.47,10.11L17.58,5H13V3H21V11H19V6.41L13.89,11.5C14.59,12.5 15,13.7 15,15A6,6 0 0,1 9,21A6,6 0 0,1 3,15A6,6 0 0,1 9,9M9,11A4,4 0 0,0 5,15A4,4 0 0,0 9,19A4,4 0 0,0 13,15A4,4 0 0,0 9,11Z" fill="#2711e8" layoutX="27.0" layoutY="270.0" />
-                  <SVGPath content="M12,4A6,6 0 0,1 18,10C18,12.97 15.84,15.44 13,15.92V18H15V20H13V22H11V20H9V18H11V15.92C8.16,15.44 6,12.97 6,10A6,6 0 0,1 12,4M12,6A4,4 0 0,0 8,10A4,4 0 0,0 12,14A4,4 0 0,0 16,10A4,4 0 0,0 12,6Z" fill="#ce20da" layoutX="27.0" layoutY="306.0" />
-                  <Label layoutX="112.0" layoutY="243.0" text="Evacuados" />
-                  <Label layoutX="39.0" layoutY="244.0" text="Asistidos" />
-                  <AnchorPane fx:id="eventFormID" layoutX="14.0" layoutY="372.0" prefHeight="101.0" prefWidth="1170.0" style="-fx-background-color: #e9e9e9;" AnchorPane.leftAnchor="20.0">
-                     <children>
-                        <JFXTimePicker fx:id="startTimeEventID" defaultColor="#e53935" layoutX="132.0" layoutY="12.0" prefHeight="25.0" prefWidth="165.0" promptText="Inicio" />
-                        <JFXTimePicker fx:id="startAssitanceEventID" defaultColor="#e53935" layoutX="132.0" layoutY="56.0" prefHeight="25.0" prefWidth="165.0" promptText="Inicio asistencia" />
-                        <JFXTimePicker fx:id="endTimeEventID" defaultColor="#e53935" layoutX="329.0" layoutY="12.0" prefHeight="25.0" prefWidth="165.0" promptText="Fin" />
-                        <JFXTimePicker fx:id="transferTimeEventID" defaultColor="#e53935" layoutX="329.0" layoutY="55.0" prefHeight="25.0" prefWidth="165.0" promptText="Hora translado" />
-                        <JFXComboBox fx:id="hospitalID" focusColor="#e53935" layoutX="529.0" layoutY="14.0" prefHeight="23.0" prefWidth="234.0" promptText="Hospital" visibleRowCount="15" />
-                        <JFXTextField fx:id="pathologyID" focusColor="#e53935" labelFloat="true" layoutX="529.0" layoutY="57.0" prefHeight="23.0" prefWidth="398.0" promptText="Patología" />
-                        <JFXComboBox fx:id="keyID" focusColor="#e53935" layoutX="798.0" layoutY="14.0" prefHeight="23.0" prefWidth="127.0" promptText="Clave" />
-                        <JFXTextField fx:id="patientID" focusColor="#e53935" labelFloat="true" layoutX="962.0" layoutY="55.0" prefHeight="23.0" prefWidth="174.0" promptText="Registro" />
-                        <JFXRadioButton fx:id="maleID" layoutX="962.0" layoutY="17.0" selected="true" text="Hombre">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="gender" />
-                           </toggleGroup>
-                        </JFXRadioButton>
-                        <JFXRadioButton fx:id="femaleID" layoutX="1066.0" layoutY="17.0" text="Mujer" toggleGroup="$gender" />
-                        <JFXButton fx:id="addEventID" layoutX="29.0" layoutY="35.0" prefHeight="31.0" prefWidth="70.0" ripplerFill="#ff6d6d" style="-fx-background-color: #eb2323;" text="Añadir" textFill="WHITE" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="32.0">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </JFXButton>
-                     </children>
-                  </AnchorPane>
-                  <SVGPath fx:id="closeID" content="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" fill="#b0b0b066" layoutX="878.0" layoutY="42.0" onMouseClicked="#onClose" pickOnBounds="true" scaleX="5.0" scaleY="5.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </SVGPath>
-                  <TableView fx:id="eventsTableID" editable="true" focusTraversable="false" layoutX="20.0" layoutY="497.0" prefHeight="260.0" prefWidth="1170.0" styleClass="eventTable" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="497.0">
-                    <columns>
-                      <TableColumn fx:id="subCodeColumID" maxWidth="150.0" minWidth="120.0" prefWidth="120.0" sortable="false" text="Código" />
-                      <TableColumn fx:id="transferColumID" prefWidth="134.0" sortable="false" text="Lugar de translado" />
-                        <TableColumn fx:id="startTimeColumID" prefWidth="141.0" sortable="false" text="Hora inicio" />
-                        <TableColumn fx:id="startAssitanceColumID" prefWidth="75.0" text="Inicio asistencia" />
-                        <TableColumn fx:id="transferTimeColumID" prefWidth="136.0" sortable="false" text="Inicio translado" />
-                        <TableColumn fx:id="endTimeColumID" prefWidth="142.0" sortable="false" text="Hora fin" />
-                        <TableColumn fx:id="keyColumID" prefWidth="75.0" text="Clave" />
-                        <TableColumn fx:id="pathologyColumID" prefWidth="171.0" sortable="false" text="Patología" />
-                        <TableColumn fx:id="genderColumID" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="Genero" />
-                        <TableColumn fx:id="registryColumID" prefWidth="50.0" sortable="false" text="Registro" />
-                        <TableColumn fx:id="iconColumnID" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
-                    </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
-                  <JFXComboBox fx:id="operativeID" focusColor="#e53935" layoutX="534.0" layoutY="32.0" prefHeight="23.0" prefWidth="214.0" promptText="Operativo" />
-               </children>
-            </AnchorPane>
-         </children>
-      </AnchorPane>
-   </center>
+        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="400.0"
+                    minWidth="600.0" prefHeight="400.0" prefWidth="780.0">
+            <children>
+                <AnchorPane layoutX="20.0" layoutY="40.0" style="-fx-background-color: #fff;"
+                            AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
+                            AnchorPane.topAnchor="20.0">
+                    <children>
+                        <Label fx:id="codeID" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="22.0"
+                               maxWidth="1.7976931348623157E308" text="#18/-------" textAlignment="CENTER"
+                               AnchorPane.leftAnchor="22.0" AnchorPane.topAnchor="22.0">
+                            <font>
+                                <Font size="34.0"/>
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </Label>
+                        <JFXDatePicker fx:id="dateID" defaultColor="#e53935" layoutX="246.0" layoutY="32.0"
+                                       promptText="Fecha"/>
+                        <JFXTimePicker fx:id="startTimeID" defaultColor="#e53935" layoutX="25.0" layoutY="117.0"
+                                       maxWidth="1.7976931348623157E308" promptText="Hora de inicio"/>
+                        <JFXTimePicker fx:id="endTimeID" defaultColor="#e53935" layoutX="25.0" layoutY="177.0"
+                                       maxWidth="1.7976931348623157E308" promptText="Hora de fin"/>
+                        <JFXComboBox fx:id="assemblyID" focusColor="#e53935" labelFloat="true" layoutX="249.0"
+                                     layoutY="116.0" maxWidth="1.7976931348623157E308" prefHeight="25.0"
+                                     prefWidth="185.0" promptText="Asamblea" visibleRowCount="20"/>
+                        <JFXComboBox fx:id="resourceID" focusColor="#e53935" labelFloat="true" layoutX="248.0"
+                                     layoutY="177.0" maxWidth="1.7976931348623157E308" prefHeight="25.0"
+                                     prefWidth="190.0" promptText="Recurso" visibleRowCount="20"/>
+                        <JFXComboBox fx:id="areaID" focusColor="#e53935" labelFloat="true" layoutX="462.0"
+                                     layoutY="116.0" maxWidth="1.7976931348623157E308" prefHeight="25.0"
+                                     prefWidth="287.0" promptText="Área" visibleRowCount="20"/>
+                        <JFXComboBox fx:id="serviceID" focusColor="#e53935" labelFloat="true" layoutX="462.0"
+                                     layoutY="177.0" maxWidth="1.7976931348623157E308" prefHeight="25.0"
+                                     prefWidth="286.0" promptText="Servicio" visibleRowCount="20"/>
+                        <JFXTextField fx:id="assistance_hID" alignment="CENTER" focusColor="#e53935" layoutX="54.0"
+                                      layoutY="266.0" maxWidth="1.7976931348623157E308" prefHeight="25.0"
+                                      prefWidth="36.0" text="0" unFocusColor="#2711e8"/>
+                        <JFXTextField fx:id="assistance_mID" alignment="CENTER" focusColor="#e53935" layoutX="54.0"
+                                      layoutY="301.0" maxWidth="1.7976931348623157E308" prefHeight="25.0"
+                                      prefWidth="37.0" text="0" unFocusColor="#ce20da"/>
+                        <JFXTextField fx:id="evacuated_hID" alignment="CENTER" editable="false" focusColor="#2711e8"
+                                      layoutX="138.0" layoutY="263.0" maxWidth="1.7976931348623157E308"
+                                      prefHeight="25.0" prefWidth="33.0" text="0" unFocusColor="#2711e8"/>
+                        <JFXTextField fx:id="evacuated_mID" alignment="CENTER" editable="false" focusColor="#ce20da"
+                                      layoutX="138.0" layoutY="301.0" maxWidth="1.7976931348623157E308"
+                                      prefHeight="25.0" prefWidth="33.0" text="0" unFocusColor="#ce20da"/>
+                        <JFXTextField fx:id="addressID" focusColor="#e53935" labelFloat="true" layoutX="249.0"
+                                      layoutY="244.0" maxWidth="1.7976931348623157E308" prefHeight="29.0"
+                                      prefWidth="499.0" promptText="Lugar de intervención"/>
+                        <JFXTextField fx:id="registryID" focusColor="#e53935" labelFloat="true" layoutX="249.0"
+                                      layoutY="299.0" maxWidth="1.7976931348623157E308" prefHeight="25.0"
+                                      prefWidth="165.0" promptText="Registro"/>
+                        <JFXTextField fx:id="notesID" focusColor="#e53935" labelFloat="true" layoutX="436.0"
+                                      layoutY="297.0" maxWidth="1.7976931348623157E308" prefHeight="29.0"
+                                      prefWidth="314.0" promptText="Notas"/>
+                        <SVGPath
+                                content="M9,9C10.29,9 11.5,9.41 12.47,10.11L17.58,5H13V3H21V11H19V6.41L13.89,11.5C14.59,12.5 15,13.7 15,15A6,6 0 0,1 9,21A6,6 0 0,1 3,15A6,6 0 0,1 9,9M9,11A4,4 0 0,0 5,15A4,4 0 0,0 9,19A4,4 0 0,0 13,15A4,4 0 0,0 9,11Z"
+                                fill="#2711e8" layoutX="108.0" layoutY="269.0"/>
+                        <SVGPath
+                                content="M12,4A6,6 0 0,1 18,10C18,12.97 15.84,15.44 13,15.92V18H15V20H13V22H11V20H9V18H11V15.92C8.16,15.44 6,12.97 6,10A6,6 0 0,1 12,4M12,6A4,4 0 0,0 8,10A4,4 0 0,0 12,14A4,4 0 0,0 16,10A4,4 0 0,0 12,6Z"
+                                fill="#ce20da" layoutX="108.0" layoutY="305.0"/>
+                        <SVGPath
+                                content="M9,9C10.29,9 11.5,9.41 12.47,10.11L17.58,5H13V3H21V11H19V6.41L13.89,11.5C14.59,12.5 15,13.7 15,15A6,6 0 0,1 9,21A6,6 0 0,1 3,15A6,6 0 0,1 9,9M9,11A4,4 0 0,0 5,15A4,4 0 0,0 9,19A4,4 0 0,0 13,15A4,4 0 0,0 9,11Z"
+                                fill="#2711e8" layoutX="27.0" layoutY="270.0"/>
+                        <SVGPath
+                                content="M12,4A6,6 0 0,1 18,10C18,12.97 15.84,15.44 13,15.92V18H15V20H13V22H11V20H9V18H11V15.92C8.16,15.44 6,12.97 6,10A6,6 0 0,1 12,4M12,6A4,4 0 0,0 8,10A4,4 0 0,0 12,14A4,4 0 0,0 16,10A4,4 0 0,0 12,6Z"
+                                fill="#ce20da" layoutX="27.0" layoutY="306.0"/>
+                        <Label layoutX="112.0" layoutY="243.0" text="Evacuados"/>
+                        <Label layoutX="39.0" layoutY="244.0" text="Asistidos"/>
+                        <AnchorPane fx:id="eventFormID" layoutX="14.0" layoutY="372.0" prefHeight="101.0"
+                                    prefWidth="1170.0" style="-fx-background-color: #e9e9e9;"
+                                    AnchorPane.leftAnchor="20.0">
+                            <children>
+                                <JFXTimePicker fx:id="startTimeEventID" defaultColor="#e53935" layoutX="132.0"
+                                               layoutY="12.0" prefHeight="25.0" prefWidth="165.0" promptText="Inicio"/>
+                                <JFXTimePicker fx:id="startAssitanceEventID" defaultColor="#e53935" layoutX="132.0"
+                                               layoutY="56.0" prefHeight="25.0" prefWidth="165.0"
+                                               promptText="Inicio asistencia"/>
+                                <JFXTimePicker fx:id="endTimeEventID" defaultColor="#e53935" layoutX="329.0"
+                                               layoutY="12.0" prefHeight="25.0" prefWidth="165.0" promptText="Fin"/>
+                                <JFXTimePicker fx:id="transferTimeEventID" defaultColor="#e53935" layoutX="329.0"
+                                               layoutY="55.0" prefHeight="25.0" prefWidth="165.0"
+                                               promptText="Hora translado"/>
+                                <JFXComboBox fx:id="hospitalID" focusColor="#e53935" layoutX="529.0" layoutY="14.0"
+                                             prefHeight="23.0" prefWidth="234.0" promptText="Hospital"
+                                             visibleRowCount="15"/>
+                                <JFXTextField fx:id="pathologyID" focusColor="#e53935" labelFloat="true" layoutX="529.0"
+                                              layoutY="57.0" prefHeight="23.0" prefWidth="398.0"
+                                              promptText="Patología"/>
+                                <JFXComboBox fx:id="keyID" focusColor="#e53935" layoutX="798.0" layoutY="14.0"
+                                             prefHeight="23.0" prefWidth="127.0" promptText="Clave"/>
+                                <JFXTextField fx:id="patientID" focusColor="#e53935" labelFloat="true" layoutX="962.0"
+                                              layoutY="55.0" prefHeight="23.0" prefWidth="174.0" promptText="Registro"/>
+                                <JFXRadioButton fx:id="maleID" layoutX="962.0" layoutY="17.0" selected="true"
+                                                text="Hombre">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="gender"/>
+                                    </toggleGroup>
+                                </JFXRadioButton>
+                                <JFXRadioButton fx:id="femaleID" layoutX="1066.0" layoutY="17.0" text="Mujer"
+                                                toggleGroup="$gender"/>
+                                <JFXButton fx:id="addEventID" layoutX="29.0" layoutY="35.0" prefHeight="31.0"
+                                           prefWidth="70.0" ripplerFill="#ff6d6d" style="-fx-background-color: #eb2323;"
+                                           text="Añadir" textFill="WHITE" AnchorPane.bottomAnchor="32.0"
+                                           AnchorPane.leftAnchor="29.0" AnchorPane.topAnchor="32.0">
+                                    <font>
+                                        <Font size="16.0"/>
+                                    </font>
+                                    <cursor>
+                                        <Cursor fx:constant="HAND"/>
+                                    </cursor>
+                                </JFXButton>
+                            </children>
+                        </AnchorPane>
+                        <SVGPath fx:id="closeID"
+                                 content="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"
+                                 fill="#b0b0b066" layoutX="878.0" layoutY="42.0" onMouseClicked="#onClose"
+                                 pickOnBounds="true" scaleX="5.0" scaleY="5.0" AnchorPane.rightAnchor="40.0"
+                                 AnchorPane.topAnchor="40.0">
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </SVGPath>
+                        <TableView fx:id="eventsTableID" editable="true" focusTraversable="false" layoutX="20.0"
+                                   layoutY="497.0" prefHeight="260.0" prefWidth="1170.0" styleClass="eventTable"
+                                   AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0"
+                                   AnchorPane.topAnchor="497.0">
+                            <columns>
+                                <TableColumn fx:id="subCodeColumID" maxWidth="150.0" minWidth="120.0" prefWidth="120.0"
+                                             sortable="false" text="Código"/>
+                                <TableColumn fx:id="transferColumID" prefWidth="134.0" sortable="false"
+                                             text="Lugar de translado"/>
+                                <TableColumn fx:id="startTimeColumID" prefWidth="141.0" sortable="false"
+                                             text="Hora inicio"/>
+                                <TableColumn fx:id="startAssitanceColumID" prefWidth="75.0" text="Inicio asistencia"/>
+                                <TableColumn fx:id="transferTimeColumID" prefWidth="136.0" sortable="false"
+                                             text="Inicio translado"/>
+                                <TableColumn fx:id="endTimeColumID" prefWidth="142.0" sortable="false" text="Hora fin"/>
+                                <TableColumn fx:id="keyColumID" prefWidth="75.0" text="Clave"/>
+                                <TableColumn fx:id="pathologyColumID" prefWidth="171.0" sortable="false"
+                                             text="Patología"/>
+                                <TableColumn fx:id="genderColumID" maxWidth="50.0" minWidth="50.0" prefWidth="50.0"
+                                             text="Genero"/>
+                                <TableColumn fx:id="registryColumID" prefWidth="50.0" sortable="false" text="Registro"/>
+                                <TableColumn fx:id="iconColumnID" maxWidth="50.0" minWidth="50.0" prefWidth="50.0"/>
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                            </columnResizePolicy>
+                        </TableView>
+                        <JFXComboBox fx:id="operativeID" focusColor="#e53935" layoutX="534.0" layoutY="32.0"
+                                     prefHeight="23.0" prefWidth="214.0" promptText="Operativo"/>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+    </center>
 </BorderPane>

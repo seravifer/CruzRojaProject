@@ -9,11 +9,7 @@ import javafx.scene.input.KeyEvent;
 
 public class AutoComplete {
 
-    public interface AutoCompleteComparator<T> {
-        boolean matches(String typedText, T objectToCompare);
-    }
-
-    public static<T> void set(ComboBox<T> comboBox, AutoCompleteComparator<T> comparatorMethod) {
+    public static <T> void set(ComboBox<T> comboBox, AutoCompleteComparator<T> comparatorMethod) {
         ObservableList<T> data = comboBox.getItems();
 
         comboBox.setEditable(true);
@@ -92,11 +88,15 @@ public class AutoComplete {
         });
     }
 
-    public static<T> T getValue(ComboBox<T> comboBox){
+    public static <T> T getValue(ComboBox<T> comboBox) {
         if (comboBox.getSelectionModel().getSelectedIndex() < 0) {
             return null;
         } else {
             return comboBox.getItems().get(comboBox.getSelectionModel().getSelectedIndex());
         }
+    }
+
+    public interface AutoCompleteComparator<T> {
+        boolean matches(String typedText, T objectToCompare);
     }
 }

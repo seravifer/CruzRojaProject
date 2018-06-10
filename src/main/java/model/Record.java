@@ -48,7 +48,8 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
     @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Operative operative;
 
-    public Record() {}
+    public Record() {
+    }
 
     public Record(LocalDate date, int code, Resource resource, Assembly assembly, LocalTime startTime, LocalTime endTime,
                   Area area, Service service, String address, String assistance_h, String assistance_m,
@@ -79,36 +80,72 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
         return date;
     }
 
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     public int getCode() {
         return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public Resource getResource() {
         return resource;
     }
 
+    public void setResource(Resource resource) {
+        this.resource = resource;
+    }
+
     public Assembly getAssembly() {
         return assembly;
+    }
+
+    public void setAssembly(Assembly assembly) {
+        this.assembly = assembly;
     }
 
     public LocalTime getStartTime() {
         return startTime;
     }
 
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
     public LocalTime getEndTime() {
         return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
     }
 
     public Area getArea() {
         return area;
     }
 
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
     public Service getService() {
         return service;
     }
 
+    public void setService(Service service) {
+        this.service = service;
+    }
+
     public String getAddress() {
         return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = Utils.emptyStringToNull(address);
     }
 
     public int getAssistance_h() {
@@ -131,52 +168,28 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
         return registry;
     }
 
+    public void setRegistry(String registry) {
+        this.registry = Utils.emptyStringToNull(registry);
+    }
+
     public String getNotes() {
         return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = Utils.emptyStringToNull(notes);
     }
 
     public Operative getOperative() {
         return operative;
     }
 
+    public void setOperative(Operative operative) {
+        this.operative = operative;
+    }
+
     public void setID(int ID_record) {
         this.ID_record = ID_record;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public void setResource(Resource resource) {
-        this.resource = resource;
-    }
-
-    public void setAssembly(Assembly assembly) {
-        this.assembly = assembly;
-    }
-
-    public void setStartTime(LocalTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setEndTime(LocalTime endTime) {
-        this.endTime = endTime;
-    }
-
-    public void setArea(Area area) {
-        this.area = area;
-    }
-
-    public void setService(Service service) {
-        this.service = service;
-    }
-
-    public void setAddress(String address) {
-        this.address = Utils.emptyStringToNull(address);
     }
 
     public void setAssistanceH(String assistance_h) {
@@ -193,18 +206,6 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
 
     public void setEvacuatedM(String evacuated_m) {
         this.evacuated_m = Integer.parseInt(evacuated_m);
-    }
-
-    public void setRegistry(String registry) {
-        this.registry = Utils.emptyStringToNull(registry);
-    }
-
-    public void setNotes(String notes) {
-        this.notes = Utils.emptyStringToNull(notes);
-    }
-
-    public void setOperative(Operative operative) {
-        this.operative = operative;
     }
 
     @Override
@@ -244,26 +245,94 @@ public class Record extends BaseDaoEnabled<Record, Integer> {
                 ", operative=" + operative +
                 '}';
     }
-    
+
     public Object[] getInfo() {
-        Object[] info  = new Object[17];
-        try { info[0]  = this.getID_record() + ""; } catch (Exception e) { info[0]  = "-"; }
-        try { info[1]  = this.getDate().toString() + ""; } catch (Exception e) { info[1]  = "-"; }
-        try { info[2]  = this.getCode() + ""; } catch (Exception e) { info[2]  = "-"; }
-        try { info[3]  = this.getResource().getCode() + ""; } catch (Exception e) { info[3]  = "-"; }
-        try { info[4]  = this.getAssembly().getName() + ""; } catch (Exception e) { info[4]  = "-"; }
-        try { info[5]  = this.getStartTime().toString() + ""; } catch (Exception e) { info[5]  = "-"; }
-        try { info[6]  = this.getEndTime().toString() + ""; } catch (Exception e) { info[6]  = "-"; }
-        try { info[7]  = this.getArea().getName() + ""; } catch (Exception e) { info[7]  = "-"; }
-        try { info[8]  = this.getService().getName() + ""; } catch (Exception e) { info[8]  = "-"; }
-        try { info[9]  = this.getAddress() + ""; } catch (Exception e) { info[9]  = "-"; }
-        try { info[10] = this.getAssistance_h() + ""; } catch (Exception e) { info[10] = "-"; }
-        try { info[11] = this.getAssistance_m() + ""; } catch (Exception e) { info[11] = "-"; }
-        try { info[12] = this.getEvacuated_h() + ""; } catch (Exception e) { info[12] = "-"; }
-        try { info[13] = this.getEvacuated_m() + ""; } catch (Exception e) { info[13] = "-"; }
-        try { info[14] = this.getRegistry() + ""; } catch (Exception e) { info[14] = "-"; }
-        try { info[15] = this.getNotes() + ""; } catch (Exception e) { info[15] = "-"; }
-        try { info[16] = this.getOperative().getName() + ""; } catch (Exception e) { info[16] = "-"; }
+        Object[] info = new Object[17];
+        try {
+            info[0] = this.getID_record() + "";
+        } catch (Exception e) {
+            info[0] = "-";
+        }
+        try {
+            info[1] = this.getDate().toString() + "";
+        } catch (Exception e) {
+            info[1] = "-";
+        }
+        try {
+            info[2] = this.getCode() + "";
+        } catch (Exception e) {
+            info[2] = "-";
+        }
+        try {
+            info[3] = this.getResource().getCode() + "";
+        } catch (Exception e) {
+            info[3] = "-";
+        }
+        try {
+            info[4] = this.getAssembly().getName() + "";
+        } catch (Exception e) {
+            info[4] = "-";
+        }
+        try {
+            info[5] = this.getStartTime().toString() + "";
+        } catch (Exception e) {
+            info[5] = "-";
+        }
+        try {
+            info[6] = this.getEndTime().toString() + "";
+        } catch (Exception e) {
+            info[6] = "-";
+        }
+        try {
+            info[7] = this.getArea().getName() + "";
+        } catch (Exception e) {
+            info[7] = "-";
+        }
+        try {
+            info[8] = this.getService().getName() + "";
+        } catch (Exception e) {
+            info[8] = "-";
+        }
+        try {
+            info[9] = this.getAddress() + "";
+        } catch (Exception e) {
+            info[9] = "-";
+        }
+        try {
+            info[10] = this.getAssistance_h() + "";
+        } catch (Exception e) {
+            info[10] = "-";
+        }
+        try {
+            info[11] = this.getAssistance_m() + "";
+        } catch (Exception e) {
+            info[11] = "-";
+        }
+        try {
+            info[12] = this.getEvacuated_h() + "";
+        } catch (Exception e) {
+            info[12] = "-";
+        }
+        try {
+            info[13] = this.getEvacuated_m() + "";
+        } catch (Exception e) {
+            info[13] = "-";
+        }
+        try {
+            info[14] = this.getRegistry() + "";
+        } catch (Exception e) {
+            info[14] = "-";
+        }
+        try {
+            info[15] = this.getNotes() + "";
+        } catch (Exception e) {
+            info[15] = "-";
+        }
+        try {
+            info[16] = this.getOperative().getName() + "";
+        } catch (Exception e) {
+            info[16] = "-";
+        }
         return info;
     }
 }

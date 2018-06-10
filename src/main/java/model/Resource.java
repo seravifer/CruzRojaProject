@@ -16,12 +16,13 @@ public class Resource {
 
     @DatabaseField(canBeNull = false, unique = true)
     private String code;
-    @DatabaseField(foreign = true,foreignAutoRefresh = true)
+    @DatabaseField(foreign = true, foreignAutoRefresh = true)
     private Assembly assembly;
 
-    public Resource() {}
+    public Resource() {
+    }
 
-    public Resource(String name, String code,Assembly assembly) {
+    public Resource(String name, String code, Assembly assembly) {
         this.name = name;
         this.code = code;
         this.assembly = assembly;
@@ -35,22 +36,23 @@ public class Resource {
         return name;
     }
 
-    public String getCode() {
-        return code;
-    }
-    
-    public Assembly getAssembly(){
-        return assembly;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
     }
 
     public void setCode(String code) {
         this.code = code;
     }
-    public void setAssembly(Assembly assembly){
+
+    public Assembly getAssembly() {
+        return assembly;
+    }
+
+    public void setAssembly(Assembly assembly) {
         this.assembly = assembly;
     }
 

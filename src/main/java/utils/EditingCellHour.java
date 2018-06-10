@@ -4,13 +4,9 @@ import com.jfoenix.controls.JFXTimePicker;
 import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.input.KeyCode;
-import javafx.util.StringConverter;
-import javafx.util.converter.LocalTimeStringConverter;
 import model.Event;
 
 import java.time.LocalTime;
-import java.time.format.FormatStyle;
-import java.util.Locale;
 
 import static utils.Utils.timeConverter;
 
@@ -18,7 +14,8 @@ public class EditingCellHour extends TableCell<Event, LocalTime> {
 
     private JFXTimePicker textField;
 
-    public EditingCellHour() {}
+    public EditingCellHour() {
+    }
 
     @Override
     public void startEdit() {

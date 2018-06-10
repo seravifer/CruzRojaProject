@@ -21,6 +21,19 @@ public class DB {
         }
     }
 
+    public static ConnectionSource get() {
+        if (instance == null) {
+            instance = new DB();
+        }
+        return instance.getJdbi();
+    }
+
+    public static void close() {
+        if (instance != null) {
+            instance.stopJdbi();
+        }
+    }
+
     private ConnectionSource getJdbi() {
         return db;
     }
@@ -30,19 +43,6 @@ public class DB {
             db.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public static ConnectionSource get() {
-        if(instance == null) {
-            instance = new DB();
-        }
-        return instance.getJdbi();
-    }
-
-    public static void close() {
-        if (instance != null) {
-            instance.stopJdbi();
         }
     }
 }

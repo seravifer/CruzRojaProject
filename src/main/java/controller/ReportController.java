@@ -1,109 +1,81 @@
 package controller;
 
-import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.Where;
 import com.jfoenix.controls.*;
-
-import org.controlsfx.control.CheckComboBox;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.chart.*;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.*;
+import org.controlsfx.control.CheckComboBox;
 import service.DAO;
+import utils.ReportPDFHelper;
+import utils.ReportXLSHelper;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.time.temporal.ChronoUnit;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import utils.ReportPDFHelper;
-import utils.ReportXLSHelper;
 
 public class ReportController {
-
-    @FXML
-    private JFXProgressBar loadingID;
-
-    @FXML
-    private JFXDatePicker startDateID;
-
-    @FXML
-    private JFXDatePicker endDateID;
-
-    @FXML
-    private JFXComboBox<Assembly> assemblyID;
-
-    @FXML
-    private CheckComboBox<Area> areaID;
-
-    @FXML
-    private CheckComboBox<Service> serviceID;
-
-    @FXML
-    private CheckComboBox<Resource> resourceID;
-
-    @FXML
-    private AnchorPane pageID;
-
-    @FXML
-    private JFXCheckBox cb_gender;
-
-    @FXML
-    private JFXCheckBox cb_service;
-
-    @FXML
-    private JFXCheckBox cb_areas;
-
-    @FXML
-    private JFXCheckBox cb_resource;
-
-    @FXML
-    private JFXCheckBox cb_hours;
-
-    @FXML
-    private VBox tabla_info;
-
-    @FXML
-    private JFXCheckBox cb_graphs;
-
-    @FXML
-    private JFXButton pdfButtonID;
-
-    @FXML
-    private JFXButton xlsButtonID;
 
     PieChart at_chart, ev_chart;
     List<String> textList;
     List<Node> nodeList;
     List<Record> query;
+    @FXML
+    private JFXProgressBar loadingID;
+    @FXML
+    private JFXDatePicker startDateID;
+    @FXML
+    private JFXDatePicker endDateID;
+    @FXML
+    private JFXComboBox<Assembly> assemblyID;
+    @FXML
+    private CheckComboBox<Area> areaID;
+    @FXML
+    private CheckComboBox<Service> serviceID;
+    @FXML
+    private CheckComboBox<Resource> resourceID;
+    @FXML
+    private AnchorPane pageID;
+    @FXML
+    private JFXCheckBox cb_gender;
+    @FXML
+    private JFXCheckBox cb_service;
+    @FXML
+    private JFXCheckBox cb_areas;
+    @FXML
+    private JFXCheckBox cb_resource;
+    @FXML
+    private JFXCheckBox cb_hours;
+    @FXML
+    private VBox tabla_info;
+    @FXML
+    private JFXCheckBox cb_graphs;
+    @FXML
+    private JFXButton pdfButtonID;
+    @FXML
+    private JFXButton xlsButtonID;
 
     public ReportController() {
         try {
@@ -279,8 +251,8 @@ public class ReportController {
             HBox graphs = new HBox();
             ObservableList<PieChart.Data> at_data
                     = FXCollections.observableArrayList(
-                            new PieChart.Data("Hombres atendidos", at_h),
-                            new PieChart.Data("Mujeres atendidas", at_m));
+                    new PieChart.Data("Hombres atendidos", at_h),
+                    new PieChart.Data("Mujeres atendidas", at_m));
             at_chart = new PieChart(at_data) {
                 @Override
                 protected void layoutChartChildren(double top, double left, double contentWidth, double contentHeight) {
@@ -300,8 +272,8 @@ public class ReportController {
             at_chart.setLegendVisible(true);
             ObservableList<PieChart.Data> ev_data
                     = FXCollections.observableArrayList(
-                            new PieChart.Data("Hombres evacuados", ev_h),
-                            new PieChart.Data("Mujeres evacuadas", ev_m));
+                    new PieChart.Data("Hombres evacuados", ev_h),
+                    new PieChart.Data("Mujeres evacuadas", ev_m));
             ev_chart = new PieChart(ev_data) {
                 @Override
                 protected void layoutChartChildren(double top, double left, double contentWidth, double contentHeight) {

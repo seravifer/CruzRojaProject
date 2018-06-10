@@ -77,7 +77,7 @@ class PerformanceTest {
             }
         }
 
-        assertEquals(2000, total);
+        assertEquals(30000, total);
     }
 
     private static int random(int min, int max) {

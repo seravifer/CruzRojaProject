@@ -95,7 +95,7 @@ public class OperativeModal extends AnchorPane {
         }
     }
 
-    public void setActionOnClose( EventHandler<? super MouseEvent> event) {
+    public void setActionOnClose(EventHandler<? super MouseEvent> event) {
         closeID.setOnMouseClicked(event);
     }
 

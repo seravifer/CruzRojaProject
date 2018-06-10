@@ -12,16 +12,16 @@ public class LocalTimeType extends BaseDateType {
 
     private static final LocalTimeType singleTon = new LocalTimeType();
 
-    public static LocalTimeType getSingleton() {
-        return singleTon;
-    }
-
     private LocalTimeType() {
         super(SqlType.STRING, new Class<?>[]{String.class});
     }
 
     protected LocalTimeType(SqlType sqlType, Class<?>[] classes) {
         super(sqlType, classes);
+    }
+
+    public static LocalTimeType getSingleton() {
+        return singleTon;
     }
 
     @Override
