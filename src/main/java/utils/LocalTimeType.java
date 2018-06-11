@@ -7,6 +7,7 @@ import com.j256.ormlite.support.DatabaseResults;
 
 import java.sql.SQLException;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class LocalTimeType extends BaseDateType {
 
@@ -42,7 +43,8 @@ public class LocalTimeType extends BaseDateType {
     @Override
     public Object javaToSqlArg(FieldType fieldType, Object javaObject) {
         LocalTime date = (LocalTime) javaObject;
-        if (date != null) return date.getHour() + ":" + date.getMinute();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        if (date != null) return date.format(formatter);
         else return null;
     }
 
