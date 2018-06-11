@@ -32,6 +32,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -183,11 +184,21 @@ public class ReportController {
             return;
         }
 
-        if (cb_gender.isSelected()) showGenderInfo(query);
-        if (cb_service.isSelected()) showServiceInfo(query);
-        if (cb_areas.isSelected()) showAreaInfo(query);
-        if (cb_resource.isSelected()) showResourceInfo(query);
-        if (cb_hours.isSelected()) showHoursInfo(query);
+        if (cb_gender.isSelected()) {
+            showGenderInfo(query);
+        }
+        if (cb_service.isSelected()) {
+            showServiceInfo(query);
+        }
+        if (cb_areas.isSelected()) {
+            showAreaInfo(query);
+        }
+        if (cb_resource.isSelected()) {
+            showResourceInfo(query);
+        }
+        if (cb_hours.isSelected()) {
+            showHoursInfo(query);
+        }
 
         pdfButtonID.setDisable(false);
         xlsButtonID.setDisable(false);
@@ -212,7 +223,7 @@ public class ReportController {
             where.or(checkedArea.size());
             total++;
         }
-        
+
         for (Service service : checkedService) {
             where.eq("service_id", service.getID());
         }
@@ -252,9 +263,9 @@ public class ReportController {
         info += "       - Hombres evacuados: " + ev_h + "\n";
         info += "       - Mujeres evacuadas: " + ev_m + "\n";
         info += "El total de gente atendida es de " + (at_h + at_m)
-                + "personas, de los cuales "
+                + " personas, de los cuales "
                 + (ev_h + ev_m)
-                + " han sido evacuadas. \nSe han realizado, en total, "
+                + " han \nsido evacuadas. Se han realizado, en total, "
                 + query.size() + " registros.";
         tabla_info.getChildren().add(new Label(info));
         textList.add(info);
@@ -263,8 +274,8 @@ public class ReportController {
             HBox graphs = new HBox();
             ObservableList<PieChart.Data> at_data
                     = FXCollections.observableArrayList(
-                    new PieChart.Data("Hombres atendidos", at_h),
-                    new PieChart.Data("Mujeres atendidas", at_m));
+                            new PieChart.Data("Hombres atendidos", at_h),
+                            new PieChart.Data("Mujeres atendidas", at_m));
             at_chart = new PieChart(at_data) {
                 @Override
                 protected void layoutChartChildren(double top, double left, double contentWidth, double contentHeight) {
@@ -336,7 +347,12 @@ public class ReportController {
             }
             if (count != 0) {
                 String s = service.getName() + ": " + count;
-                serie.getData().add(new XYChart.Data(service.getName(), count));
+                if (service.getName().length() < 8) {
+                    serie.getData().add(new XYChart.Data(service.getName(), count));
+                } else {
+                    String aux = service.getName().substring(0, 8).concat("...");
+                    serie.getData().add(new XYChart.Data(aux, count));
+                }
                 lista_info.add(s);
             }
         }
@@ -350,12 +366,13 @@ public class ReportController {
         textList.add(info.toString());
 
         if (cb_graphs.isSelected()) {
-            bc.getData().add(serie);
-            bc.setTitle("Desglose de registros por servicio");
-            bc.setPrefSize(250, 250);
+            bc.getData().addAll(serie);
+            bc.setTitle("Desglose de los registros por servicio:");
+            bc.setPrefSize(600, 400);
             bc.setLegendVisible(false);
             tabla_info.getChildren().add(bc);
             nodeList.add(bc);
+
         }
     }
 
@@ -383,7 +400,12 @@ public class ReportController {
             }
             if (count != 0) {
                 String s = area.getName() + ": " + count;
-                serie.getData().add(new XYChart.Data(area.getName(), count));
+                if (area.getName().length() < 10) {
+                    serie.getData().add(new XYChart.Data(area.getName(), count));
+                } else {
+                    String aux = area.getName().substring(0, 8).concat("...");
+                    serie.getData().add(new XYChart.Data(aux, count));
+                }
                 lista_info.add(s);
             }
         }
@@ -397,12 +419,14 @@ public class ReportController {
         textList.add(info.toString());
 
         if (cb_graphs.isSelected()) {
+
             bc.getData().addAll(serie);
-            bc.setTitle("Desglose de los registros por área");
-            bc.setPrefSize(250, 250);
+            bc.setTitle("Desglose de los registros por área:");
+            bc.setPrefSize(600, 400);
             bc.setLegendVisible(false);
             tabla_info.getChildren().add(bc);
             nodeList.add(bc);
+
         }
     }
 
@@ -428,12 +452,19 @@ public class ReportController {
             int count = 0;
 
             for (String s : lista_resource) {
-                if (resource.getCode().equals(s)) count++;
+                if (resource.getCode().equals(s)) {
+                    count++;
+                }
             }
 
             if (count != 0) {
                 String s = resource.getCode() + ": " + count;
-                serie.getData().add(new XYChart.Data(resource.getCode(), count));
+                if (resource.getCode().length() < 8) {
+                    serie.getData().add(new XYChart.Data(resource.getCode(), count));
+                } else {
+                    String aux = resource.getCode().substring(0, 8).concat("...");
+                    serie.getData().add(new XYChart.Data(aux, count));
+                }
                 lista_info.add(s);
             }
         }
@@ -448,11 +479,12 @@ public class ReportController {
 
         if (cb_graphs.isSelected()) {
             bc.getData().addAll(serie);
-            bc.setTitle("Desglose de los registros por recurso");
-            bc.setPrefSize(250, 250);
+            bc.setTitle("Desglose de los registros por recurso:");
+            bc.setPrefSize(600, 400);
             bc.setLegendVisible(false);
             tabla_info.getChildren().add(bc);
             nodeList.add(bc);
+
         }
     }
 
@@ -464,7 +496,7 @@ public class ReportController {
                 LocalTime finish = record.getEndTime();
                 minutes = minutes + ChronoUnit.MINUTES.between(start, finish);
             } catch (Exception e) {
-                System.err.println("Un error muy turbio");
+                e.printStackTrace();
             }
         }
 
@@ -473,12 +505,7 @@ public class ReportController {
             hours = hours + 1;
         }
 
-        while (hours > 24) {
-            hours = hours - 24;
-            days = days + 1;
-        }
-
-        String info = "Se han trabajado en total " + days + " dias, " + hours + " horas y " + minutes + " minutos.";
+        String info = "Se han trabajado en total " + hours + " horas y " + minutes + " minutos.";
 
         tabla_info.getChildren().add(new Label(info));
         textList.add(info);
