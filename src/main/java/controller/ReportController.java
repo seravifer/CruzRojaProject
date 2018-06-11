@@ -347,7 +347,12 @@ public class ReportController {
             }
             if (count != 0) {
                 String s = service.getName() + ": " + count;
-                serie.getData().add(new XYChart.Data(service.getName(), count));
+                if (service.getName().length() < 8) {
+                    serie.getData().add(new XYChart.Data(service.getName(), count));
+                } else {
+                    String aux = service.getName().substring(0, 8).concat("...");
+                    serie.getData().add(new XYChart.Data(aux, count));
+                }
                 lista_info.add(s);
             }
         }
@@ -361,19 +366,13 @@ public class ReportController {
         textList.add(info.toString());
 
         if (cb_graphs.isSelected()) {
-            if (serie.getData().size() > 10) {
-                String err = "No se ha podido generar una gráfica. Solo se puede previsualizar \n" +
-                        "hasta diez";
-                tabla_info.getChildren().add(new Label(err));
-                
-            } else {
-                bc.getData().addAll(serie);
-                bc.setTitle("Desglose de los registros por servicio:");
-                bc.setPrefSize(250, 250);
-                bc.setLegendVisible(false);
-                tabla_info.getChildren().add(bc);
-                nodeList.add(bc);
-            }
+            bc.getData().addAll(serie);
+            bc.setTitle("Desglose de los registros por servicio:");
+            bc.setPrefSize(600, 400);
+            bc.setLegendVisible(false);
+            tabla_info.getChildren().add(bc);
+            nodeList.add(bc);
+
         }
     }
 
@@ -401,7 +400,12 @@ public class ReportController {
             }
             if (count != 0) {
                 String s = area.getName() + ": " + count;
-                serie.getData().add(new XYChart.Data(area.getName(), count));
+                if (area.getName().length() < 10) {
+                    serie.getData().add(new XYChart.Data(area.getName(), count));
+                } else {
+                    String aux = area.getName().substring(0, 8).concat("...");
+                    serie.getData().add(new XYChart.Data(aux, count));
+                }
                 lista_info.add(s);
             }
         }
@@ -415,19 +419,14 @@ public class ReportController {
         textList.add(info.toString());
 
         if (cb_graphs.isSelected()) {
-            if (serie.getData().size() > 10) {
-                String err = "No se ha podido generar una gráfica. Solo se puede previsualizar \n" +
-                        "hasta diez datos";
-                tabla_info.getChildren().add(new Label(err));
-                
-            } else {
-                bc.getData().addAll(serie);
-                bc.setTitle("Desglose de los registros por área:");
-                bc.setPrefSize(250, 250);
-                bc.setLegendVisible(false);
-                tabla_info.getChildren().add(bc);
-                nodeList.add(bc);
-            }
+
+            bc.getData().addAll(serie);
+            bc.setTitle("Desglose de los registros por área:");
+            bc.setPrefSize(600, 400);
+            bc.setLegendVisible(false);
+            tabla_info.getChildren().add(bc);
+            nodeList.add(bc);
+
         }
     }
 
@@ -460,7 +459,12 @@ public class ReportController {
 
             if (count != 0) {
                 String s = resource.getCode() + ": " + count;
-                serie.getData().add(new XYChart.Data(resource.getCode(), count));
+                if (resource.getCode().length() < 8) {
+                    serie.getData().add(new XYChart.Data(resource.getCode(), count));
+                } else {
+                    String aux = resource.getCode().substring(0, 8).concat("...");
+                    serie.getData().add(new XYChart.Data(aux, count));
+                }
                 lista_info.add(s);
             }
         }
@@ -474,19 +478,13 @@ public class ReportController {
         textList.add(info.toString());
 
         if (cb_graphs.isSelected()) {
-            if (serie.getData().size() > 10) {
-                String err = "No se ha podido generar una gráfica. Solo se puede previsualizar \n" +
-                        "hasta diez";
-                tabla_info.getChildren().add(new Label(err));
-                
-            } else {
-                bc.getData().addAll(serie);
-                bc.setTitle("Desglose de los registros por recurso:");
-                bc.setPrefSize(250, 250);
-                bc.setLegendVisible(false);
-                tabla_info.getChildren().add(bc);
-                nodeList.add(bc);
-            }
+            bc.getData().addAll(serie);
+            bc.setTitle("Desglose de los registros por recurso:");
+            bc.setPrefSize(600, 400);
+            bc.setLegendVisible(false);
+            tabla_info.getChildren().add(bc);
+            nodeList.add(bc);
+
         }
     }
 
@@ -498,7 +496,7 @@ public class ReportController {
                 LocalTime finish = record.getEndTime();
                 minutes = minutes + ChronoUnit.MINUTES.between(start, finish);
             } catch (Exception e) {
-                System.err.println("Un error muy turbio");
+                e.printStackTrace();
             }
         }
 
